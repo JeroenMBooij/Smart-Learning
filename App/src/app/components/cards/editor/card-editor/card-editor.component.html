@@ -1,0 +1,44 @@
+
+<div class="mt-4">
+    <div class="d-flex justify-content-between w-100">
+        <div class="d-flex w-25 ml-4">
+            <h3 class="mt-4 mr-4">{{'signpost.deck' | translate}}</h3>
+            <mat-form-field class="w-100" color="accent">
+                <mat-label>{{'input.title' | translate}}</mat-label>
+                <mat-select [value]="(currentDeck | async)?.id">
+                    <mat-option *ngFor="let deckIdentity of deckIdentities | async" [value]="deckIdentity.id">
+                        {{deckIdentity.title}}      
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="w-10 mr-4">
+            <main-button mat-button [matMenuTriggerFor]="menu" label="{{'input.actions' | translate }}"></main-button>
+            <mat-menu #menu="matMenu">
+                <a routerLink="/deck/{{deckId}}/cards" mat-menu-item>{{'signpost.browseCards' | translate}}</a>
+                <a mat-menu-item>{{'signpost.newCard' | translate}}</a>
+            </mat-menu>
+        </div>
+    </div>
+    <form class='d-flex flex-column w-25 ml-4' [formGroup]="cardDescriptionForm">
+        <div class="d-flex w-100">
+            <h3 class="mt-4 mr-4">{{'signpost.cardPreview' | translate}}</h3>
+            <mat-form-field color="accent">
+                <mat-label>{{'input.name' | translate }}</mat-label>
+                <input matInput type="text" [formControl]="name" (change)="saveCardName()">
+                <mat-error *ngIf="cardDescriptionForm.hasError('name') && !cardDescriptionForm.hasError('required')">
+                    {{'error.card.name' | translate }}
+                </mat-error>
+                <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">
+                    {{'input.required' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="card-editor-container">
+        <custom-web-editor *ngIf="(card | async)?.type == 'web custom'" 
+            [deck]="currentDeck" 
+            [card]="card"
+        ></custom-web-editor>
+    </div>
+</div>

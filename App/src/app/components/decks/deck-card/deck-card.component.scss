@@ -1,0 +1,93 @@
+.my-card 
+{
+    max-width: 250px;
+    min-width: 250px;
+    max-height: 250px;
+    min-height: 250px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    padding: 0;
+}
+
+.card-scale:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    z-index: 9;
+}
+
+.grid-container {
+    display: grid;
+}
+
+.mat-card-header {
+    height: 60px;
+}
+
+.mat-card-title {
+    max-width: 140px;
+    min-width: 140px;
+    min-height: 30px;
+    line-height: 30px;
+}
+
+.cat-subtitle{
+    max-width: 90px;
+    min-width: 90px;
+}
+  
+.deck-card-img {
+    top: -90px;
+    max-width: 250px;
+    min-width: 250px;
+    max-height: 250px;
+    min-height: 250px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.card-description {
+    min-height: 67px;
+}
+
+
+.mat-card-actions {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+hr {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+mat-card-subtitle {
+    color: white !important;
+    min-height: 21px;
+}
+
+.mat-card:hover .toggler {
+    opacity: 1;
+}
+
+.mat-card:hover {
+    background: rgba(0, 0, 0, 0.3);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+a span {
+    font-size: 12px;
+}
+
+a {
+    min-width: unset !important;
+    padding: 0 !important;
+}
+
+.toggler {
+    opacity: 1;
+}

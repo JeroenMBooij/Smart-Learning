@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "teacher-didac": {
+      "hosting": {
+        "didac-admin": [
+          "teacher-didac"
+        ]
+      }
+    }
+  }
+}

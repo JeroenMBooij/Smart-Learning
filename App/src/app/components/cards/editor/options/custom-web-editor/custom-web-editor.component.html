@@ -1,0 +1,65 @@
+
+
+<div class="d-flex justify-content-between vw-100">
+
+    <div class=" w-50 ml-5 mt-4">
+        <h5>{{'signpost.front' | translate}}</h5>
+        <div class="d-inline-block theme-border p-2">
+            <div class="card-container">
+                <front-card [frameSource]="frontFrameSource"></front-card>
+            </div>
+        </div>
+        <h5 class="mt-4">{{'signpost.back' | translate}}</h5>
+        <div class="d-inline-block theme-border p-2">
+            <div class="card-container">
+                <back-card [frameSource]="backFrameSource"></back-card>
+            </div>
+        </div>
+        <div class="robo-container theme-border mt-5 mb-4">
+            <app-robot [state]='robotState' [emote]='robotEmote'></app-robot>
+        </div>
+    </div>
+    
+    <div class="mt-4 mr-5 w-50 editor-bottom-padding">
+        <div #frontEditorContainer class="w-75 h-25 ml-auto">
+            <p>{{'signpost.frontEditor' | translate}}</p>
+            <div class="pr-1" [ngClass]="(editorContent.frontHtml.eval == false) ? 'theme-border':'warning-border'">
+                <ngx-monaco-editor class="my-editor" [options]="editorContent.frontHtml.options" 
+                    (onInit)="registerMonacoHtmlAutoComplete()"
+                    (keyup)="onFrontHtmlChange()" [(ngModel)]="editorContent.frontHtml.current">
+                </ngx-monaco-editor>
+            </div>
+        </div>
+        <div #backEditorContainer class="w-75 h-25 ml-auto">
+            <p>{{'signpost.backEditor' | translate}}</p>
+            <div class="pr-1" [ngClass]="(editorContent.backHtml.eval == false) ? 'theme-border':'warning-border'">
+                <ngx-monaco-editor class="my-editor" [options]="editorContent.backHtml.options" 
+                    [(ngModel)]="editorContent.backHtml.current" (keyup)="onBackHtmlChange()">
+                </ngx-monaco-editor>
+            </div>
+        </div>
+        <div #cssEditorContainer class="w-75 h-25 ml-auto">
+            <p>{{'signpost.cssEditor' | translate}}</p>
+            <div class="pr-1" [ngClass]="(editorContent.css.eval == false) ? 'theme-border':'warning-border'">
+                <ngx-monaco-editor class="my-editor" [options]="editorContent.css.options" 
+                    [(ngModel)]="editorContent.css.current" (keyup)="onSupportHtmlChange()">
+                </ngx-monaco-editor>
+            </div>
+        </div>
+        <div #javascriptEditorContainer class="w-75 h-25 ml-auto">
+            <p>{{'signpost.javascriptEditor' | translate}}</p>
+            <div class="pr-1" [ngClass]="(editorContent.javascript.eval == false) ? 'theme-border':'warning-border'">
+                <ngx-monaco-editor class="my-editor" [options]="editorContent.javascript.options" 
+                [(ngModel)]="editorContent.javascript.current" (keyup)="onSupportHtmlChange()">
+                </ngx-monaco-editor>
+            </div>
+        </div>
+
+        <div class="w-25 ml-auto">
+            <main-button (click)="UndoChanges()" label="{{'input.UndoChanges' | translate }}" >
+            </main-button>
+        </div>
+
+    </div>
+</div>
+

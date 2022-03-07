@@ -1,0 +1,67 @@
+<article class="d-flex">
+
+    <section class="w-25 container-header-height pt-100 pl-100 pr-100 position-fixed">
+        <div class="w-100 h-100">
+            <app-robot [state]='robotState' [emote]='robotEmote' roboId="1"></app-robot>
+        </div>
+    </section>
+
+    <section class="ml-auto mr-auto">
+
+        <div class="d-flex justify-content-between mt-4">
+            <div class="d-flex flex-column">
+                <p class="font-weight-bold">{{ filterReview ? ('deck.review' | translate) : ('signpost.all' | translate)}}</p>
+                <mat-slide-toggle 
+                    class="ml-auto mr-auto"
+                    [ngModel]="filterReview" 
+                    (change)="applyReviewFilter()"
+                ></mat-slide-toggle>
+            </div>
+
+            <h1 class="">{{'Navigation.Decks' | translate }}</h1>
+
+            <mat-icon 
+                [svgIcon]='themeService.addButton | async' 
+                class="my-icon-button mt-2"
+                (click)="openAddDeck()"
+            ></mat-icon>
+        </div>
+
+        <div>
+            <div class="d-flex mt-4 sticky-search">
+                <mat-form-field class="search-form-field" color="accent" appearance="outline" class="w-100">
+                    <mat-label>{{'input.search' | translate}}</mat-label>
+                    <mat-icon matPrefix>search</mat-icon>
+                    <advanced-search-input
+                        [formControl]="searchForm"
+                        [scopeOptions]="scopeOptions"
+                    ></advanced-search-input>
+                  </mat-form-field>
+                <!--<mat-form-field color="accent" appearance="outline" class="w-100">
+                    <mat-label><mat-icon>search</mat-icon> {{'input.search' | translate }}</mat-label>
+                    <input matInput type="text" (keyup)="applyFilter($event.target.value)" class="no-bottom">
+                </mat-form-field>-->
+                <mat-icon svgIcon='my-info' id="hide-search-icon" class="fade-icon mt-3 ml-4"  (click)="his.open('deck.info.search')"></mat-icon>
+            </div>
+
+            <div class="d-flex flex-wrap sticky-container">
+                <div *ngFor="let deck of decks | async" class="mr-1 mb-1">
+                    <deck-card
+                        [deck]="deck"    
+                        [imageSource]="deck.imageSource"
+                        [themeTracker]="themeTracker"    
+                    ></deck-card>
+                </div>
+                <div *ngIf="(decks | async)?.length == 0">
+                    <h4 class="sticky-container text-center">{{'signpost.noDecks' | translate}}</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-25 container-header-height pt-100 pl-100 pr-100 position-fixed" style="right: 0px;">
+        <div class="w-100 h-100">
+            <app-robot [state]='robotState' [emote]='robotEmote' roboId="2" horizontalOrientation="-1.4"></app-robot>
+        </div>
+    </section>
+</article>

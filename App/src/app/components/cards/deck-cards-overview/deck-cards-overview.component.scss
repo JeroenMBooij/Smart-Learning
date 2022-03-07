@@ -1,0 +1,25 @@
+.table-row:hover {
+    cursor: pointer;
+    opacity: 1 !important;
+}
+
+.table-row {
+    opacity: 0.7 !important;
+}
+
+table {
+    background-color: transparent !important;
+}
+
+.mat-paginator {
+    background-color: transparent !important;
+}
+
+.mat-header-cell {
+    color: var(--theme-opposite-color) !important;
+}
+
+.card-container {
+    height: 40vh;
+    width: 40vw;
+}

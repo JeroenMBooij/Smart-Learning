@@ -1,0 +1,22 @@
+<ng-container [formGroup]="form">
+    <div class="d-flex">
+        <mat-select class="select" formControlName="scope">
+            <mat-option 
+                *ngFor="let scopeOption of scopeOptions" 
+                value="{{scopeOption.value}}"
+            >{{scopeOption.display}}</mat-option>
+        </mat-select>
+
+        <mat-divider [vertical]="true" class="divider"></mat-divider>
+        
+        <input
+            formControlName="query"
+            [ngStyle]="{ opacity: disabled ? 0.5 : 1 }"
+            matInput
+            [placeholder]="placeholder"
+            type="text"
+            name="advanced-search"
+            class="input"
+        />
+    </div>
+</ng-container>

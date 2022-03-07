@@ -1,0 +1,140 @@
+{
+	"Navigation": {
+		"Decks": ""
+	},
+	"authentication": {
+		"currentPassword": "当前密码",
+		"email": "电子邮件",
+		"invalidCredentials": "登录无效。请检查您的电子邮件和密码",
+		"login": "登录",
+		"logout": "登出",
+		"manageAccount": "管理帐户",
+		"newPassword": "新密码",
+		"noAccount": "没有帐户吗",
+		"password": "密码",
+		"passwordUpdated": "为 {email} 调整密码",
+		"recover": "恢复",
+		"register": "登记",
+		"registrationSuccess": "登记通过",
+		"username": "用户名",
+		"validEmail": "请使用有效的电子邮件地址",
+		"validPassword": "密码必须至少有六个字符"
+	},
+	"card": {
+		"dueTomorrow": "",
+		"feedback": {
+			"again": "",
+			"easy": "",
+			"good": "",
+			"hard": ""
+		},
+		"name": "",
+		"showAnswer": "",
+		"validateAnswer": ""
+	},
+	"cards": {
+		"due": "",
+		"dueTomorrow": ""
+	},
+	"deck": {
+		"defaultEaseModifier": "",
+		"easeBonus": "",
+		"easePenalty": "",
+		"hardIntervalModifier": "",
+		"intervalModifier": "",
+		"review": "",
+		"settings": "",
+		"start": ""
+	},
+	"dropdown": {
+		"more": "更多信息",
+		"noResults": "没结果",
+		"search": "搜索",
+		"select": "选择"
+	},
+	"error": {
+		"card": {
+			"name": ""
+		},
+		"deck": {
+			"again": "",
+			"defaultEaseModifier": "",
+			"easeBonus": "",
+			"easePenalty": "",
+			"easy": "",
+			"good": "",
+			"hard": "",
+			"hardIntervalModifier": "",
+			"intervalModifier": "",
+			"title": ""
+		}
+	},
+	"header": {
+		"cardSettings": "卡片设置",
+		"decks": "甲板",
+		"review": "审查",
+		"teams": ""
+	},
+	"input": {
+		"UndoChanges": "",
+		"accountDeleted": "帐户删除",
+		"actions": "",
+		"cancel": "取消",
+		"card": {
+			"answerOptions": ""
+		},
+		"confirm": "确认",
+		"create": "",
+		"dark-theme": "黑色的主题",
+		"deck": {
+			"category": "",
+			"feedbackOption": ""
+		},
+		"delete": "删除",
+		"deleteNotDelete": "您要不要删除 {email}",
+		"description": "",
+		"file": "",
+		"light-theme": "白色的主题",
+		"name": "",
+		"required": "必需",
+		"reset": "重启",
+		"search": "",
+		"showAnswer": "",
+		"title": "",
+		"update": "更新"
+	},
+	"language": {
+		"select": "选择语言"
+	},
+	"shared": {
+		"title": "迪达克老师"
+	},
+	"signpost": {
+		"advancedSettings": "",
+		"all": "",
+		"back": "",
+		"backEditor": "",
+		"browseCards": "",
+		"cardPreview": "",
+		"cards": "",
+		"cssEditor": "",
+		"deck": "",
+		"edit": "",
+		"front": "",
+		"frontEditor": "",
+		"groups": "",
+		"javascriptEditor": "",
+		"joinLearning": "",
+		"newCard": "",
+		"noCards": "",
+		"noDecks": "",
+		"or": "",
+		"returnToLogin": "返回登录",
+		"settings": "",
+		"signup": "在这里注册",
+		"team": "",
+		"teams": "",
+		"upload": "",
+		"welcome": "欢迎在应用中"
+	}
+}

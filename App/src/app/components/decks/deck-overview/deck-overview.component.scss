@@ -1,0 +1,17 @@
+.sticky-search {
+    position: fixed;
+    top: calc(150px - var(--sticky-subheader));
+    background-color: var(--my-theme-primary);
+    z-index: 10;
+    padding-top: 20px;
+    width: 762px;
+}
+
+.no-bottom {
+    padding-bottom: 0 !important;
+ }
+
+.sticky-container {
+    margin-top: 100px;
+    width: 762px;
+}

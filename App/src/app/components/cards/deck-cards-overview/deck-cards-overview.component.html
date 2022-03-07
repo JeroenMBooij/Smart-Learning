@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between w-100 mt-4">
+    <div class="d-flex w-25 mt-4 ml-4">
+        <h3 class="mr-4">{{'signpost.deck' | translate}}</h3>
+        <ngx-select-dropdown 
+            class="w-100"
+            [config]="dropDownConfig" 
+            [options]="deckIdentities | async" 
+            [(ngModel)]="selectedDeckID"
+            (change)="switchDeck($event.value.id)">
+        </ngx-select-dropdown>
+    </div>
+    <div class="w-10 mr-4">
+        <main-button mat-button [matMenuTriggerFor]="menu" label="{{'signpost.settings' | translate }}"></main-button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>{{'signpost.browseCards' | translate}}</button>
+            <button mat-menu-item>{{'signpost.newCard' | translate}}</button>
+        </mat-menu>
+    </div>
+</div>
+
+<div class="ml-4 mb-4">
+    <div class="d-flex w-100">
+        <h3 class="mt-4 mr-4">{{'signpost.cardPreview' | translate}}</h3>
+        <mat-form-field color="accent">
+            <mat-label>{{'input.name' | translate }}</mat-label>
+            <input matInput type="text" [value]="(selectedCard | async)?.name" disabled>
+        </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-between vw-100">
+
+        <div class="m-5 w-50">
+            <h5>{{'signpost.front' | translate}}</h5>
+            <div class="d-inline-block theme-border p-2">
+                <div class="card-container">
+                    <front-card [frameSource]="frontFrameSource"></front-card>
+                </div>
+            </div>
+            <h5>{{'signpost.back' | translate}}</h5>
+            <div class="d-inline-block theme-border p-2 mt-4">
+                <div class="card-container">
+                    <back-card [frameSource]="backFrameSource"></back-card>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-5 w-50">
+            <h2>{{'signpost.cards' | translate }}</h2>
+            <div class="d-flex justify-content-between">
+                <mat-form-field class="search-form-field" color="accent" appearance="outline" class="w-75">
+                    <mat-label>{{'input.search' | translate}}</mat-label>
+                    <mat-icon matPrefix>search</mat-icon>
+                    <advanced-search-input
+                        [formControl]="searchForm"
+                        [scopeOptions]="scopeOptions"
+                    ></advanced-search-input>
+                </mat-form-field>
+                <mat-icon 
+                    [svgIcon]='themeService.addButton | async' 
+                    class="my-icon-button mt-3 mr-4"
+                    (click)="openNewCard()"
+                ></mat-icon>
+            </div>
+            <table mat-table color="primary" [dataSource]="cardDataSource" class="w-100">
+        
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef class="w-80"> <h4 id="nameColumn">{{'card.name' | translate}}</h4> </th>
+                        <td mat-cell *matCellDef="let card"> <p class="truncate ml-1">{{card.name}}</p> </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="settings">
+                        <th mat-header-cell *matHeaderCellDef > <h4 id="nameColumn">{{'signpost.settings' | translate}}</h4> </th>
+                        <td mat-cell *matCellDef="let card">
+                            <mat-icon class="d-block m-auto fade-icon scale-icon" (click)="openCardSettings(card.id)">settings</mat-icon>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef > <h4 id="nameColumn">{{'signpost.edit' | translate}}</h4> </th>
+                        <td mat-cell *matCellDef="let card">
+                            <mat-icon class="d-block m-auto fade-icon scale-icon" (click)="openCardEditor(card.id)">edit</mat-icon>
+                        </td>
+                    </ng-container>
+                    
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell text-center" colspan="5">{{'signpost.noCards' | translate}}</td>
+                    </tr>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr 
+                        mat-row 
+                        *matRowDef="let card; columns: displayedColumns;"
+                        (click)="previewCard(card.id)"
+                        class="table-row"
+                    ></tr>
+            </table>
+            <mat-paginator #paginator [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

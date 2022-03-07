@@ -1,0 +1,48 @@
+<mat-card 
+    class="my-card" [class.card-scale] = "scale" [ngStyle]="{'background-image': imageSourceAvailable ? imageSource : defaultImageSource}"
+    (click)="openLearnCards()"
+>
+    <mat-card-content class="position-relative">
+        <div class="toggler container w-100">
+            <div class="row">
+                <div class="col w-50">
+                    <div class="row ml-1">
+                        <mat-card-title class="truncate m-0">{{ deck.title }}</mat-card-title>
+                    </div>
+                    <div class="row ml-1">
+                        <mat-card-subtitle>{{ deck.cardsDue ?? 0 }} {{'cards.due' | translate}}</mat-card-subtitle>
+                    </div>  
+                    <div class="row ml-1">
+                        <p class="truncate description-column card-description">
+                            {{ deck.description }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col ml-1">
+                    <mat-card-subtitle class="cat-subtitle text-break">
+                        <span *ngFor="let category of deck.selectedCategories; index as i">
+                            <span class="mr-2">{{category}} <span *ngIf="i < deck.selectedCategories.length - 1">, </span></span>
+                        </span>
+                    </mat-card-subtitle>
+                </div>
+            </div>
+            <mat-card-actions class="d-flex justify-content-between ml-auto mr-auto">
+                <a mat-button (click)="openDeck()"><span>{{'signpost.edit' | translate }}</span></a>
+                <a mat-button><span>{{'signpost.teams' | translate }}</span></a>
+                
+                <mat-icon class="fade-icon scale-icon mt-2">share</mat-icon>
+            </mat-card-actions>
+            <hr/>
+            <div class="d-flex justify-content-between mt-2">
+                <div class="text-center">
+                    <p class="m-0">{{'signpost.cards' | translate}}</p>
+                    <p>{{deck.cards?.length ?? 0}}</p>
+                </div>
+                <div class="text-center">
+                    <p class="m-0">{{'card.dueTomorrow' | translate}}</p>
+                    <p>{{deck.cardsDueTomorrow ?? 0}}</p>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+  </mat-card>

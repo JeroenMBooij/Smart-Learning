@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  teacherdidac.web:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      AUTH_SERVER_URL: ${AUTH_SERVER_URL}
+    ports:
+      - "7000:80"
+    networks:
+      - proxynet
+
+  scheduledb:
+    container_name: scheduledb
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "7003:1433"
+    networks:
+      - proxynet
+
+
+  teacherdidac.scheduler:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - scheduledb
+    ports:
+      - "7001:80"
+    networks:
+      - proxynet
+

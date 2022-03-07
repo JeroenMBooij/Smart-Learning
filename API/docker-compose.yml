@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+
+  teacherdidac.scheduler:
+    image: ${DOCKER_REGISTRY-}teacherdidacscheduler
+    build:
+      context: .
+      dockerfile: TeacherDidac.Scheduler/Dockerfile
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
+  
+  scheduledb:
+    image: mysql
+    
+  teacherdidac.web:
+    image: ${DOCKER_REGISTRY-}teacherdidacweb
+    build:
+      context: .
+      dockerfile: TeacherDidac.Web/Dockerfile
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
+ 
+
+networks:
+  proxynet:
+    name: custom_network
+
+

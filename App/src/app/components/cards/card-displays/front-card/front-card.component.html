@@ -1,0 +1,14 @@
+<iframe #frame class="preview-frame theme-border" 
+    sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
+        allow-presentation allow-scripts allow-top-navigation-by-user-activation"
+></iframe>
+
+<div>
+    <div>
+        <div  *ngIf="showAnswer.value == false" class="w-25 mt-5 mb-5 ml-auto mr-auto">
+            <main-button (click)="submit()" label="{{'input.showAnswer' | translate }}" 
+                [disabled]="showAnswer.value == true">
+            </main-button>
+        </div>
+    </div>
+</div>

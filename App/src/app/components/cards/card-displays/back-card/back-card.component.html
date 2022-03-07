@@ -1,0 +1,31 @@
+
+<iframe #frame class="preview-frame theme-border" 
+    sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
+        allow-presentation allow-scripts allow-top-navigation-by-user-activation"
+></iframe>
+
+<div class="d-flex justify-content-around mt-4 mb-2">
+    <div class="w-20">
+        <main-button (click)="next('again')" label="{{'card.feedback.again' | translate }}"
+            class="again-button"
+        ></main-button>
+    </div>
+
+    <div class="w-20">
+        <main-button (click)="next('hard')" label="{{'card.feedback.hard' | translate }}"
+            class="hard-button"
+        ></main-button>
+    </div>
+
+    <div class="w-20">
+        <main-button (click)="next('good')" label="{{'card.feedback.good' | translate }}"
+            class="good-button"
+        ></main-button>
+    </div>
+
+    <div class="w-20">
+        <main-button (click)="next('easy')" label="{{'card.feedback.easy' | translate }}"
+            class="easy-button"
+        ></main-button>
+    </div>
+</div>

@@ -1,0 +1,255 @@
+
+    <article class="d-flex">
+        <section class="w-50 container-header-height p-100 position-fixed">
+            <div class="w-100 h-100">
+                <app-robot [state]='robotState' [emote]='robotEmote'></app-robot>
+            </div>
+        </section>
+        <section class="w-50 pl-100 pr-100 ml-auto">
+            <form class='d-flex flex-column' [formGroup]="deckForm">
+                <h1 class="mt-5 mb-5">{{'Navigation.Decks' | translate }}</h1>
+                <mat-form-field color="accent">
+                    <mat-label>{{'input.title' | translate }}</mat-label>
+                    <input matInput type="text" [formControl]="title">
+                    <mat-error *ngIf="deckForm.hasError('title') && !deckForm.hasError('required')">
+                        {{'error.deck.title' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="title.invalid && (title.dirty || title.touched) && title.errors.required">
+                        {{'input.required' | translate }}
+                    </mat-error>
+                </mat-form-field>
+                
+                <div class="d-flex justify-content-between w-100">
+                    <div class="d-flex justify-content-between w-40 mt-4">
+                        <mat-form-field class="w-100" color="accent">
+                            <mat-label>{{'signpost.team' | translate}}</mat-label>
+                            <mat-select [formControl]="teamId">
+                                <mat-option *ngFor="let team of playerTeams | async" [value]="team.id">
+                                    {{team.name}}    
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-icon svgIcon='my-info' class="fade-icon ml-4 mt-3"  (click)="his.open('deck.info.teams')"></mat-icon>
+                    </div>
+
+                    <div class="d-flex justify-content-between w-40 mt-4">
+                        <mat-form-field class="w-100" color="accent">
+                            <mat-label>{{'input.deck.category' | translate}}</mat-label>
+                            <mat-select [formControl]="selectedCategories" multiple>
+                                <mat-option *ngFor="let category of categories | async" [value]="category.name">
+                                    {{category.name}}                     
+                                    <mat-icon 
+                                        [svgIcon]='themeService.addButton | async' 
+                                        class="fade-icon rotate-45 ml-4 mt-3"
+                                        (click)="deleteCategory(category)"
+                                    ></mat-icon>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-icon 
+                            [svgIcon]='themeService.addButton | async' 
+                            class="my-icon-button mt-3 ml-4"
+                            (click)="openCreateCategory()"
+                        ></mat-icon>
+                    </div>
+                </div>
+
+                <div class="mt-4" *ngIf="(iconBase64 | json) != ({} | json)">
+                    <mat-icon 
+                        [svgIcon]='themeService.addButton | async' 
+                        class="my-cross-button mr-3"
+                        (click)="deleteIconFile()"
+                    ></mat-icon>
+                    {{'input.delete' | translate}} {{'signpost.upload' | translate}}
+                </div>
+                <div class=" d-flex justify-content-between w-100 mt-4">
+                    <div class="theme-border">
+                        <deck-card
+                            [deck]="deck"
+                            [imageSource]="iconBase64"
+                            [themeTracker]="themeTracker"  
+                            [scale]="false" 
+                        ></deck-card>
+                    </div>
+                    <div class="w-25 mt-auto">
+                        <main-button (click)="iconeFileInput.click()"  label="{{'input.file' | translate }}"></main-button>
+                        <input hidden (change)="onIconFileSelected()" #iconeFileInput type="file" id="icon-file">
+                    </div>
+                </div>
+
+                <mat-form-field class="mt-4" color="accent">
+                    <mat-label>{{'input.description' | translate}}</mat-label>
+                    <textarea 
+                        matInput 
+                        [formControl]="description"
+                    ></textarea>
+                </mat-form-field>
+
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex mt-4">
+                        <mat-slide-toggle (change)="handleAnswerOptions()" class="mt-3">
+                            {{ showAnswerOptions ? ('card.validateAnswer' | translate) : ('card.showAnswer' | translate)}}
+                        </mat-slide-toggle>
+                        <mat-icon svgIcon='my-info' class="fade-icon ml-4 mt-3"  (click)="his.open('deck.info.answerOptions')"></mat-icon>
+                    </div>
+
+                    <div class="d-flex w-50 mt-4">
+                        <mat-form-field class=" w-100" color="accent">
+                            <mat-label>{{'input.deck.feedbackOption' | translate}}</mat-label>
+                            <mat-select [formControl]="feedbackOption">
+                                <mat-option *ngFor="let feedbackOption of feedbackOptions" [value]="feedbackOption.value">
+                                    {{feedbackOption.display}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-icon svgIcon='my-info' class="fade-icon ml-4 mt-3"  (click)="his.open('deck.info.feedbackOptions')"></mat-icon>
+                    </div>
+                </div>
+
+                <div *ngIf="showAnswerOptions" class="d-flex">
+                    <mat-form-field class="mt-4 w-100" color="accent">
+                        <mat-label>{{'input.card.answerOptions' | translate}}</mat-label>
+                        <mat-select [formControl]="selectedAnswerOptions" multiple>
+                            <mat-option *ngFor="let answerOption of answerOptions" [value]="answerOption.value">
+                                {{answerOption.display}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div [ngClass]="{'d-none' : displayAdvancedSettings == false}">
+                    
+                    <div class="d-flex justify-content-between">
+                        <div class="mt-4 w-100">
+                            <mat-form-field color="accent" class="w-100">
+                                <mat-label>{{'deck.intervalModifier' | translate }}</mat-label>
+                                <input 
+                                    matInput
+                                    type="number" 
+                                    [formControl]="intervalModifier">
+                                <mat-error *ngIf="deckForm.hasError('intervalModifier') && !deckForm.hasError('required')">
+                                    {{'error.deck.intervalModifier' | translate }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <mat-form-field color="accent" class="w-45">
+                                    <mat-label>{{'deck.hardIntervalModifier' | translate }}</mat-label>
+                                    <input 
+                                        matInput
+                                        type="number" 
+                                        [formControl]="hardIntervalModifier">
+                                    <mat-error *ngIf="deckForm.hasError('hardIntervalModifier') && !deckForm.hasError('required')">
+                                        {{'error.deck.hardIntervalModifier' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field color="accent" class="w-45">
+                                    <mat-label>{{'deck.defaultEaseModifier' | translate }}</mat-label>
+                                    <input 
+                                        matInput
+                                        type="number" 
+                                        [formControl]="defaultEaseModifier">
+                                    <mat-error *ngIf="deckForm.hasError('defaultEaseModifier') && !deckForm.hasError('required')">
+                                        {{'error.deck.defaultEaseModifier' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <mat-form-field color="accent" class="w-45">
+                                    <mat-label>{{'deck.easeBonus' | translate }}</mat-label>
+                                    <input 
+                                        matInput
+                                        type="number" 
+                                        [formControl]="easeBonus">
+                                    <mat-error *ngIf="deckForm.hasError('easeBonus') && !deckForm.hasError('required')">
+                                        {{'error.deck.easeBonus' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field color="accent" class="w-45">
+                                    <mat-label>{{'deck.easePenalty' | translate }}</mat-label>
+                                    <input 
+                                        matInput
+                                        type="number" 
+                                        [formControl]="easePenalty">
+                                    <mat-error *ngIf="deckForm.hasError('easePenalty') && !deckForm.hasError('required')">
+                                        {{'error.deck.easePenalty' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <mat-icon svgIcon='my-info' class="fade-icon mt-5 ml-4" (click)="his.open('deck.info.modifiers')"></mat-icon>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+
+                        <mat-form-field color="accent" class="w-20">
+                            <mat-label>{{'card.feedback.again' | translate }}</mat-label>
+                            <input 
+                                matInput
+                                type="number"
+                                [formControl]="again">
+                            <mat-error *ngIf="deckForm.hasError('again') && !deckForm.hasError('required')">
+                                {{'error.deck.again' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field color="accent" class="w-20">
+                            <mat-label>{{'card.feedback.hard' | translate }}</mat-label>
+                            <input 
+                                matInput
+                                type="number"
+                                [formControl]="again">
+                            <mat-error *ngIf="deckForm.hasError('hard') && !deckForm.hasError('required')">
+                                {{'error.deck.hard' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field color="accent" class="w-20">
+                            <mat-label>{{'card.feedback.good' | translate }}</mat-label>
+                            <input 
+                                matInput
+                                type="number" 
+                                [formControl]="good">
+                            <mat-error *ngIf="deckForm.hasError('good') && !deckForm.hasError('required')">
+                                {{'error.deck.good' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field color="accent" class="w-20">
+                            <mat-label>{{'card.feedback.easy' | translate }}</mat-label>
+                            <input 
+                                matInput
+                                type="number"
+                                [formControl]="easy">
+                            <mat-error *ngIf="deckForm.hasError('easy') && !deckForm.hasError('required')">
+                                {{'error.deck.easy' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-icon svgIcon='my-info' class="fade-icon mt-4" (click)="his.open('deck.info.feedbackDifficulty')"></mat-icon>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <div>
+                        <a mat-button (click)="openAdvancedSettings()">
+                            <span *ngIf="displayAdvancedSettings">{{'input.hide'}} &nbsp;</span>
+                            <span>{{'signpost.advancedSettings' | translate }} </span>
+                        </a>
+                        <mat-icon svgIcon='my-info' class="fade-icon mt-2" (click)="his.open('deck.info.advancedSettings')"></mat-icon>
+                    </div>
+
+                    <div class="w-25 mb-5 ml-auto">
+                        <main-button (click)="createDeck()" label="{{'input.create' | translate }}" [disabled]="deckForm.valid == false"></main-button>
+                    </div>
+                </div>
+                
+
+            </form>
+        </section>
+    </article>

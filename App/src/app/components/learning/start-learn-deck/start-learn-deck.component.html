@@ -1,0 +1,84 @@
+
+<article class="d-flex">
+
+    <section class="w-25 container-header-height pt-100 pl-100 pr-100 position-fixed">
+        <div class="w-100 h-100">
+            <app-robot [state]='robotState' [emote]='robotEmote' roboId="1"></app-robot>
+        </div>
+    </section>
+
+    <section class="my-main-container d-flex flex-column justify-content-between w-50 ml-auto mr-auto ">
+
+        <div class="mt-4 mb-4 text-center">
+            <div class="d-flex justify-content-between">
+                <h1>{{(deck | async)?.title}}</h1>
+                <div class="w-25">
+                    <main-button mat-button [matMenuTriggerFor]="menu" label="{{'input.actions' | translate }}"></main-button>
+                    <mat-menu #menu="matMenu">
+                        <a routerLink="/deck/{{deckId}}/cards" mat-menu-item>{{'signpost.browseCards' | translate}}</a>
+                        <a mat-menu-item>{{'deck.settings' | translate}}</a>
+                    </mat-menu>
+                </div>
+            </div>
+
+            <div class="w-50 mt-3 ml-auto mr-auto">
+                {{(deck | async)?.description}}
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around">
+
+            <mat-card class="text-center">
+                <p>{{'signpost.cards' | translate}}</p>
+                <mat-card-content>
+                    <div>
+                        <h1 class="display-3">{{(deck | async)?.dueTomorrow ?? 0}}</h1>
+                    </div>
+                </mat-card-content>
+                <mat-card-footer>
+                  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+                </mat-card-footer>
+            </mat-card>
+
+            <mat-card class="text-center">
+                <p>{{'cards.due' | translate}}</p>
+                <mat-card-content>
+                    <div>
+                        <h1 class="display-3">{{(deck | async)?.dueTomorrow ?? 0}}</h1>
+                    </div>
+                </mat-card-content>
+                <mat-card-footer>
+                  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+                </mat-card-footer>
+            </mat-card>
+
+            <mat-card class="text-center">
+                <p>{{'cards.dueTomorrow' | translate}}</p>
+                <mat-card-content>
+                    <div>
+                        <h1 class="display-3">{{(deck | async)?.dueTomorrow ?? 0}}</h1>
+                    </div>
+                </mat-card-content>
+                <mat-card-footer>
+                  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+                </mat-card-footer>
+            </mat-card>
+        </div>
+        
+        <div class="d-flex justify-content-center">
+            <gauge-chart [data]="gaugeData"></gauge-chart>        
+        </div>
+
+        <div class="w-25 mb-5 ml-auto mr-auto">
+            <main-button (click)="startLearningCards()" label="{{'deck.start' | translate }}" 
+                [disabled]="learningAvailable == false">
+            </main-button>
+        </div>
+    </section>
+
+    <section class="w-25 container-header-height pt-100 pl-100 pr-100 position-fixed" style="right: 0px;">
+        <div class="w-100 h-100">
+            <app-robot [state]='robotState' [emote]='robotEmote' roboId="2" horizontalOrientation="-1.4"></app-robot>
+        </div>
+    </section>
+</article>
