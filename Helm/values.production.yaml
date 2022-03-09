@@ -42,7 +42,7 @@ deployment:
       requestMemory: 50Mi
       requestCPU: 50m
       limitMemory: 500Mi
-      limitCPU: 500m
+      limitCPU: 250m
     api:
       requestMemory: 50Mi
       requestCPU: 50m
