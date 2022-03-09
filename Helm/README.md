@@ -1,3 +1,3 @@
 # Kubernetes Helm Charts
 
-depends on a cloud managed MySQL database cluster
+For scalability these charts depend on a cloud managed MySQL database cluster
