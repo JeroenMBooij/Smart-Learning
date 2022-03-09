@@ -53,6 +53,8 @@ spec:
             secretKeyRef:
               name: teacher-didac-secret
               key: email.appkey
+
+              
 ---
 apiVersion: v1
 kind: Service

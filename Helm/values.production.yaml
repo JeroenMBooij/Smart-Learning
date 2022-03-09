@@ -3,10 +3,11 @@ deployment:
   database:
     main:
       host: teacherdidac.db
+      user: ${MAIN_DATABASE_USER}
       password: ${MAIN_DATABASE_PASSWORD}
       storageCapacity: 10Gi
   hangfire: 
-    user:
+    user: ${HANGFIRE_USER}
     password: ${HANGFIRE_PASSWORD}
   jwt:
     key: ${JWT_KEY}
