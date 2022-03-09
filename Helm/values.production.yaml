@@ -19,6 +19,9 @@ deployment:
   api:
     url: http://teacherdidac.api
   ports:
+    app:
+      containerPort: 4000
+      nodePort: 34000
     api:
       containerPort: 7000
       nodePort: 37000
