@@ -21,6 +21,13 @@ spec:
         image: booij/teacherdidac.scheduler
         ports:
         - containerPort: {{.Values.deployment.ports.scheduler.containerPort}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.scheduler.requestMemory}}
+            cpu: {{.Values.deployment.resources.scheduler.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.scheduler.limitMemory}}
+            cpu: {{.Values.deployment.resources.scheduler.limitCPU}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}

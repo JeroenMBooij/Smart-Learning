@@ -21,6 +21,13 @@ spec:
         image: booij/teacherdidac.api
         ports:
         - containerPort: {{.Values.deployment.ports.api.containerPort}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.api.requestMemory}}
+            cpu: {{.Values.deployment.resources.api.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.api.limitMemory}}
+            cpu: {{.Values.deployment.resources.api.limitCPU}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}

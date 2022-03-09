@@ -22,6 +22,13 @@ spec:
           image: mysql
           ports:
           - containerPort: {{.Values.deployment.ports.mainDb.containerPort}}
+          resources:
+            requests:
+              memory: {{.Values.deployment.resources.mainDb.requestMemory}}
+              cpu: {{.Values.deployment.resources.mainDb.requestCPU}}
+            limits:
+              memory: {{.Values.deployment.resources.mainDb.limitMemory}}
+              cpu: {{.Values.deployment.resources.mainDb.limitCPU}}
           env:
           - name: ASPNETCORE_ENVIRONMENT
             valueFrom: 

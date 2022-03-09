@@ -21,6 +21,13 @@ spec:
         image: booij/authentication.server
         ports:
         - containerPort: {{.Values.deployment.ports.auth.containerPort}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.auth.requestMemory}}
+            cpu: {{.Values.deployment.resources.auth.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.auth.limitMemory}}
+            cpu: {{.Values.deployment.resources.auth.limitCPU}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}

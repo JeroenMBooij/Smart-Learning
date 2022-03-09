@@ -37,6 +37,37 @@ deployment:
     mainDB:
       containerPort: 3003
       nodePort: 33003
+  resources:
+    app:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 500Mi
+      limitCPU: 500m
+    api:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 400Mi
+      limitCPU: 200m
+    auth:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 200Mi
+      limitCPU: 100m
+    email:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 100Mi
+      limitCPU: 50m
+    scheduler:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 400Mi
+      limitCPU: 200m
+    mainDB:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 400Mi
+      limitCPU: 200m
 
 
 

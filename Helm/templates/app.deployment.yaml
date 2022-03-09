@@ -21,6 +21,13 @@ spec:
         image: booij/teacherdidac.app
         ports:
         - containerPort: {{.Values.deployment.ports.app.containerPort}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.app.requestMemory}}
+            cpu: {{.Values.deployment.resources.app.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.app.limitMemory}}
+            cpu: {{.Values.deployment.resources.app.limitCPU}}
         env:
         - name: API_SERVER_URL
           valueFrom: 

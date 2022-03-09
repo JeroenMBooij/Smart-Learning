@@ -21,6 +21,13 @@ spec:
         image: booij/email.service
         ports:
         - containerPort: {{.Values.deployment.ports.email.containerPort}}
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.email.requestMemory}}
+            cpu: {{.Values.deployment.resources.email.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.email.limitMemory}}
+            cpu: {{.Values.deployment.resources.email.limitCPU}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}
