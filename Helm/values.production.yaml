@@ -16,6 +16,8 @@ deployment:
     appkey: ${EMAIL_APPKEY}
   auth:
     url: http://teacherdidac.authentication
+  api:
+    url: http://teacherdidac.api
   ports:
     api:
       containerPort: 7000

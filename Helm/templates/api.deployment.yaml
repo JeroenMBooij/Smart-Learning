@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: teacher-didac-api
+  name: teacher-didac-api-deployment
   labels:
-    app: teacher-didac-api
+    app: teacher-didac-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: teacher-didac-api-app
+      app: teacher-didac-api-deployment
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
-        app: teacher-didac-api-app
+        app: teacher-didac-api-deployment
     spec:
       containers:
-      - name: teacher-didac-api-app
-        image: booij/teacherdidac.web
+      - name: teacher-didac-api-deployment
+        image: booij/teacherdidac.api
         ports:
         - containerPort: {{.Values.deployment.ports.api.containerPort}}
         env:
@@ -30,15 +30,15 @@ spec:
               name: teacher-didac-configmap
               key: auth.url
 
-              
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: teacher-didac-scheduler-service
+  name: teacher-didac-api-service
 spec:
   selector:
-    app: teacher-didac-scheduler-app
+    app: teacher-didac-api-deployment
   type: LoadBalancer  
   ports:
     - protocol: TCP

@@ -8,16 +8,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: teacher-didac-email-app
+      app: teacher-didac-email-deployment
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
-        app: teacher-didac-email-app
+        app: teacher-didac-email-deployment
     spec:
       containers:
-      - name: teacher-didac-email-app
+      - name: teacher-didac-email-deployment
         image: booij/email.service
         ports:
         - containerPort: {{.Values.deployment.ports.email.containerPort}}
@@ -31,7 +31,7 @@ metadata:
   name: teacher-didac-email-service
 spec:
   selector:
-    app: teacher-didac-email-app
+    app: teacher-didac-email-deployment
   type: LoadBalancer  
   ports:
     - protocol: TCP

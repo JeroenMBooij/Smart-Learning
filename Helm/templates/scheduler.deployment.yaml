@@ -8,16 +8,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: teacher-didac-scheduler-app
+      app: teacher-didac-scheduler-deployment
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
-        app: teacher-didac-scheduler-app
+        app: teacher-didac-scheduler-deployment
     spec:
       containers:
-      - name: teacher-didac-scheduler-app
+      - name: teacher-didac-scheduler-deployment
         image: booij/teacherdidac.scheduler
         ports:
         - containerPort: {{.Values.deployment.ports.scheduler.containerPort}}
@@ -54,7 +54,7 @@ metadata:
   name: teacher-didac-scheduler-service
 spec:
   selector:
-    app: teacher-didac-scheduler-app
+    app: teacher-didac-scheduler-deployment
   type: LoadBalancer  
   ports:
     - protocol: TCP
