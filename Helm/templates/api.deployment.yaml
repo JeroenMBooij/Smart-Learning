@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacher-didac-api
+  labels:
+    app: teacher-didac-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teacher-didac-api-app
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: teacher-didac-api-app
+    spec:
+      containers:
+      - name: teacher-didac-api-app
+        image: booij/teacherdidac.web
+        ports:
+        - containerPort: 7000
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{.Values.deployment.environment}}
+        - name: AUTH_SERVER_URL
+          value: http://teacherdidac.authentication
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-scheduler-service
+spec:
+  selector:
+    app: teacher-didac-scheduler-app
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 7000
+      targetPort: 7000
+      nodePort: 37000
+

@@ -63,6 +63,8 @@ Thumbs.db
 *.userosscache
 *.sln.docstates
 docker-compose.vs.debug.yml
+firebase-admin-secret.json
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

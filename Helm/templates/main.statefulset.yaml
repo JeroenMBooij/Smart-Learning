@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: teacher-didac-main-db
+spec:
+  serviceName: teacher-didac-main-db-service
+  selector:
+    matchLabels:
+      app: teacher-didac-main-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: teacher-didac-main-db
+    spec:
+      containers:
+        - name: teacher-didac-main-db
+          image: mysql
+          ports:
+          - containerPort: 3003
+          env:
+          - name: ASPNETCORE_ENVIRONMENT
+            valueFrom: 
+              secretKeyRef:
+                name: teacher-didac-secret
+                key: database.main.password
+          volumeMounts:
+          - name: data
+            mountPath: /var/lib/mysql
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: main-claim
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-main-db-service
+spec:
+  selector:
+    app: teacher-didac-main-db
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
+      nodePort: 33003
+
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: main-claim
+spec:
+  storageClassName: hostpath
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi

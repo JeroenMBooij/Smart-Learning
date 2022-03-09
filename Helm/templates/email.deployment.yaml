@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacher-didac-email
+  labels:
+    app: teacher-didac-email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teacher-didac-email-app
+  template:
+    metadata:
+      labels:
+        app: teacher-didac-email-app
+    spec:
+      containers:
+      - name: teacher-didac-email-app
+        image: booij/email.service
+        ports:
+        - containerPort: 2000
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: PRODUCTION
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-email-service
+spec:
+  selector:
+    app: teacher-didac-email-app
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 2000
+      targetPort: 2000
+      nodePort: 32000
+

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacher-didac-email
+  labels:
+    app: teacher-didac-email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teacher-didac-scheduler-app
+  template:
+    metadata:
+      labels:
+        app: teacher-didac-scheduler-app
+    spec:
+      containers:
+      - name: teacher-didac-scheduler-app
+        image: booij/teacherdidac.scheduler
+        ports:
+        - containerPort: 7001
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{.Values.deployment.environment}}
+        - name: DB_HOST
+          valueFrom: 
+            configMapKeyRef:
+              name: teacher-didac-configmap
+              key: database.main.host
+        - name: DB_NAME
+          value: {{.Values.deployment.database.main.name}}
+        - name: DB_USER
+          value: {{.Values.deployment.database.main.user}}
+        - name: DB_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: database.main.password
+        - name: HANGFIRE_USER
+          value: {{.Values.deployment.hangfire.user}}
+        - name: HANGFIRE_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: hangfire.password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-scheduler-service
+spec:
+  selector:
+    app: teacher-didac-scheduler-app
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 7001
+      targetPort: 7001
+      nodePort: 37001
+

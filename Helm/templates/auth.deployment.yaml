@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacher-didac-auth
+  labels:
+    app: teacher-didac-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teacher-didac-auth-app
+  template:
+    metadata:
+      labels:
+        app: teacher-didac-auth-app
+    spec:
+      containers:
+      - name: teacher-didac-auth-app
+        image: booij/authentication.server
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: PRODUCTION
+        - name: DB_HOST
+          valueFrom: 
+            configMapKeyRef:
+              name: teacher-didac-configmap
+              key: database_url
+        - name: DB_NAME
+          value: {{.Values.deployment.database.main.name}}
+        - name: DB_USER
+          value: {{.Values.deployment.database.main.user}}
+        - name: DB_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: database.main.password
+        - name: JWT_SECRETTKEY
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: jwt.key
+        - name: JWT_ISSUER
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: jwt.issuer
+        - name: EMAIL_APPKEY
+          valueFrom: 
+            secretKeyRef:
+              name: teacher-didac-secret
+              key: email.appkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-email-service
+spec:
+  selector:
+    app: teacher-didac-email-app
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 33000
+
