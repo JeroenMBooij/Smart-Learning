@@ -20,7 +20,7 @@ spec:
       - name: teacher-didac-auth-app
         image: booij/authentication.server
         ports:
-        - containerPort: 3000
+        - containerPort: {{.Values.deployment.ports.auth.containerPort}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: PRODUCTION
@@ -64,7 +64,7 @@ spec:
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
-      nodePort: 33000
+      port: {{.Values.deployment.ports.auth.containerPort}}
+      targetPort: {{.Values.deployment.ports.auth.containerPort}}
+      nodePort: {{.Values.deployment.ports.auth.nodePort}}
 

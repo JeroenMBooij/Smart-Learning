@@ -4,6 +4,7 @@ deployment:
     main:
       host: teacherdidac.db
       password: ${MAIN_DATABASE_PASSWORD}
+      storageCapacity: 10Gi
   hangfire: 
     user:
     password: ${HANGFIRE_PASSWORD}
@@ -14,6 +15,22 @@ deployment:
     appkey: ${EMAIL_APPKEY}
   auth:
     url: http://teacherdidac.authentication
+  ports:
+    api:
+      containerPort: 7000
+      nodePort: 37000
+    auth:
+      containerPort: 3000
+      nodePort: 33000
+    email:
+      containerPort: 2000
+      nodePort: 32000
+    scheduler:
+      containerPort: 7001
+      nodePort: 37001
+    mainDB:
+      containerPort: 3003
+      nodePort: 33003
 
 
 

@@ -21,7 +21,7 @@ spec:
         - name: teacher-didac-main-db
           image: mysql
           ports:
-          - containerPort: 3003
+          - containerPort: {{.Values.deployment.ports.mainDb.containerPort}}
           env:
           - name: ASPNETCORE_ENVIRONMENT
             valueFrom: 
@@ -47,9 +47,9 @@ spec:
     app: teacher-didac-main-db
   ports:
     - protocol: TCP
-      port: 3003
-      targetPort: 3003
-      nodePort: 33003
+      port: {{.Values.deployment.ports.mainDb.containerPort}}
+      targetPort: {{.Values.deployment.ports.mainDb.containerPort}}
+      nodePort: {{.Values.deployment.ports.mainDb.nodePort}}
 
 
 ---
@@ -63,4 +63,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: {{.Values.deployment.database.main.storageCapacity}}

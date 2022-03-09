@@ -6,3 +6,5 @@ data:
   database: 
     main: 
       host: {{.Values.deployment.database.main.host}}
+  auth:
+    url: {{.Values.deployment.auth.url}}

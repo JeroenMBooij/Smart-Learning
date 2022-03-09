@@ -20,12 +20,17 @@ spec:
       - name: teacher-didac-api-app
         image: booij/teacherdidac.web
         ports:
-        - containerPort: 7000
+        - containerPort: {{.Values.deployment.ports.api.containerPort}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}
         - name: AUTH_SERVER_URL
-          value: {{.Values.deployment.auth.url}}
+          valueFrom: 
+            configMapKeyRef:
+              name: teacher-didac-configmap
+              key: auth.url
+
+              
 ---
 apiVersion: v1
 kind: Service
@@ -37,7 +42,7 @@ spec:
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      port: 7000
-      targetPort: 7000
-      nodePort: 37000
+      port: {{.Values.deployment.ports.api.containerPort}}
+      targetPort: {{.Values.deployment.ports.api.containerPort}}
+      nodePort: {{.Values.deployment.ports.api.nodePort}}
 

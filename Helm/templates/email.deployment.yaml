@@ -20,7 +20,7 @@ spec:
       - name: teacher-didac-email-app
         image: booij/email.service
         ports:
-        - containerPort: 2000
+        - containerPort: {{.Values.deployment.ports.email.containerPort}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: PRODUCTION
@@ -35,7 +35,7 @@ spec:
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      port: 2000
-      targetPort: 2000
-      nodePort: 32000
+      port: {{.Values.deployment.ports.email.containerPort}}
+      targetPort: {{.Values.deployment.ports.email.containerPort}}
+      nodePort: {{.Values.deployment.ports.email.nodePort}}
 
