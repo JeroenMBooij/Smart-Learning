@@ -23,7 +23,7 @@ spec:
         - containerPort: {{.Values.deployment.ports.auth.containerPort}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: PRODUCTION
+          value: {{.Values.deployment.environment}}
         - name: DB_HOST
           valueFrom: 
             configMapKeyRef:

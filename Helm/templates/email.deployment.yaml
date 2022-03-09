@@ -23,7 +23,7 @@ spec:
         - containerPort: {{.Values.deployment.ports.email.containerPort}}
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: PRODUCTION
+          value: {{.Values.deployment.environment}}
 ---
 apiVersion: v1
 kind: Service
