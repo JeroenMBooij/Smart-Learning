@@ -25,7 +25,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}
         - name: AUTH_SERVER_URL
-          value: http://teacherdidac.authentication
+          value: {{.Values.deployment.auth.url}}
 ---
 apiVersion: v1
 kind: Service

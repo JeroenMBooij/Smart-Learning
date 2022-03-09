@@ -11,6 +11,8 @@ spec:
       app: teacher-didac-email-app
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: teacher-didac-email-app
     spec:

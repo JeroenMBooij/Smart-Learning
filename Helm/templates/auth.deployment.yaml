@@ -11,6 +11,8 @@ spec:
       app: teacher-didac-auth-app
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: teacher-didac-auth-app
     spec:
@@ -26,9 +28,9 @@ spec:
           valueFrom: 
             configMapKeyRef:
               name: teacher-didac-configmap
-              key: database_url
+              key: database.main.host
         - name: DB_NAME
-          value: {{.Values.deployment.database.main.name}}
+          value: IdentityDb
         - name: DB_USER
           value: {{.Values.deployment.database.main.user}}
         - name: DB_PASSWORD

@@ -1,7 +1,9 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: teacher-didac-main-db
+  name: teacher-didac-main-db-deployment
+  labels:
+    app: mongodb
 spec:
   serviceName: teacher-didac-main-db-service
   selector:
@@ -10,6 +12,8 @@ spec:
   replicas: 1
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: teacher-didac-main-db
     spec:
@@ -30,7 +34,7 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: main-claim
+          claimName: main-db-claim
 
 
 ---
@@ -52,11 +56,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: main-claim
+  name: main-db-claim
 spec:
   storageClassName: hostpath
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 10Gi

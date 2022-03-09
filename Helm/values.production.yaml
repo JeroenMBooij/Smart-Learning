@@ -1,4 +1,19 @@
 deployment:
+  environment: PRODUCTION
   database:
     main:
-      host:
+      host: teacherdidac.db
+      password: ${MAIN_DATABASE_PASSWORD}
+  hangfire: 
+    user:
+    password: ${HANGFIRE_PASSWORD}
+  jwt:
+    key: ${JWT_KEY}
+    issuer: ${JWT_ISSUER}
+  email:
+    appkey: ${EMAIL_APPKEY}
+  auth:
+    url: http://teacherdidac.authentication
+
+
+

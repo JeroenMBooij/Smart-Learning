@@ -11,6 +11,8 @@ spec:
       app: teacher-didac-scheduler-app
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: teacher-didac-scheduler-app
     spec:
@@ -28,7 +30,7 @@ spec:
               name: teacher-didac-configmap
               key: database.main.host
         - name: DB_NAME
-          value: {{.Values.deployment.database.main.name}}
+          value: ScheduleDb
         - name: DB_USER
           value: {{.Values.deployment.database.main.user}}
         - name: DB_PASSWORD
