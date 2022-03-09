@@ -62,8 +62,8 @@ namespace TeacherDidac.Scheduler
                         {
                             new BasicAuthAuthorizationUser
                             {
-                                Login = Configuration["HangfireUser"],
-                                PasswordClear =  Configuration["HangfirePassword"]
+                                Login = Configuration["HANGFIRE_USER"],
+                                PasswordClear =  Configuration["HANGFIRE_PASSWORD"]
                             }
                         }
 

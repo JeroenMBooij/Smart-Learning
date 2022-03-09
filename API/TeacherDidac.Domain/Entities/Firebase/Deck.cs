@@ -1,6 +1,7 @@
 ﻿using Google.Cloud.Firestore;
 using System.Collections.Generic;
 using TeacherDidac.Common.Constants;
+using TeacherDidac.Domain.Entities.Firebase.security;
 
 namespace TeacherDidac.Domain.Entities.Firebase
 {

@@ -1,17 +1,7 @@
-version: '3.4'
+version: '3.8'
 
 services:
 
-  teacherdidac.scheduler:
-    image: ${DOCKER_REGISTRY-}teacherdidacscheduler
-    build:
-      context: .
-      dockerfile: TeacherDidac.Scheduler/Dockerfile
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
-  
-  scheduledb:
-    image: mysql
     
   teacherdidac.web:
     image: ${DOCKER_REGISTRY-}teacherdidacweb
@@ -20,6 +10,28 @@ services:
       dockerfile: TeacherDidac.Web/Dockerfile
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
+
+      
+  teacherdidac.scheduler:
+    image: ${DOCKER_REGISTRY-}teacherdidacscheduler
+    build:
+      context: .
+      dockerfile: TeacherDidac.Scheduler/Dockerfile
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
+
+  #teacherdidac.ai:
+    #image: ${DOCKER_REGISTRY-}artificial-intelligence.server  
+  
+  teacherdidac.authentication:
+    image: booij/authentication.server  
+
+  teacherdidac.db:
+    image: mysql
+
+  teacherdidac.email:
+    image: booij/email.server
+    
  
 
 networks:
