@@ -21,16 +21,16 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
 
   #teacherdidac.ai:
-    #image: ${DOCKER_REGISTRY-}artificial-intelligence.server  
+    #image: booij/transcribing-nn.service 
   
   teacherdidac.authentication:
-    image: booij/authentication.server  
+    image: booij/authentication.service 
 
   teacherdidac.db:
     image: mysql
 
   teacherdidac.email:
-    image: booij/email.server
+    image: booij/email.service
     
  
 

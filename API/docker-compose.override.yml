@@ -6,9 +6,7 @@ services:
     depends_on:
       - teacherdidac.authentication
     ports:
-      - "7000:80"
-    networks:
-      - proxynet
+      - "7002:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       AUTH_SERVER_URL: ${AUTH_SERVER_URL}
@@ -37,8 +35,6 @@ services:
       - "3000:80"   
     volumes:
       - /home/server/files:/app/UploadedFiles
-    networks:
-      - proxynet
     depends_on: 
       - teacherdidac.db
       - teacherdidac.email
@@ -58,8 +54,6 @@ services:
     restart: always
     ports:
       - "3003:3306"
-    networks:
-      - proxynet
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
 
@@ -67,7 +61,5 @@ services:
     container_name: teacherdidac.email
     ports:
       - "2000:80"
-    networks:
-      - my-proxy-net
     environment:
       ASPNETCORE_ENVIRONMENT: STAGING

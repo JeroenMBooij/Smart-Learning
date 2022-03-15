@@ -8,8 +8,9 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["TeacherDidac.Web/TeacherDidac.Web.csproj", "TeacherDidac.Web/"]
 COPY ["TeacherDidac.Persistance/TeacherDidac.Persistance.csproj", "TeacherDidac.Persistance/"]
+COPY ["TeacherDidac.Application/TeacherDidac.Application.csproj", "TeacherDidac.Application/"]
 COPY ["TeacherDidac.Common/TeacherDidac.Common.csproj", "TeacherDidac.Common/"]
-COPY ["TeacherDidac.Services/TeacherDidac.Services.csproj", "TeacherDidac.Services/"]
+COPY ["TeacherDidac.Domain/TeacherDidac.Domain.csproj", "TeacherDidac.Domain/"]
 RUN dotnet restore "TeacherDidac.Web/TeacherDidac.Web.csproj"
 COPY . .
 WORKDIR "/src/TeacherDidac.Web"
