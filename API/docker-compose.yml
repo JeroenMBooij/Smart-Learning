@@ -20,7 +20,7 @@ services:
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
 
-  #teacherdidac.ai:
+  #teacherdidac.transcribing-nn:
     #image: booij/transcribing-nn.service 
   
   teacherdidac.authentication:
@@ -31,11 +31,9 @@ services:
 
   teacherdidac.email:
     image: booij/email.service
-    
- 
 
-networks:
-  proxynet:
-    name: custom_network
+
+    
+
 
 

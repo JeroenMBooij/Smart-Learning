@@ -89,7 +89,7 @@ namespace TeacherDidac.Scheduler
             var dbUser = configuration["DB_USER"];
             var dbPassword = configuration["DB_PASSWORD"];
 
-            return $"server={dbHost}; database={dbName}; user={dbUser}; password={dbPassword}";
+            return $"Server={dbHost}; Database={dbName}; Uid={dbUser}; Pwd={dbPassword}";
         }
     }
 }
