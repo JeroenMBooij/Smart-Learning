@@ -44,7 +44,7 @@ jobs:
         name: Build and push Didac App
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./App
           file: App/nginx.stage.Dockerfile
           push: true
           tags: booij/teacher-didac.scheduler:latest
