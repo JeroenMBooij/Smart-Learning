@@ -28,16 +28,16 @@ jobs:
         name: Build and push Didac Api
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: API/TeacherDidac.Web/Dockerfile
+          context: ./API
+          file: TeacherDidac.Web/Dockerfile
           push: true
           tags: booij/teacher-didac.api:latest
       -
         name: Build and push Didac Scheduler
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: API/TeacherDidac.Scheduler/Dockerfile
+          context: ./API
+          file: TeacherDidac.Scheduler/Dockerfile
           push: true
           tags: booij/teacher-didac.scheduler:latest
       -
@@ -45,6 +45,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: App/Dockerfile
+          file: App/nginx.stage.Dockerfile
           push: true
           tags: booij/teacher-didac.scheduler:latest
