@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./API
-          file: TeacherDidac.Web/Dockerfile
+          file: API/TeacherDidac.Web/Dockerfile
           push: true
           tags: booij/teacher-didac.api:latest
       -
@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./API
-          file: TeacherDidac.Scheduler/Dockerfile
+          file: API/TeacherDidac.Scheduler/Dockerfile
           push: true
           tags: booij/teacher-didac.scheduler:latest
       -
