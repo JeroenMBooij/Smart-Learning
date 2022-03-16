@@ -21,8 +21,10 @@ This application supports deployment with Docker Compose or Kubernetes. For Kube
 * prerequisite - docker installed <br/><br/>
   
 <b>steps</b>
-  <p> 1. Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</p>
-  <p> 2. run docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d</p>
+<ol>
+  <li> 1. Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</li>
+  <li> 2. run docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d</li>
+ </ol>
 </br>
 
 This repository also builds a docker image for the Angular app, but is only used in Kubernetes. For local development in Angular please use ng serve. </br>
