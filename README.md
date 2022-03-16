@@ -14,7 +14,7 @@ The application consists of an Angular frontend, which you can find in the App f
 </ul>
 
 
-<h1>Usage</h1>
+<h1>Deployment</h1>
 This application supports deployment with Docker Compose or Kubernetes. For Kubernetes please see the <a href="https://github.com/JeroenMBooij/Smart-Learning/tree/main/Helm">Helm Charts</a> in this repository </br></br>
 
 <h3>Docker Compose</h3>
