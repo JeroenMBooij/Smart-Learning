@@ -22,8 +22,8 @@ This application supports deployment with Docker Compose or Kubernetes. For Kube
   
 <b>steps</b>
 <ol>
-  <li> 1. Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</li>
-  <li> 2. run docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d</li>
+  <li>Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</li>
+  <li>Run "docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d"</li>
  </ol>
 </br>
 
