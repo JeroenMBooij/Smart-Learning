@@ -14,7 +14,7 @@ export const environment = {
     measurementId: "G-F0NXY27WJ5"
   },
   authenticationClient: {
-      baseUrl: "https://localhost:44389"
+      baseUrl: "https://localhost:3000"
   }
 };
 

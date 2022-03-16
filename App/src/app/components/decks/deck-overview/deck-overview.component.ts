@@ -85,12 +85,15 @@ export class DeckOverviewComponent implements OnInit,  AfterViewInit {
         { 
             value: { scope: TITLE_SCOPE, query: '' }
         });
-        this.scopeOptions = [
-            new SelectionInput(this.translationService.get('deck.title'), TITLE_SCOPE),
-            new SelectionInput(this.translationService.get('deck.category'), CATEGORY_SCOPE),
-            new SelectionInput(this.translationService.get('deck.frontCard'), FRONTCARD_SCOPE),
-            new SelectionInput(this.translationService.get('deck.backCard'), BACKCARD_SCOPE)
-        ];
+        this.translationService.update.subscribe(update => 
+        {
+            this.scopeOptions = [
+                new SelectionInput(this.translationService.get('deck.title'), TITLE_SCOPE),
+                new SelectionInput(this.translationService.get('deck.category'), CATEGORY_SCOPE),
+                new SelectionInput(this.translationService.get('deck.frontCard'), FRONTCARD_SCOPE),
+                new SelectionInput(this.translationService.get('deck.backCard'), BACKCARD_SCOPE)
+            ];
+        });
         this.searchForm.valueChanges.subscribe((value: FormFieldValue) => 
         { 
             if(environment.production == false)

@@ -1,6 +1,6 @@
 {
 	"Navigation": {
-		"Decks": ""
+		"Decks": "几纸牌"
 	},
 	"authentication": {
 		"currentPassword": "当前密码",
@@ -21,30 +21,30 @@
 		"validPassword": "密码必须至少有六个字符"
 	},
 	"card": {
-		"dueTomorrow": "",
+		"dueTomorrow": "过期明天",
 		"feedback": {
-			"again": "",
-			"easy": "",
-			"good": "",
-			"hard": ""
+			"again": "屡次",
+			"easy": "简单",
+			"good": "好的",
+			"hard": "难的"
 		},
-		"name": "",
-		"showAnswer": "",
-		"validateAnswer": ""
+		"name": "名字",
+		"showAnswer": "显示答",
+		"validateAnswer": "证实答"
 	},
 	"cards": {
-		"due": "",
-		"dueTomorrow": ""
+		"due": "过期",
+		"dueTomorrow": "过期明天"
 	},
 	"deck": {
-		"defaultEaseModifier": "",
-		"easeBonus": "",
-		"easePenalty": "",
-		"hardIntervalModifier": "",
-		"intervalModifier": "",
-		"review": "",
-		"settings": "",
-		"start": ""
+		"defaultEaseModifier": "默认舒适修饰符",
+		"easeBonus": "舒适奖金",
+		"easePenalty": "舒适惩罚",
+		"hardIntervalModifier": "难的间隔修饰符",
+		"intervalModifier": "间隔修饰符",
+		"review": "审查",
+		"settings": "设置",
+		"start": "开始"
 	},
 	"dropdown": {
 		"more": "更多信息",
@@ -52,55 +52,38 @@
 		"search": "搜索",
 		"select": "选择"
 	},
-	"error": {
-		"card": {
-			"name": ""
-		},
-		"deck": {
-			"again": "",
-			"defaultEaseModifier": "",
-			"easeBonus": "",
-			"easePenalty": "",
-			"easy": "",
-			"good": "",
-			"hard": "",
-			"hardIntervalModifier": "",
-			"intervalModifier": "",
-			"title": ""
-		}
-	},
 	"header": {
 		"cardSettings": "卡片设置",
-		"decks": "甲板",
+		"decks": "几甲板",
 		"review": "审查",
-		"teams": ""
+		"teams": "队们"
 	},
 	"input": {
-		"UndoChanges": "",
+		"UndoChanges": "取消更改",
 		"accountDeleted": "帐户删除",
-		"actions": "",
+		"actions": "行动",
 		"cancel": "取消",
 		"card": {
-			"answerOptions": ""
+			"answerOptions": "答选项们"
 		},
 		"confirm": "确认",
-		"create": "",
+		"create": "创建",
 		"dark-theme": "黑色的主题",
 		"deck": {
-			"category": "",
-			"feedbackOption": ""
+			"category": "类别",
+			"feedbackOption": "回馈选项"
 		},
 		"delete": "删除",
 		"deleteNotDelete": "您要不要删除 {email}",
-		"description": "",
-		"file": "",
+		"description": "描述",
+		"file": "文件",
 		"light-theme": "白色的主题",
-		"name": "",
+		"name": "名字",
 		"required": "必需",
 		"reset": "重启",
-		"search": "",
-		"showAnswer": "",
-		"title": "",
+		"search": "搜索",
+		"showAnswer": "显示答",
+		"title": "纸牌名",
 		"update": "更新"
 	},
 	"language": {
@@ -110,31 +93,31 @@
 		"title": "迪达克老师"
 	},
 	"signpost": {
-		"advancedSettings": "",
-		"all": "",
-		"back": "",
-		"backEditor": "",
-		"browseCards": "",
-		"cardPreview": "",
-		"cards": "",
-		"cssEditor": "",
-		"deck": "",
-		"edit": "",
-		"front": "",
-		"frontEditor": "",
-		"groups": "",
-		"javascriptEditor": "",
-		"joinLearning": "",
-		"newCard": "",
-		"noCards": "",
-		"noDecks": "",
-		"or": "",
+		"advancedSettings": "高级设置",
+		"all": "都",
+		"back": "后",
+		"backEditor": "后编辑器",
+		"browseCards": "浏览几牌",
+		"cardPreview": "牌预习",
+		"cards": "几牌",
+		"cssEditor": "CSS编辑器",
+		"deck": "纸牌",
+		"edit": "主编",
+		"front": "前",
+		"frontEditor": "前编辑器",
+		"groups": "团体们",
+		"javascriptEditor": "Javascript编辑器",
+		"joinLearning": "入伍在学习",
+		"newCard": "新牌",
+		"noCards": "没有找到牌",
+		"noDecks": "没有找到纸牌",
+		"or": "或",
 		"returnToLogin": "返回登录",
-		"settings": "",
+		"settings": "设置",
 		"signup": "在这里注册",
-		"team": "",
-		"teams": "",
-		"upload": "",
+		"team": "队",
+		"teams": "队们",
+		"upload": "上传",
 		"welcome": "欢迎在应用中"
 	}
 }

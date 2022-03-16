@@ -1,6 +1,6 @@
 {
 	"Navigation": {
-		"Decks": ""
+		"Decks": "Decks"
 	},
 	"authentication": {
 		"currentPassword": "Current password",
@@ -21,53 +21,37 @@
 		"validPassword": "Password should be at least 6 characters"
 	},
 	"card": {
-		"dueTomorrow": "",
+		"dueTomorrow": "Due Tomorrow",
 		"feedback": {
-			"again": "",
-			"easy": "",
-			"good": "",
-			"hard": ""
+			"again": "again",
+			"easy": "easy",
+			"good": "good",
+			"hard": "hard"
 		},
-		"name": "",
-		"showAnswer": "",
-		"validateAnswer": ""
+		"name": "Name",
+		"showAnswer": "Show Answer",
+		"validateAnswer": "Validate Answer"
 	},
 	"cards": {
-		"due": "",
-		"dueTomorrow": ""
+		"due": "Due",
+		"dueTomorrow": "Due Tomorrow"
 	},
 	"deck": {
-		"defaultEaseModifier": "",
-		"easeBonus": "",
-		"easePenalty": "",
-		"hardIntervalModifier": "",
-		"intervalModifier": "",
-		"review": "",
-		"settings": "",
-		"start": ""
+		"defaultEaseModifier": "Default Ease Modifier",
+		"easeBonus": "Ease Bonus",
+		"easePenalty": "Ease Penalty",
+		"hardIntervalModifier": "Hard Interval Modifier",
+		"intervalModifier": "Interval Modifier",
+		"review": "Review",
+		"settings": "Settings",
+		"start": "Start",
+        "title": "Title"
 	},
 	"dropdown": {
 		"more": "more",
 		"noResults": "No results",
 		"search": "Search",
 		"select": "Select"
-	},
-	"error": {
-		"card": {
-			"name": ""
-		},
-		"deck": {
-			"again": "",
-			"defaultEaseModifier": "",
-			"easeBonus": "",
-			"easePenalty": "",
-			"easy": "",
-			"good": "",
-			"hard": "",
-			"hardIntervalModifier": "",
-			"intervalModifier": "",
-			"title": ""
-		}
 	},
 	"header": {
 		"cardSettings": "Card Settings",
@@ -76,31 +60,31 @@
 		"teams": ""
 	},
 	"input": {
-		"UndoChanges": "",
+		"UndoChanges": "Undo Changes",
 		"accountDeleted": "account deleted",
-		"actions": "",
+		"actions": "Actions",
 		"cancel": "Cancel",
 		"card": {
-			"answerOptions": ""
+			"answerOptions": "Answer Options"
 		},
 		"confirm": "Confirm",
-		"create": "",
+		"create": "Create",
 		"dark-theme": "dark theme",
 		"deck": {
-			"category": "",
-			"feedbackOption": ""
+			"category": "Category",
+			"feedbackOption": "Feedback Option"
 		},
 		"delete": "Delete",
 		"deleteNotDelete": "Are you sure you want to delete {email}?",
-		"description": "",
-		"file": "",
+		"description": "Description",
+		"file": "File",
 		"light-theme": "light theme",
-		"name": "",
+		"name": "Name",
 		"required": "Is required",
 		"reset": "Reset",
-		"search": "",
-		"showAnswer": "",
-		"title": "",
+		"search": "Search",
+		"showAnswer": "Show Answer",
+		"title": "Title",
 		"update": "Update"
 	},
 	"language": {
@@ -110,31 +94,31 @@
 		"title": "Teacher Didac"
 	},
 	"signpost": {
-		"advancedSettings": "",
-		"all": "",
-		"back": "",
-		"backEditor": "",
-		"browseCards": "",
-		"cardPreview": "",
-		"cards": "",
-		"cssEditor": "",
-		"deck": "",
-		"edit": "",
-		"front": "",
-		"frontEditor": "",
+		"advancedSettings": "Advanced Settings",
+		"all": "All",
+		"back": "Back",
+		"backEditor": "Back Editor",
+		"browseCards": "Browse Cards",
+		"cardPreview": "Card Preview",
+		"cards": "Cards",
+		"cssEditor": "CSS Editor",
+		"deck": "Decks",
+		"edit": "Edit",
+		"front": "Front",
+		"frontEditor": "Front Editor",
 		"groups": "groups",
-		"javascriptEditor": "",
-		"joinLearning": "",
-		"newCard": "",
-		"noCards": "",
-		"noDecks": "",
-		"or": "",
+		"javascriptEditor": "Javascript Editor",
+		"joinLearning": "Join Learning",
+		"newCard": "New Card",
+		"noCards": "No Cards Found",
+		"noDecks": "No Decks Found",
+		"or": "or",
 		"returnToLogin": "Return to login",
 		"settings": "settings",
 		"signup": "Register here",
-		"team": "",
-		"teams": "",
-		"upload": "",
+		"team": "Team",
+		"teams": "Teams",
+		"upload": "Upload",
 		"welcome": "Welcome to the app!"
 	}
 }
