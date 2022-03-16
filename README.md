@@ -5,7 +5,7 @@
 The goal of this project is to build an app that combines my previous projects, Handwriting & Speech recognition, Single sign-on and the Email Service in a microservice architecture maintained with Kubernetes. With this app users have the abillty to create, configure, learn and share flash cards. The time between learning flashcards is based on the users learning curve attached to the card, which is calculated with the <a href='https://www.supermemo.com/en/archives1990-2015/english/ol/sm2' target='_blank'> SuperMemo 2 spaced repetition algorithm </a> and depends on feedback given to the card and the time it takes to answer the flashcard. Furthermore the app provides insight into the users learning retention with leaderboards and data visualisation. </br></br>
 
 <h1>Architecture</h1>
-
+The application consists of an Angular frontend, which you can find in the App folder, and two .NET 5.0 Web API. One API is a Hangfire.io scheduler for scheduling the flashcards and the other API is for managing the flashcards. Managing the flashcards depends on three microservices listed below. </br></br>
 <h3> Microservice Repositories </h3>
 <ul>
   <li><a href="https://github.com/JeroenMBooij/JWT-SSO-Authentication">Authentication Service (.NET 5.0)</a></li>
@@ -18,13 +18,12 @@ The goal of this project is to build an app that combines my previous projects, 
 This application supports deployment with Docker Compose or Kubernetes. For Kubernetes please see the <a href="https://github.com/JeroenMBooij/Smart-Learning/tree/main/Helm">Helm Charts</a> in this repository </br></br>
 
 <h3>Docker Compose</h3>
-* prerequisite - docker installed <br/>
+* prerequisite - docker installed <br/><br/>
   
-  <b>steps</b>
-   <p> 1. Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</p>
-   <p> 2. run docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d</p>
-   <p> 3. open localhost:3000</p> 
-   </br>
+<b>steps</b>
+  <p> 1. Override secrets in docker-compose with a docker-compose.vs.debug.yml file or define the secrets as environment variables in your pipeline</p>
+  <p> 2. run docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.vs.debug.yml up -d</p>
+</br>
 
 <b>docker-compose.vs.debug.yml example file</b>
 
