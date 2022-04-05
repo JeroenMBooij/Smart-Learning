@@ -17,7 +17,7 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
         {
         }
 
-        public async Task<Card> GetCard(string deckId, string cardId)
+        public async Task<Card> GetCardAsync(string deckId, string cardId)
         {
             DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
                 .Collection(Collection.Cards).Document(cardId);
@@ -31,26 +31,31 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
             return card;
         }
 
-        public async Task<PlayerCard> GetPlayerCard(string deckId, string cardId, string playerCardId)
+        public async Task<PlayerCard> GetPlayerCardAsync(string deckId, string cardId, string userId)
         {
-            DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
+            QuerySnapshot querySnapshot = await _db.Collection(Collection.Decks).Document(deckId)
                 .Collection(Collection.Cards).Document(cardId)
-                .Collection(Collection.PlayerCards).Document(playerCardId);
+                .Collection(Collection.PlayerCard).WhereEqualTo(nameof(PlayerCard.UserId).ToCamelCase(), userId)
+                .GetSnapshotAsync();
 
-            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists == false)
+            if (querySnapshot.Count == 0)
                 return null;
 
-            var playerCard = snapshot.ConvertTo<PlayerCard>();
+            PlayerCard playerCard = null;
+            foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
+            {
+                playerCard = documentSnapshot.ConvertTo<PlayerCard>();
+                break;
+            }
 
             return playerCard;
         }
 
 
 
-        public async Task<PlayerCard> GetNextPlayerCard(string deckId, string userId)
+        public async Task<PlayerCard> GetNextPlayerCardAsync(string deckId, string userId)
         {
-            QuerySnapshot querySnapshot = await _db.CollectionGroup(Collection.PlayerCards)
+            QuerySnapshot querySnapshot = await _db.CollectionGroup(Collection.PlayerCard)
                 .WhereEqualTo(nameof(PlayerCard.DeckId).ToCamelCase(), deckId)
                 .WhereEqualTo(nameof(PlayerCard.UserId).ToCamelCase(), userId)
                 .WhereEqualTo(nameof(PlayerCard.Planning).ToCamelCase(), PlanningState.Due)
@@ -69,31 +74,72 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
             return document;
         }
 
-        public async Task<bool> UpdateCardField(string deckId, string cardId, string field, object value)
+        public async Task<bool> UpdateCardFieldAsync(string deckId, string cardId, string field, object value)
         {
-            DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
-                .Collection(Collection.Cards).Document(cardId);
+            return await Transactional(async () =>
+            {
+                DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
+                    .Collection(Collection.Cards).Document(cardId);
 
-            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists == false)
-                return false;
+                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                    return false;
 
-            await docRef.UpdateAsync(field, value);
-            return true;
+                _batch.Update(docRef, new Dictionary<string, object> { { field, value } });
+
+                return true;
+            });
         }
 
-        public async Task<bool> UpdatePlayerCardField(string deckId, string cardId, string playerCardId, string field, object value)
+        public async Task<bool> UpdatePlayerCardFieldAsync(PlayerCard playerCard, string field, object value)
         {
-            DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
+            return await UpdatePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, playerCard.UserId, field, value);
+        }
+
+        public async Task<bool> UpdatePlayerCardFieldAsync(string deckId, string cardId, string playerCardId, string field, object value)
+        {
+            return await Transactional(async () =>
+            {
+                DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
                 .Collection(Collection.Cards).Document(cardId)
-                .Collection(Collection.PlayerCards).Document(playerCardId);
+                .Collection(Collection.PlayerCard).Document(playerCardId);
 
-            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists == false)
-                return false;
+                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                    return false;
 
-            await docRef.UpdateAsync(field, value);
-            return true;
+                _batch.Update(docRef, new Dictionary<string, object> { { field, value } });
+
+                return true;
+            });
+        }
+
+        public async Task<bool> DeletePlayerCardFieldAsync(string deckId, string cardId, string playerCardId, string field)
+        {
+            return await Transactional(async () =>
+            {
+                DocumentReference docRef = _db.Collection(Collection.Decks).Document(deckId)
+                    .Collection(Collection.Cards).Document(cardId)
+                    .Collection(Collection.PlayerCard).Document(playerCardId);
+
+                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                    return false;
+
+                Dictionary<string, object> updates = new Dictionary<string, object>
+                {
+                    { field, FieldValue.Delete }
+                };
+
+                _batch.Update(docRef, updates);
+
+                return true;
+            });
+        }
+
+        public async Task<bool> DeletePlayerCardFieldAsync(PlayerCard playerCard, string field)
+        {
+            return await DeletePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, playerCard.UserId, field);
         }
     }
 }

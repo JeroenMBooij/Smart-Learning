@@ -9,13 +9,15 @@ namespace TeacherDidac.Common.Constants
     public static class EducationState
     {
         public const string New = "new";
-        public const string Sleeping = "new";
+        public const string Sleeping = "sleeping";
     }
 
-    public static class IntervalTime
+    public static class EducationPhase
     {
-        public const string Minutes = "minutes";
-        public const string Days = "Days";
+        public const string Learning = "learning";
+        public const string Graduate = "graduate";
+        public const string Relearn = "relearn";
+        public const string Retired = "retired";
 
     }
 
@@ -24,6 +26,5 @@ namespace TeacherDidac.Common.Constants
         public const string Due = "due";
         public const string Scheduled = "scheduled";
         public const string UnScheduled = "unscheduled";
-
     }
 }

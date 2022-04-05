@@ -46,6 +46,7 @@ import { FrontCardComponent } from './components/cards/card-displays/front-card/
 import { BackCardComponent } from './components/cards/card-displays/back-card/back-card.component';
 import { LandingpageComponent } from './components/Landing/landingpage/landingpage.component';
 import { TeamsOverviewComponent } from './components/teams/teams-overview/teams-overview.component';
+import { DIDAC_API_BASE_URL } from './services/didac/didac-client.generated';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { TeamsOverviewComponent } from './components/teams/teams-overview/teams-
     MonacoEditorModule.forRoot()
   ],
   providers: [
-      { provide: AUTHENTICATION_API_BASE_URL, useValue: environment.authenticationClient.baseUrl }
+      { provide: AUTHENTICATION_API_BASE_URL, useValue: environment.authenticationClient.baseUrl },
+      { provide: DIDAC_API_BASE_URL, useValue: environment.didacClient.baseUrl }
     ],
   bootstrap: [AppComponent]
 })

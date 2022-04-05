@@ -23,15 +23,19 @@ export class DevToolComponent implements OnInit {
         { 
         }
 
+    private testAdminEmail: string;
+    private testAdminPassword: string;
     private testUser: IPlayer;
     private testUserPassword: string;
 
     ngOnInit(): void 
     {
+        this.testAdminEmail = "admin@test.test";
+        this.testAdminPassword = "string";
         this.testUser = {} as IPlayer;
         this.testUser.username = 'Timmeh';
-        this.testUser.email= 'test@test.test';
-        this.testUserPassword = 'test1234';
+        this.testUser.email= 'test4@gmail.com';
+        this.testUserPassword = 'string';
 
     }
 
@@ -74,26 +78,29 @@ export class DevToolComponent implements OnInit {
 
     public async createTestUser(): Promise<void>
     {
-        let success = await this.authService.register(this.testUser, this.testUserPassword);
-        if(success)
-        {
-            this.snackbar.openFromComponent(SnackBarComponent, {
-                data: 'TestUser is created',
-                duration: 5000,
-                panelClass: ['mat-toolbar', 'mat-accent']
-            });
+        let result = await this.authService.register(this.testUser, this.testUserPassword);
+        
+        this.snackbar.openFromComponent(SnackBarComponent, {
+            data: result.content,
+            duration: 5000,
+            panelClass: ['mat-toolbar', 'mat-accent']
+        });
 
-            //navigate to home page
+        if(result.success)
             this.router.navigate(['/']);
-        }
-        else
-        {
-            this.snackbar.openFromComponent(SnackBarComponent, {
-                data: 'TestUser already exists',
-                duration: 5000,
-                panelClass: ['mat-toolbar', 'mat-accent']
-            });
-        }
+    }
+
+    public async createTestAdmin(): Promise<void>
+    {
+        //let adminResult = await this.authService.customAdminRegistration(this.testAdminEmail, this.testAdminPassword);
+        //let appResult = await this.authService.applicationRegistration();
+
+        this.snackbar.openFromComponent(SnackBarComponent, {
+            data: "niet doen",
+            duration: 5000,
+            panelClass: ['mat-toolbar', 'mat-accent']
+        });
+
     }
 
     public async deleteTestUser(): Promise<void>

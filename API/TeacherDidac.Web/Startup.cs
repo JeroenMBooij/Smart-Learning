@@ -22,9 +22,8 @@ namespace TeacherDidac.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
             services.AddControllers();
-
             services.AddMySwagger();
 
             services.AddApplication(Configuration);
@@ -46,6 +45,14 @@ namespace TeacherDidac.Web
                     c.RoutePrefix = string.Empty;
                 });
             }
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .Build();
+            });
 
             app.UseRouting();
 

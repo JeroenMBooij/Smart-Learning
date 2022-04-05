@@ -68,14 +68,14 @@ export class RegisterComponent implements OnInit {
     {
         let player: IPlayer = this.registerForm.value;
         player.createdAt = new Date();
-        let success = await this.authService.register(player, this.password.value);
-        if(success)
+        let registrationResult = await this.authService.register(player, this.password.value);
+        if(registrationResult.success)
         {
             this.registerStatus = 'SUCCESS';
             let dialogReference = this.dialog.open(ConfirmationDialogComponent, {
                 width: "600px",
                 data: { 
-                    message: `${this.translationService.get('authentication.registrationSuccess')}. 
+                    message: `${this.translationService.get('authentication.registrationSuccess').replace("{email}", player.email)}. 
                         <br> ${this.translationService.get('signpost.welcome')}`,
                     confirmation: false
                 }

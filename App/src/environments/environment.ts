@@ -14,7 +14,12 @@ export const environment = {
     measurementId: "G-F0NXY27WJ5"
   },
   authenticationClient: {
-      baseUrl: "https://localhost:3000"
+      baseUrl: "http://localhost:3000",
+      appId: "716c80ee-8289-4360-aceb-de1e225ed096",
+      adminId: "fa548fb2-fb4f-42e5-84eb-f0546c11e27f"
+  },
+  didacClient: {
+      baseUrl: "http://localhost:7002"
   }
 };
 
@@ -25,4 +30,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

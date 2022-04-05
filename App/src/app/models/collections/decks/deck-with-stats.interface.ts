@@ -1,9 +1,9 @@
-import { ICard } from '../cards/card.model';
+import { IPlayerCard } from '../cards/player-card.model';
 import { IDeckWithIcon } from './deck-with-icon.interface';
 
 export interface IDeckWithStats extends IDeckWithIcon
 {
-    cards: ICard[];
+    cards: IPlayerCard[];
     cardsDue: number;
     cardsDueTomorrow: number;
 }

@@ -8,11 +8,8 @@ export interface ICard
     type: string;
     frontFrameSource: string;
     backFrameSource: string;
-    createdAt: Date;
-    dueDate: Date;
     lastEditedBy: string;
-    currentInterval: number;
-    state: string;
+    createdAt: Date;
     easeModifier: number;
 
     frontHtml: string;

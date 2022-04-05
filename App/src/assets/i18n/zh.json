@@ -15,7 +15,7 @@
 		"passwordUpdated": "为 {email} 调整密码",
 		"recover": "恢复",
 		"register": "登记",
-		"registrationSuccess": "登记通过",
+		"registrationSuccess": "An Email has been send to {email}. Please confirm your Email to complete your registration.",
 		"username": "用户名",
 		"validEmail": "请使用有效的电子邮件地址",
 		"validPassword": "密码必须至少有六个字符"

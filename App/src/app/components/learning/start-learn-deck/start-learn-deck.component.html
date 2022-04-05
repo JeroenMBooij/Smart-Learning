@@ -32,7 +32,7 @@
                 <p>{{'signpost.cards' | translate}}</p>
                 <mat-card-content>
                     <div>
-                        <h1 class="display-3">{{(deck | async)?.dueTomorrow ?? 0}}</h1>
+                        <h1 class="display-3">{{(deck | async)?.cards?.length ?? 0}}</h1>
                     </div>
                 </mat-card-content>
                 <mat-card-footer>
@@ -44,7 +44,7 @@
                 <p>{{'cards.due' | translate}}</p>
                 <mat-card-content>
                     <div>
-                        <h1 class="display-3">{{(deck | async)?.dueTomorrow ?? 0}}</h1>
+                        <h1 class="display-3">{{(deck | async)?.cardsDue ?? 0}}</h1>
                     </div>
                 </mat-card-content>
                 <mat-card-footer>

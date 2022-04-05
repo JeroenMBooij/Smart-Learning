@@ -15,7 +15,7 @@ namespace TeacherDidac.Persistance.Firebase.Observables.Decks
 
         public Query GetNewCards()
         {
-            return _db.CollectionGroup(Collection.PlayerCards).WhereEqualTo(nameof(PlayerCard.Planning).ToCamelCase(), PlanningState.UnScheduled);
+            return _db.CollectionGroup(Collection.PlayerCard).WhereEqualTo(nameof(PlayerCard.Planning).ToCamelCase(), PlanningState.UnScheduled);
         }
     }
 }

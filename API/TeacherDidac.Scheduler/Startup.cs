@@ -25,16 +25,17 @@ namespace TeacherDidac.Scheduler
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
             string connectionString = GetDatabaseConnectionString(Configuration);
             services.AddDbContext<DbContext>(options =>
             {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), providerOptions => providerOptions.EnableRetryOnFailure());
             });
 
             services.AddHangfire(x => x.UseStorage(new MySqlStorage(connectionString, new MySqlStorageOptions())));
             services.AddHangfireServer();
 
-            services.AddLogging();
             services.AddPersistance(Configuration);
             services.AddSingleton <FirebaseCardScheduler>();
 
@@ -69,7 +70,7 @@ namespace TeacherDidac.Scheduler
 
                     })
                 },
-                IsReadOnlyFunc = (DashboardContext context) => Configuration["ASPNETCORE_ENVIRONMENT"] != "Development"
+                IsReadOnlyFunc = (DashboardContext context) => Configuration["ASPNETCORE_ENVIRONMENT"] == "Production"
             });
             app.UseRouting();
 

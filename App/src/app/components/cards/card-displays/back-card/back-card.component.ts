@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, SimpleChange, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'back-card',
@@ -9,6 +9,9 @@ export class BackCardComponent implements OnInit , AfterViewInit {
 
     @Input()
     public frameSource: string;
+
+    @Output() 
+    feedbackEvent = new EventEmitter<string>();
 
 
     @ViewChild('frame') frame: ElementRef;
@@ -36,6 +39,7 @@ export class BackCardComponent implements OnInit , AfterViewInit {
 
     public next(feedback: string)
     {
-        
+        if (this.feedbackEvent)
+            this.feedbackEvent.emit(feedback);
     }
 }

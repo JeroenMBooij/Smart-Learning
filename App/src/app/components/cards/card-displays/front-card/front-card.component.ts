@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, SimpleChange, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -13,6 +13,9 @@ export class FrontCardComponent implements OnInit, AfterViewInit {
 
     @Input()
     public showAnswer: BehaviorSubject<boolean>;
+
+    @Output() 
+    flipCardEvent = new EventEmitter<boolean>();
 
 
     @ViewChild('frame') frame: ElementRef;
@@ -34,15 +37,17 @@ export class FrontCardComponent implements OnInit, AfterViewInit {
         this.iFrame.srcdoc = this.frameSource;
     }
 
-    ngOnChanges(changes: SimpleChange) 
+    ngOnChanges(changes: SimpleChange): void
     {
         if(this.frame)
             this.iFrame.srcdoc = this.frameSource;
     }
 
-    public submit()
+    public async submit(): Promise<void>
     {
         this.showAnswer.next(true);
+
+        this.flipCardEvent.emit(true);
     }
 
 }

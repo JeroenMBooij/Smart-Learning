@@ -15,7 +15,7 @@
 		"passwordUpdated": "Wachtwoord succesvol aangepast voor {email}",
 		"recover": "Herstel",
 		"register": "Registreren",
-		"registrationSuccess": "Registratie succesvol",
+		"registrationSuccess": "An email has been send to {email}. Please confirm your email to complete your registration.",
 		"username": "Gebruikersnaam",
 		"validEmail": "Gebruik een geldig e-mailadres",
 		"validPassword": "Wachtwoord moet minstens 6 karakters hebben"

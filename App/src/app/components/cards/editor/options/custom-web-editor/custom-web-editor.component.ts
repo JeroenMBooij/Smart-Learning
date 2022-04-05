@@ -14,9 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { patienceDiff } from 'src/app/common/logic/patient-diff';
 import * as uuid from 'uuid';
-import { COMMON_CSS } from 'src/app/services/card-html/html/common.html';
-import { AnswerOption, FeedbackOption } from 'src/app/common/enums/answers.enum';
-import { CardHtmlService } from 'src/app/services/card-html/card-html.service';
+import { COMMON_CSS } from './card-editor.css';
 
 @Component({
   selector: 'custom-web-editor',
@@ -38,8 +36,8 @@ export class CustomWebEditorComponent implements OnInit, AfterViewInit
     public cardId: string;
     public cardName: string;
 
-    public frontFrameSource: string = "";
-    public backFrameSource: string = "";
+    public frontFrameSource = "";
+    public backFrameSource = "";
 
     public editorContent = {
         frontHtml: 
@@ -113,15 +111,14 @@ export class CustomWebEditorComponent implements OnInit, AfterViewInit
 
     public showSnackBar = true;
 
-    private answerOptions: AnswerOption[];
-    private feedbackOption: FeedbackOption;
+    private answerOptions: string[];
+    private feedbackOption: string;
 
     
 
     constructor(
         private themeService: ThemeService,
         private cardService: CardService,
-        private cardHtmlService: CardHtmlService,
         private router: Router,
         private route: ActivatedRoute,
         private translationService: TranslationService,

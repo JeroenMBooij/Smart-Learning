@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
       
@@ -41,13 +41,15 @@ services:
       - teacherdidac.db
       - teacherdidac.email
     environment:
-      ASPNETCORE_ENVIRONMENT: STAGING        
+      ASPNETCORE_ENVIRONMENT: Staging       
       DB_HOST: ${MYSQL_HOST}
       DB_NAME: ${MYSQL_NAME}
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
-      JWT_SECRETTKEY: ${JWT_SECRETKEY}
+      JWT_SECRETKEY: ${JWT_SECRETKEY}
       JWT_ISSUER: ${JWT_ISSUER}
+      AUTHENTICATION_URL: ${AUTHENTICATION_URL}
+      EMAIL_URL: ${EMAIL_URL}
       EMAIL_APPKEY: ${EMAIL_APPKEY}
 
   teacherdidac.db:
@@ -65,4 +67,4 @@ services:
     ports:
       - "2000:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: STAGING
+      ASPNETCORE_ENVIRONMENT: Staging

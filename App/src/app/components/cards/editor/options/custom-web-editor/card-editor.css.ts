@@ -18,7 +18,6 @@ export const COMMON_CSS = `
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid #303030;  /* creates padding around scroll thumb */
     }
-
     .main-container {
         display: flex;
         flex-direction: column;
@@ -27,12 +26,10 @@ export const COMMON_CSS = `
         min-height: calc(50vh - 40px);
         padding: 20px;
     }
-
     .answer-container {
         min-height: calc(50vh - 40px);
         padding: 20px;
     }
-
     .hover-icon {
         color: white;
         opacity: 0.7;
@@ -41,21 +38,16 @@ export const COMMON_CSS = `
         opacity: 1;
         cursor: pointer;
     }
-
     .button-size {
         transform: scale(1.6);
     }
-
     .input-size {
         transform: scale(5);
     }
-
     .my-link {
         text-decoration: underline;
     }
-
     .my-link:hover {
         cursor: pointer;
     }
-
 `;

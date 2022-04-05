@@ -18,11 +18,11 @@ import { CONFIRM, CREATE } from 'src/app/common/constants/angular.constants';
 import { IDeck } from 'src/app/models/collections/decks/deck.interface';
 import { Router } from '@angular/router';
 import { CARD_TYPES } from 'src/app/common/constants/card.constants';
-import { AnswerOption, FeedbackOption } from 'src/app/common/enums/answers.enum';
 import { SelectionInput } from 'src/app/models/SelectionInput.model';
 import { IDeckWithIcon } from 'src/app/models/collections/decks/deck-with-icon.interface';
 import { ITeam } from 'src/app/models/collections/teams/team.interface';
 import { TeamService } from 'src/app/services/team/team.service';
+import { ANSWER_OPTION_SHOW, ANSWER_OPTION_SPEECH, ANSWER_OPTION_TYPE, ANSWER_OPTION_WRITE, FEEDBACK_OPTION_BOTH, FEEDBACK_OPTION_INPUT, FEEDBACK_OPTION_TIME } from 'src/app/common/enums/answers.enum';
 
 @Component({
   selector: 'app-create-deck',
@@ -263,7 +263,7 @@ export class CreateDeckComponent implements OnInit {
             this.robotState = ROBOT_YES_EMOTE;
 
             if(this.showAnswerOptions == false)
-                this.selectedAnswerOptions.setValue([AnswerOption.Show]);
+                this.selectedAnswerOptions.setValue([ANSWER_OPTION_SHOW]);
 
             let deckId: string = await this.deckService.createDeck(this.deckForm.value);
 
@@ -274,25 +274,25 @@ export class CreateDeckComponent implements OnInit {
     public handleAnswerOptions(): void
     {
         this.showAnswerOptions = !this.showAnswerOptions;
-        this.selectedAnswerOptions.setValue([AnswerOption.Type, AnswerOption.Write, AnswerOption.Speech]);
+        this.selectedAnswerOptions.setValue([ANSWER_OPTION_TYPE, ANSWER_OPTION_WRITE, ANSWER_OPTION_SPEECH]);
     }
 
     private setDeckOptions()
     {
 
         this.feedbackOptions = [
-            new SelectionInput(this.translationService.get('deck.feedbackOption.input'), FeedbackOption.InputBased),
-            new SelectionInput(this.translationService.get('deck.feedbackOption.time'), FeedbackOption.TimeBased),
-            new SelectionInput(this.translationService.get('deck.feedbackOption.both'), FeedbackOption.Both)
+            new SelectionInput(this.translationService.get('deck.feedbackOption.input'), FEEDBACK_OPTION_INPUT),
+            new SelectionInput(this.translationService.get('deck.feedbackOption.time'), FEEDBACK_OPTION_TIME),
+            new SelectionInput(this.translationService.get('deck.feedbackOption.both'), FEEDBACK_OPTION_BOTH)
         ];
         this.feedbackOption.setValue(this.feedbackOptions[0].value);
 
         this.answerOptions = [
-            new SelectionInput(this.translationService.get('deck.answerOption.type'), AnswerOption.Type),
-            new SelectionInput(this.translationService.get('deck.answerOption.write'), AnswerOption.Write),
-            new SelectionInput(this.translationService.get('deck.answerOption.speech'), AnswerOption.Speech)
+            new SelectionInput(this.translationService.get('deck.answerOption.type'), ANSWER_OPTION_TYPE),
+            new SelectionInput(this.translationService.get('deck.answerOption.write'), ANSWER_OPTION_WRITE),
+            new SelectionInput(this.translationService.get('deck.answerOption.speech'), ANSWER_OPTION_SPEECH)
         ];
-        this.selectedAnswerOptions.setValue([AnswerOption.Type, AnswerOption.Write, AnswerOption.Speech]);
+        this.selectedAnswerOptions.setValue([ANSWER_OPTION_TYPE, ANSWER_OPTION_WRITE, ANSWER_OPTION_SPEECH]);
     }
 
 

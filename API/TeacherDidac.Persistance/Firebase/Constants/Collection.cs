@@ -10,6 +10,9 @@ namespace TeacherDidac.Persistance.Firebase.Constants
     {
         public static string Decks = "decks"; 
         public static string Cards = "cards";
-        public static string PlayerCards = "playerCards";
+        public static string Player = "players";
+        public static string PlayerCard = "playerCards";
+        public static string Session = "sessions";
+        public static string SessionCard = "sessionCards";
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using TeacherDidac.Persistance.Firebase;
 using System.IO;
+using TeacherDidac.Application.Contracts.Repositories;
 
 namespace TeacherDidac.Persistance
 {
@@ -22,6 +23,7 @@ namespace TeacherDidac.Persistance
                 Credential = GoogleCredential.FromJson(firebaseSettings)
             });
 
+            services.AddSingleton<ITransactionRunner, TransactionRunner>();
 
             #region Repositories
             services.Scan(scan => scan

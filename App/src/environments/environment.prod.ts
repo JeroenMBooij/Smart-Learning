@@ -11,5 +11,8 @@ export const environment = {
   },
   authenticationClient: {
       baseUrl: "https://teacherdidac.authentication"
+  },
+  didacClient: {
+      baseUrl: "https://teacherdidac.web"
   }
 };

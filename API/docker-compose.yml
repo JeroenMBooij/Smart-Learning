@@ -24,6 +24,7 @@ services:
     #image: booij/transcribing-nn.service 
   
   teacherdidac.authentication:
+    pull_policy: always
     image: booij/authentication.service 
 
   teacherdidac.db:

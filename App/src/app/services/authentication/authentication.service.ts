@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import "firebase/auth";
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AccountRegistration, AuthenticationClient, Credentials } from './authentication-client.generated';
+import { AccountConfirmation, AccountRegistration, Application, AuthenticationClient, ClaimConfig, Credentials, DomainName, JwtTenantConfig, Ticket } from './authentication-client.generated';
 import { environment } from 'src/environments/environment';
 import * as lsKeys from 'src/app/common/constants/localstorage.constants';
 import { BehaviorSubject } from 'rxjs';
@@ -37,8 +37,22 @@ export class AuthenticationService
             if (user) 
             {
                 this.userId.next(user.uid);
-                this.userEmail.next(user.email);
-                this.username.next(user.displayName);
+                if(user.email)
+                {
+                    this.userEmail.next(user.email);
+                    this.username.next(user.displayName);
+                }
+                else
+                {
+                    // TODO: customUser.email
+                    // TODO: customUser.displayName
+                    var authCookie = this.authClient.getAuthCookie();
+                    if(authCookie != null)
+                    {
+                        this.userEmail.next("test@gmail.com");
+                        this.username.next("test@gmail.com");
+                    }
+                }
                 this.user = user;
             }
             else 
@@ -51,19 +65,19 @@ export class AuthenticationService
         });
     }
 
-    public async register(player: IPlayer, password: string): Promise<boolean>
+    public async register(player: IPlayer, password: string): Promise<ServiceMessage>
     {
-        return await this.basicRegistration(player, password);
+        return await this.customRegistration(player, password);
     }
 
     public async login(email: string, password: string): Promise<boolean>
     {
-        return await this.basicLogin(email, password);
+        return await this.customLogin(email, password);
     }
 
     public async logout(): Promise<void>
     {
-        await this.basicLogout();
+        await this.customLogout();
     }
 
     public async manageAccount(oldPassword: string, newPassword: string): Promise<ServiceMessage>
@@ -199,44 +213,189 @@ export class AuthenticationService
         }
     }
 
-    private async customRegistration(email: string, password): Promise<boolean>
+    public async customAdminRegistration(email: string, password: string): Promise<ServiceMessage>
+    {
+        let accountConfirmation = await new Promise<AccountConfirmation>((resolve, reject) =>
+        {  
+            let account = new AccountRegistration();
+            account.email = email;
+            account.authenticationRole = "Admin";
+            account.password = password;
+            account.adminId = environment.authenticationClient.adminId;
+
+            this.authClient.register(account).subscribe(message => 
+            {
+                resolve(message);
+            },
+            error => 
+            {
+
+                if(environment.production == false)
+                    console.log(error);
+
+                return new ServiceMessage(false, "Unexpected Error");
+            })
+        });
+
+        await this.customLogin(email, password, false);
+        
+
+        return new ServiceMessage(true, accountConfirmation.message);
+    }
+
+    public async applicationRegistration(): Promise<ServiceMessage>
     {
         try
         {
-            let jwtToken = await new Promise<string>((resolve, reject) =>
+            let registrationMessage = await new Promise<string>((resolve, reject) =>
             {  
-                this.authClient.register(new AccountRegistration())
+                let app = new Application();
+                app.id = environment.authenticationClient.appId;
+                app.name = "Teacher Didac";
+
+                app.domains = [];
+                let domain = new DomainName();
+                domain.name = "localhost";
+                domain.url = "http://localhost:4200";
+                app.domains.push(domain);
+
+                app.jwtTenantConfigurations = []
+                let jwtTenantConfigurations = new JwtTenantConfig();
+
+                // development key
+                jwtTenantConfigurations.secretKey = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2do8EAkClQlkX\n9NqbF6KA64xvtCfyA+cAZlM/6StvxEs0J8KXJu0ygX31Wr0hLbBkS5i8SPPqGioE\nuTxXXx8Gv2FOduY6/EG5dJPbx5T10ry6k3bf+PDyOw9Bp14F8RpvrDPvGqWT9EIY\njTZsXGHLc4CQTc+rdg3NjXVou6qW5NzyGCINfhc0ftH3itcPdQNRWkuuQTNYe4ys\nJokSG+Xr1qVBlHS4hAkvWAQILzUXu4ofrlKzfx6kjJCC014Y6y8pHPuDGN9qYTMN\noPN1Uk5DX4u1fMTOERh9ylALpdO8ks4CH9oe1v8vZ9cYJh0itBRGL9a4PFKv4jWz\ntF1XhG3VAgMBAAECggEAAWM9RbQdrpQRWORgvZFhspYird53zPhOILDmh6573oBR\nQRmJ+jvOeICccbSptQ+jpIj1pahEC0mn0abgqFpzF4pLkLzzQHYW1Yn8g41M8Eyq\nE5zXqIQ8aDSI8msghNjh+6uag9eW9Efahn9xGe8JmFztw0swMzc1NipnVESpxgwp\nZrP2DU3KdpFHREU6aZXeT9xDfVXAEqkxvWhuVrDyTwxcnlNQwY3xcwbJapWj/Cg7\nJ8mDGpPhLu5qGAxXL4TOLBReri1mFoDOTTtViCCMMET+5j3cFYgiqrj9Ze6T5pge\nRyIm8ffyMOXS/9+w18Z1hzrnEgDPAOJEUwnrD7aU+QKBgQDscn4T+YNEQFOUVKal\nfmnYu+ZHRgL/MCf0CTLPoD3W56inPgjpZNg79/b1BXFH5/D1hYbEjvnEiurtmugR\nmO4NchvYGhzFr+DeGLATkJewNPbGgWzyYTFuv+RgonfzVI8t3snzxBXJ1ia/JLNc\n4F3eDauUWwE1bjYJVazZ2vNXeQKBgQDFjT2kei/C+cfEnAC7/8HQMkjSPDRoFFQ/\nFajoa/FR1U8p9g206WtW7TXFq8gI8NjCOE7nVtJu3uY8Ph0WCs0NZm3ZzxH28Bn2\nr9+/K3C1AbAe1nLew+f+OH0i20JsBj6AYL/3U+tfShgvQxdMwOBOm0EIrCJ/5wHM\nlxaoL6nGPQKBgQDaylr12sVni2qLcAVAUAhboAtG2nb9ca8WtshIrYtrZ7N9Bf8z\nELiyTRI8ygt3sR0b47HAAlkGUFFxCg1B81QcJwGy5v7Gwqd+fDO59usWBvxu1OZe\nJieaxn/qF4yNIirXFDellEVhHgN+jdRW1dqmFdo2DjvBGDlyS9AFSwAvaQKBgQCF\nfNb2WQoE+bsfAzsLzdos0I2cYcoXugTjS8OCqc26uiRv+i9w23kIl+kJ1PWp9PTC\n6EGI2IYBHOT+OAp3Zn0AXQJFd0JwVfV1V4odJ0FVTfqwG8Aq/r24bntAHmBXljCN\nltKgUThufyawaOlJl9r5wrbDIW1+d54jnMRWiT5zEQKBgF7t83NT6+Tg6rGlY+Nh\naKlxT8xs9PP+nyHPts2EndGnwrs3oWEvnsfWG+MVFTLQhGD/3aA9X+Q/ZGqVGYUF\nUkjSeQdlAFuT4EAmx9hJpmPpLbvtDg0E4ImxaWUVQod6w+LuOpAejhjPX3vBqm17\n5s2bJHmw7Psk3VTEoQlHctG0\n-----END PRIVATE KEY-----\n"
+                
+                jwtTenantConfigurations.expireMinutes = 60;
+                jwtTenantConfigurations.refreshExpireMinutes = 7200;
+                jwtTenantConfigurations.algorithm = "RsaSha256";
+
+                jwtTenantConfigurations.claims = [];
+
+                let issclaim = new ClaimConfig();
+                issclaim.jwtName = "iss";
+                issclaim.type = "HardData";
+                issclaim.data = "firebase-adminsdk-ytpr4@teacher-didac.iam.gserviceaccount.com";
+                jwtTenantConfigurations.claims.push(issclaim);
+
+                let subclaim = new ClaimConfig();
+                subclaim.jwtName = "sub";
+                subclaim.type = "HardData";
+                subclaim.data = "firebase-adminsdk-ytpr4@teacher-didac.iam.gserviceaccount.com";
+                jwtTenantConfigurations.claims.push(subclaim);
+
+                let audclaim = new ClaimConfig();
+                audclaim.jwtName = "aud";
+                audclaim.type = "HardData";
+                audclaim.data = "https:\/\/identitytoolkit.googleapis.com\/google.identity.identitytoolkit.v1.IdentityToolkit";
+                jwtTenantConfigurations.claims.push(audclaim);
+
+                let iatclaim = new ClaimConfig();
+                iatclaim.jwtName = "iat";
+                iatclaim.type = "JWTIat";
+                jwtTenantConfigurations.claims.push(iatclaim);
+
+                let expclaim = new ClaimConfig();
+                expclaim.jwtName = "exp";
+                expclaim.type = "JWTExp";
+                jwtTenantConfigurations.claims.push(expclaim);
+
+                app.jwtTenantConfigurations.push(jwtTenantConfigurations);
+
+                this.authClient.applications2(app).subscribe(message => 
+                {
+                    resolve(message);
+                })
             });
+
+            this.customLogout();
+
+            return new ServiceMessage(true, registrationMessage);
         }
         catch(error)
         {
             if(environment.production == false)
                 console.log(error);
 
-            return false;
+            return new ServiceMessage(false, "Unexpected Error");
         }
     }
 
-    private async customLogin(email: string, password: string): Promise<boolean>
+    private async customRegistration(player: IPlayer, password): Promise<ServiceMessage>
     {
         try
         {
-            let jwtToken = await new Promise<string>((resolve, reject) =>
+            let accountConfirmation = await new Promise<AccountConfirmation>((resolve, reject) =>
             {  
-                this.authClient.login(new Credentials({email: email, password: password}))
-                        .subscribe(token =>  {
+                let account = new AccountRegistration();
+                account.email = player.email;
+                account.authenticationRole = "Tenant";
+                account.password = password;
+                account.applicationId = environment.authenticationClient.appId;
+                account.adminId = environment.authenticationClient.adminId;
+
+                this.authClient.register(account).subscribe(accountConfirmation => 
+                {
+                    resolve(accountConfirmation);
+                },
+                error =>
+                {
+                    if(environment.production == false)
+                        console.error(error);
+                    reject(error);
+                });
+            });
+
+            await this.afStore.collection(PLAYER_COLLECTION).doc(accountConfirmation.id).set(player)
+            .catch((error) => {
+                if(environment.production == false)
+                    console.error("Error writing document: ", error);
+            });
+
+            return new ServiceMessage(true, accountConfirmation.message);
+        }
+        catch(error)
+        {
+            if(environment.production == false)
+                console.log(error);
+
+            return new ServiceMessage(false, "Unexpected Error");
+        }
+    }
+
+    private async customLogin(email: string, password: string, firebase: boolean = true): Promise<boolean>
+    {
+        try
+        {
+            let ticket = await new Promise<Ticket>((resolve, reject) =>
+            {  
+                let credentials = new Credentials(
+                {
+                    email: email, 
+                    password: password, 
+                    applicationId: environment.authenticationClient.appId,
+                    adminId: environment.authenticationClient.adminId
+                });
+
+                this.authClient.login(credentials)
+                        .subscribe(ticket =>  {
                             if(environment.production == false)
                                 console.log("authentication client subscribed."); 
 
-                            resolve(token);
+                            resolve(ticket);
                         },
                             error => reject(error)
                         );
             });
-
-            localStorage.setItem(lsKeys.jwtTokenKey, jwtToken);
             
-            var userCredential = await this.fireAuth.signInWithCustomToken(jwtToken);
+            if (firebase == true)
+            {
+                var userCredential = await this.fireAuth.signInWithCustomToken(ticket.registeredJWT);
+                
+                //TODO this is supposed to be done by the server but ofcourse it doesn't fucking work like everyting always fuck!!!!
+                document.cookie = `authorization=${JSON.stringify(ticket)}; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/`
+            }
+            else
+                localStorage.setItem(lsKeys.jwtTokenKey, ticket.registeredJWT);
 
             return true;
         }
@@ -254,6 +413,8 @@ export class AuthenticationService
         await this.fireAuth.signOut();
 
         localStorage.removeItem(lsKeys.jwtTokenKey);
+
+        document.cookie = "authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
 
 

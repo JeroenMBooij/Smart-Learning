@@ -28,7 +28,7 @@ export class AppComponent
         private iconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer)
     {
-        translationService.bootstrap();
+        this.translationService.bootstrap();
 
         this.bootstrapSwUpdates();
 

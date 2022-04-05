@@ -1,7 +1,9 @@
-import { FeedbackOption } from "../enums/answers.enum";
+import { FEEDBACK_OPTION_INPUT } from "../enums/answers.enum";
 
-export const DECK_DEFAULT_FEEDBACKOPTION = FeedbackOption.InputBased;
+
+export const DECK_DEFAULT_FEEDBACKOPTION = FEEDBACK_OPTION_INPUT
 export const DECK_DEFAULT_DEFAULT_EASE_MODIFIER = 3;
+export const DECK_DEFAULT_FIRST_LEARNING_INTERVAL = 10;
 export const DECK_DEFAULT_INTERVAL_MODIFIER = 3;
 export const DECK_DEFAULT_HARD_INTERVAL_MODIFIER = 3;
 export const DECK_DEFAULT_EASE_BONUS = 3;

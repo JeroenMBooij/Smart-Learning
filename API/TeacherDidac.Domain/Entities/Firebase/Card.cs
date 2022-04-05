@@ -27,6 +27,9 @@ namespace TeacherDidac.Domain.Entities.Firebase
         [FirestoreProperty("lastEditedBy")]
         public string LastEditedBy { get; set; }
 
+        [FirestoreProperty("createdAt")]
+        public string CreatedAt { get; set; }
+
         [FirestoreProperty("easeModifier")]
         public int EaseModifier { get; set; }
 
@@ -41,6 +44,9 @@ namespace TeacherDidac.Domain.Entities.Firebase
 
         [FirestoreProperty("javascript")]
         public string Javascript { get; set; }
+
+        [FirestoreProperty("steps")]
+        public int[] Steps { get; set; }
 
         public List<CardMedia> Media { get; set; }
 

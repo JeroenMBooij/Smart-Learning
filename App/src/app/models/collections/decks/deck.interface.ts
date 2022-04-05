@@ -1,4 +1,3 @@
-import { AnswerOption, FeedbackOption } from "src/app/common/enums/answers.enum";
 import { IDeckIdentity } from "./deck-identity.interface";
 
 export interface IDeck extends IDeckIdentity
@@ -8,8 +7,8 @@ export interface IDeck extends IDeckIdentity
     createdAt: Date;
     selectedCategories: string[];
     description: string;
-    answerOptions: AnswerOption[],
-    feedbackOption: FeedbackOption;
+    answerOptions: string[],
+    feedbackOption: string;
     intervalModifier: number;
     hardIntervalModifier: number;
     defaultEaseModifier: number;

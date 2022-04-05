@@ -15,7 +15,7 @@
 		"passwordUpdated": "Password succesfully updated for {email}",
 		"recover": "Recover",
 		"register": "Register",
-		"registrationSuccess": "Registration successful",
+		"registrationSuccess": "An email has been send to {email}. Please confirm your email to complete your registration.",
 		"username": "Username",
 		"validEmail": "Please use a valid email address",
 		"validPassword": "Password should be at least 6 characters"

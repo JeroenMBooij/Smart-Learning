@@ -30,7 +30,7 @@ export class DeckService
         
         deck.userId = this.authService.userId.value;
 
-        return this.afStore.collection(DECK_COLLECTION)
+        return await this.afStore.collection(DECK_COLLECTION)
             .add(deck)
                 .then(document => document.id)
                 .catch(error => 

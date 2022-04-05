@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using System;
 using System.Threading.Tasks;
 using TeacherDidac.Application.Models;
 using TeacherDidac.Application.Services.Education;
+using TeacherDidac.Common.Enums;
 using TeacherDidac.Web.Middleware.Auth;
 
 namespace TeacherDidac.Web.Controllers
@@ -21,14 +21,41 @@ namespace TeacherDidac.Web.Controllers
             _educationService = educationService;
         }
 
-        [HttpGet("deck/{deckId}/card/front/next", Name = "GetNextFrontCard")]
-        [ProducesResponseType(typeof(EducationCard), StatusCodes.Status200OK)]
+        [HttpGet("session/start/deck/{deckId}", Name = "StartSession")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<FrontEducationCard>> GetNextFrontCard(string deckId)
+        public async Task<ActionResult<string>> StartSession(string deckId)
         {
             string uid = Request.Headers["userid"];
 
-            FrontEducationCard nextCard = await _educationService.GetNextFrontCard(deckId, uid);
+            string sessionId = await _educationService.StartSession(uid, deckId);
+
+            if (string.IsNullOrEmpty(sessionId))
+                return NotFound();
+
+            return Ok(sessionId);
+        }
+
+        [HttpPut("session/{sessionId}/end", Name = "EndSession")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> EndSession(string sessionId)
+        {
+            string uid = Request.Headers["userid"];
+
+            await _educationService.EndSession(uid, sessionId);
+
+            return NoContent();
+        }
+
+        [HttpGet("session/{sessionId}/next-question", Name = "GetNextFrontCard")]
+        [ProducesResponseType(typeof(EducationCard), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<FrontEducationCard>> GetNextFrontCard(string sessionId)
+        {
+            string uid = Request.Headers["userid"];
+
+            FrontEducationCard nextCard = await _educationService.GetNextFrontCardAsync(sessionId, uid);
 
             if (nextCard == null)
                 return NotFound();
@@ -36,14 +63,14 @@ namespace TeacherDidac.Web.Controllers
             return Ok(nextCard);
         }
 
-        [HttpPost("deck/{deckId}/card/{cardId}/back", Name = "SubmitCardAnswer")]
+        [HttpPost("session/{sessionId}/session-card/{sessionCardId}/answer", Name = "SubmitCardAnswer")]
         [ProducesResponseType(typeof(EducationCard), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EducationCard>> SubmitCardAnswer(string deckId, string cardId)
+        public async Task<ActionResult<BackEducationCard>> SubmitCardAnswer(string sessionId, string sessionCardId)
         {
             string uid = Request.Headers["userid"];
 
-            BackEducationCard nextCard = await _educationService.SubmitCardAnswer(deckId, cardId, uid);
+            BackEducationCard nextCard = await _educationService.SubmitCardAnswerAsync(sessionId, sessionCardId, uid);
 
             if (nextCard == null)
                 return NotFound();
@@ -51,14 +78,15 @@ namespace TeacherDidac.Web.Controllers
             return Ok(nextCard);
         }
 
-        [HttpPost("deck/{deckId}/card/{cardId}/feedback", Name = "SubmitCardFeedback")]
+        [HttpPost("session/{sessionId}/session-card/{sessionCardId}/feedback", Name = "SubmitCardFeedback")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EducationCard>> SubmitCardFeedback(string deckId, string cardId, [FromBody] FeedbackData feedbackData)
+        public async Task<ActionResult> SubmitCardFeedback(string sessionId, string sessionCardId, [FromBody] string feedback)
         {
             string uid = Request.Headers["userid"];
 
-            bool result = await _educationService.SubmitCardFeedback(deckId, cardId, uid, feedbackData);
+            var feed = Enum.Parse<FeedbackOptions>(feedback);
+            bool result = await _educationService.SubmitCardFeedbackAsync(sessionId, sessionCardId, uid, feed);
 
             if (result == false)
                 return NotFound();

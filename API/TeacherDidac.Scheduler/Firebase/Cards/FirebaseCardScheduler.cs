@@ -31,37 +31,43 @@ namespace TeacherDidac.Scheduler.Firebase.Cards
             {
                 while (true)
                 {
-                    try
+                    FirestoreChangeListener listener = _cardObservable.GetNewCards().Listen(async snapshot =>
                     {
-                        FirestoreChangeListener listener = _cardObservable.GetNewCards().Listen(async snapshot =>
+                        foreach (DocumentSnapshot documentSnapshot in snapshot.Documents)
                         {
-                            foreach (DocumentSnapshot documentSnapshot in snapshot.Documents)
+                            try
                             {
                                 var playerCard = documentSnapshot.ConvertTo<PlayerCard>();
 
                                 _logger.LogInformation($"Scheduling {documentSnapshot.Id}");
                                 ScheduleCard(documentSnapshot.Id, playerCard);
 
-                                await _cardRepository.UpdatePlayerCardField(playerCard.DeckId, playerCard.CardId, documentSnapshot.Id,
+                                await _cardRepository.UpdatePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, documentSnapshot.Id,
                                     nameof(PlayerCard.Planning).ToCamelCase(), PlanningState.Scheduled);
                             }
-                        });
+                            catch (Exception error)
+                            {
+                                _logger.LogError("Something really unexpected happend");
+                                _logger.LogError(error.ToString());
+                                
+                                //TODO incase of corruption notify user
+                                var playerCard = documentSnapshot.ConvertTo<PlayerCard>();
 
-                        _logger.LogInformation("Running card scheduler...");
-                        await listener.ListenerTask;
-                    }
-                    catch(Exception error)
-                    {
-                        _logger.LogError("Something really unexpected happend");
-                        _logger.LogError(error.ToString());
-                    }
+                                BackgroundJob.Schedule(() => ScheduleCard(documentSnapshot.Id, playerCard), TimeSpan.FromMinutes(1));
+                            }
+                        }
+                    });
+
+                    _logger.LogInformation("Running card scheduler...");
+                    await listener.ListenerTask;
+                    
                 }
             });
         }
 
         public async Task ActivateCard(string playerCardId, PlayerCard playerCard)
         {
-            bool result = await _cardRepository.UpdatePlayerCardField(playerCard.DeckId, playerCard.CardId, playerCardId, nameof(playerCard.Planning).ToLower(), PlanningState.Due);
+            bool result = await _cardRepository.UpdatePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, playerCardId, nameof(playerCard.Planning).ToLower(), PlanningState.Due);
             if(result)
                 _logger.LogInformation($"playercard {playerCardId} due; deckId: {playerCard.DeckId}; cardId: {playerCard.CardId}");
             else
@@ -73,18 +79,22 @@ namespace TeacherDidac.Scheduler.Firebase.Cards
         {
             TimeSpan? interval = null;
 
-            switch(playerCard.IntervalTime)
+            switch(playerCard.Phase)
             {
-                case IntervalTime.Minutes:
+                case EducationPhase.Learning:
                     interval = TimeSpan.FromMinutes(playerCard.CurrentInterval);
                     break;
 
-                case IntervalTime.Days:
+                case EducationPhase.Graduate:
                     interval = TimeSpan.FromDays(playerCard.CurrentInterval);
                     break;
 
+                case EducationPhase.Relearn:
+                    interval = TimeSpan.FromMinutes(playerCard.RelearnInterval);
+                    break;
+
                 default:
-                    _logger.LogError($"Invalid intervalTime for card: {playerCardId} with deckId: {playerCard.DeckId} and cardId: {playerCard.CardId}");
+                    _logger.LogError($"Invalid phase: {playerCard.Phase} for playercard: {playerCardId} with deckId: {playerCard.DeckId} and cardId: {playerCard.CardId}");
                     break;
             }
 

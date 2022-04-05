@@ -33,13 +33,17 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
 
         public async Task<bool> UpdateDeckField(string id, string field, string value)
         {
-            DocumentReference docRef = _db.Collection(Collection.Decks).Document(id);
-            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists == false)
-                return false;
+            return await Transactional(async () =>
+            {
+                DocumentReference docRef = _db.Collection(Collection.Decks).Document(id);
+                DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                    return false;
 
-            await docRef.UpdateAsync(field, value);
-            return true;
+                _batch.Update(docRef, new Dictionary<string, object> { { field, value } });
+
+                return true;
+            });
         }
 
 

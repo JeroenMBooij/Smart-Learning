@@ -10,6 +10,8 @@ namespace TeacherDidac.Domain.Entities.Firebase
     [FirestoreData]
     public class PlayerCard
     {
+        public string Id { get; set; }
+
         [FirestoreProperty("userId")]
         public string UserId { get; set; }
 
@@ -28,8 +30,14 @@ namespace TeacherDidac.Domain.Entities.Firebase
         [FirestoreProperty("currentInterval")]
         public int CurrentInterval { get; set; }
 
-        [FirestoreProperty("intervalTime")]
-        public string IntervalTime { get; set; }
+        [FirestoreProperty("phase")]
+        public string Phase { get; set; }
+
+        [FirestoreProperty("currentStepIndex")]
+        public int CurrentStepIndex { get; set; }
+
+        [FirestoreProperty("relearnInterval")]
+        public int RelearnInterval { get; set; }
 
         [FirestoreProperty("planning")]
         public string Planning { get; set; }
