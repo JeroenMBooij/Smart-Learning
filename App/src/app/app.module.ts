@@ -47,6 +47,7 @@ import { BackCardComponent } from './components/cards/card-displays/back-card/ba
 import { LandingpageComponent } from './components/Landing/landingpage/landingpage.component';
 import { TeamsOverviewComponent } from './components/teams/teams-overview/teams-overview.component';
 import { DIDAC_API_BASE_URL } from './services/didac/didac-client.generated';
+import { DrawComponent } from './components/shared/draw/draw.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { DIDAC_API_BASE_URL } from './services/didac/didac-client.generated';
     BackCardComponent,
     LandingpageComponent,
     TeamsOverviewComponent,
+    DrawComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,10 @@ import { environment } from 'src/environments/environment';
 import { patienceDiff } from 'src/app/common/logic/patient-diff';
 import * as uuid from 'uuid';
 import { COMMON_CSS } from './card-editor.css';
+import { ANSWER_OPTION_SHOW, ANSWER_OPTION_SPEECH, ANSWER_OPTION_TYPE, ANSWER_OPTION_WRITE, FEEDBACK_OPTION_BOTH, FEEDBACK_OPTION_INPUT } from 'src/app/common/enums/answers.enum';
+import { DidacService } from 'src/app/services/didac/didac.service';
+import { DataMessage } from 'src/app/models/DataMessage.model';
+import { Transcription } from 'src/app/services/didac/didac-client.generated';
 
 @Component({
   selector: 'custom-web-editor',
@@ -110,13 +114,12 @@ export class CustomWebEditorComponent implements OnInit, AfterViewInit
     public robotEmote: string;
 
     public showSnackBar = true;
-
-    private answerOptions: string[];
-    private feedbackOption: string;
+    public provideFeedback = false;
 
     
 
     constructor(
+        private didacService: DidacService,
         private themeService: ThemeService,
         private cardService: CardService,
         private router: Router,
@@ -131,10 +134,11 @@ export class CustomWebEditorComponent implements OnInit, AfterViewInit
     {
         window.name = uuid.v4();
 
-        this.deck.subscribe(deck => {
+        this.deck.subscribe(deck => 
+        {
             this.deckId = deck.id;
-            this.answerOptions = deck.answerOptions;
-            this.feedbackOption = deck.feedbackOption;
+
+            this.provideFeedback = deck.feedbackOption == FEEDBACK_OPTION_INPUT || deck.feedbackOption == FEEDBACK_OPTION_BOTH;
 
             this.onSupportHtmlChange(false);
         });
@@ -237,6 +241,22 @@ export class CustomWebEditorComponent implements OnInit, AfterViewInit
 
             this.robotState = ROBOT_DEATH_STATE;
         }
+    }
+
+    public async submit(dataMessage: DataMessage): Promise<void>
+    {
+        let transcription:Transcription = null;
+        switch(dataMessage.type)
+        {
+            case ANSWER_OPTION_WRITE:
+                transcription = await this.didacService.computerVision(dataMessage.content)
+                break;
+            case ANSWER_OPTION_SPEECH:
+                break;
+        }
+
+        this.editorContent.backHtml.current = transcription.recognizedValue;
+        this.reloadBackCard();
     }
 
     public UndoChanges(): void

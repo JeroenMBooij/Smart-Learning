@@ -4,7 +4,9 @@
         allow-presentation allow-scripts allow-top-navigation-by-user-activation"
 ></iframe>
 
-<div class="d-flex justify-content-around mt-4 mb-2">
+<div *ngIf="provideFeedback; else nextTemplate"
+    class="d-flex justify-content-around mt-4 mb-2"
+>
     <div class="w-20">
         <main-button (click)="next('Again')" label="{{'card.feedback.again' | translate }}"
             class="again-button"
@@ -29,3 +31,11 @@
         ></main-button>
     </div>
 </div>
+
+<ng-template #nextTemplate>
+    <div class="w-20 ml-auto mr-auto">
+        <main-button (click)="next('')" label="{{'card.feedback.next' | translate }}"
+            class="easy-button"
+        ></main-button>
+    </div>
+</ng-template>

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DidacClient, EducationCard } from './didac-client.generated';
+import { DidacClient, EducationCard, FileParameter, Transcription } from './didac-client.generated';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DidacService 
 {
-
     constructor(private didacClient: DidacClient) { }
 
     public async GetNextFrontCard(sessionId: string): Promise<EducationCard>
@@ -74,6 +73,45 @@ export class DidacService
         });
     }
 
+    public async computerVision(image: File, sessionId: string = "test", sessionCardId: string = "test"): Promise<Transcription>
+    {
+        let fileParameter = {} as FileParameter;
+        fileParameter.data = image;
+
+        return await new Promise(resolve =>
+        {
+            this.didacClient.transcribeComputerVision(sessionId, sessionCardId, fileParameter).subscribe(transcription =>
+            {
+                resolve(transcription);
+            },
+            error =>
+            {
+                if (environment.production == false)
+                    console.log(error);
+
+                resolve(null);
+            });
+        });
+    }
+
+
+    public async startSession(deckId: string): Promise<string>
+    {
+        return await new Promise(resolve =>
+        {
+            this.didacClient.startSession(deckId).subscribe((sessionId) =>
+            {
+                resolve(sessionId);
+            },
+            error =>
+            {
+                if (environment.production == false)
+                    console.log(error);
+
+                resolve("");
+            });
+        });
+    }
     
     public async endSession(sessionId: any): Promise<boolean>
     {
@@ -91,23 +129,5 @@ export class DidacService
                 resolve(false);
             });
         });
-    }
-
-    public async startSession(deckId: string): Promise<string>
-    {
-        return await new Promise(resolve =>
-            {
-                this.didacClient.startSession(deckId).subscribe((sessionId) =>
-                {
-                    resolve(sessionId);
-                },
-                error =>
-                {
-                    if (environment.production == false)
-                        console.log(error);
-    
-                    resolve("");
-                });
-            });
     }
 }

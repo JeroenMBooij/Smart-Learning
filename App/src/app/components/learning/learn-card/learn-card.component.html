@@ -1,11 +1,17 @@
 <div class="container-header-height">
+
     <mat-progress-bar  mode="determinate" value="40" color="accent" style="filter: brightness(1.75);"></mat-progress-bar>
+
     <div class="d-flex flex-column justify-content-center ml-auto mr-auto question-window-width h-100">
+
         <div class="question-window-height">
             <front-card [frameSource]="frontFrameSource" (flipCardEvent)="flipCard($event)"></front-card>
         </div>
+
         <div *ngIf="showAnswer">
             <back-card  [frameSource]="backFrameSource" (feedbackEvent)="feedback($event)"></back-card>
         </div>
+
     </div>
+    
 </div>

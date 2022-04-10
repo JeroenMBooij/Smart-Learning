@@ -20,8 +20,8 @@ services:
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/Files/config/firebase-admin-secret.json
 
-  #teacherdidac.transcribing-nn:
-    #image: booij/transcribing-nn.service 
+  teacherdidac.transcribing-nn:
+    image: booij/transcribing-nn.service 
   
   teacherdidac.authentication:
     pull_policy: always

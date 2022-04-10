@@ -10,6 +10,9 @@ export class BackCardComponent implements OnInit , AfterViewInit {
     @Input()
     public frameSource: string;
 
+    @Input()
+    public provideFeedback: boolean;
+
     @Output() 
     feedbackEvent = new EventEmitter<string>();
 

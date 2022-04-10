@@ -118,29 +118,51 @@
                 </div>
 
                 <div [ngClass]="{'d-none' : displayAdvancedSettings == false}">
-                    
+
+                    <div class="d-flex justify-content-between mt-4">
+
+                        <div class="d-flex flex-wrap">
+                            <div *ngFor="let step of learningSteps; let i = index" 
+                                class="d-flex justify-content-between"
+                            >
+                                <mat-form-field color="accent">
+                                    <mat-label>{{'card.step' | translate }}-{{i + 1}}</mat-label>
+                                    <input 
+                                        matInput
+                                        type="number"
+                                        (change)="updateLearningStep(i, $event.target.value)"
+                                        [value]="step">
+                                    <mat-error *ngIf="deckForm.hasError('again') && !deckForm.hasError('required')">
+                                        {{'error.deck.again' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-icon 
+                                    [svgIcon]='themeService.addButton | async' 
+                                    class="fade-icon rotate-45 ml-4 mr-4 mt-3"
+                                    (click)="deleteLearningStep(i)"
+                                ></mat-icon>
+                            </div>
+                        </div>
+                        <mat-icon 
+                            [svgIcon]='themeService.addButton | async' 
+                            class="my-icon-button mt-3 ml-4"
+                            (click)="addLearningStep()"
+                        ></mat-icon>
+                        <mat-icon svgIcon='my-info' class="fade-icon mt-4" (click)="his.open('deck.info.feedbackDifficulty')"></mat-icon>
+                    </div>
+
                     <div class="d-flex justify-content-between">
                         <div class="mt-4 w-100">
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>{{'deck.intervalModifier' | translate }}</mat-label>
-                                <input 
-                                    matInput
-                                    type="number" 
-                                    [formControl]="intervalModifier">
-                                <mat-error *ngIf="deckForm.hasError('intervalModifier') && !deckForm.hasError('required')">
-                                    {{'error.deck.intervalModifier' | translate }}
-                                </mat-error>
-                            </mat-form-field>
 
                             <div class="d-flex justify-content-between mt-4">
                                 <mat-form-field color="accent" class="w-45">
-                                    <mat-label>{{'deck.hardIntervalModifier' | translate }}</mat-label>
+                                    <mat-label>{{'deck.intervalModifier' | translate }}</mat-label>
                                     <input 
                                         matInput
                                         type="number" 
-                                        [formControl]="hardIntervalModifier">
-                                    <mat-error *ngIf="deckForm.hasError('hardIntervalModifier') && !deckForm.hasError('required')">
-                                        {{'error.deck.hardIntervalModifier' | translate }}
+                                        [formControl]="intervalModifier">
+                                    <mat-error *ngIf="deckForm.hasError('intervalModifier') && !deckForm.hasError('required')">
+                                        {{'error.deck.intervalModifier' | translate }}
                                     </mat-error>
                                 </mat-form-field>
 
@@ -202,7 +224,7 @@
                             <input 
                                 matInput
                                 type="number"
-                                [formControl]="again">
+                                [formControl]="hard">
                             <mat-error *ngIf="deckForm.hasError('hard') && !deckForm.hasError('required')">
                                 {{'error.deck.hard' | translate }}
                             </mat-error>

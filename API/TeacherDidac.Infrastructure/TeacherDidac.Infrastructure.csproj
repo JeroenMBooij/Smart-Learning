@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TeacherDidac.Application\TeacherDidac.Application.csproj" />
+    <ProjectReference Include="..\TeacherDidac.Common\TeacherDidac.Common.csproj" />
+  </ItemGroup>
+
 </Project>

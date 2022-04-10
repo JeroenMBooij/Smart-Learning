@@ -3,8 +3,6 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeacherDidac.Application.Contracts.Repositories;
-using TeacherDidac.Common.Constants;
-using TeacherDidac.Common.Extentions;
 using TeacherDidac.Domain.Entities.Firebase;
 using TeacherDidac.Persistance.Firebase.Constants;
 
@@ -24,8 +22,9 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
                 return null;
 
             var deck = snapshot.ConvertTo<Deck>();
+            deck.Id = snapshot.Id;
 
-            if(eager)
+            if (eager)
                 deck.Cards = await docRef.IncludeAsync<Card>(Collection.Cards);
 
             return deck;

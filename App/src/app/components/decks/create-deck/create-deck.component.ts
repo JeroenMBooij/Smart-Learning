@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DECK_DEFAULT_AGAIN, DECK_DEFAULT_DEFAULT_EASE_MODIFIER, DECK_DEFAULT_EASE_BONUS, DECK_DEFAULT_EASE_PENALTY, DECK_DEFAULT_EASY, DECK_DEFAULT_FEEDBACKOPTION, DECK_DEFAULT_GOOD, DECK_DEFAULT_HARD, DECK_DEFAULT_HARD_INTERVAL_MODIFIER, DECK_DEFAULT_INTERVAL_MODIFIER } from 'src/app/common/constants/deck.constants';
+import { DECK_DEFAULT_AGAIN, DECK_DEFAULT_DEFAULT_EASE_MODIFIER, DECK_DEFAULT_EASE_BONUS, DECK_DEFAULT_EASE_PENALTY, DECK_DEFAULT_EASY, DECK_DEFAULT_FEEDBACKOPTION, DECK_DEFAULT_GOOD, DECK_DEFAULT_HARD, DECK_DEFAULT_INTERVAL_MODIFIER, DECK_DEFAULT_LEARNING_STEPS } from 'src/app/common/constants/deck.constants';
 import { ROBOT_DEATH_STATE, ROBOT_WALKING_STATE, ROBOT_DANCE_STATE, ROBOT_THUMBSUP_EMOTE, ROBOT_RUNNING_STATE, ROBOT_WAVE_EMOTE, ROBOT_YES_EMOTE } from 'src/app/common/constants/robot.constants';
 import { environment } from 'src/environments/environment';
 import { ThemeService } from 'src/app/services/theme/theme.service';
@@ -38,6 +38,7 @@ export class CreateDeckComponent implements OnInit {
     public playerTeams: Observable<ITeam[]>;
     public categories: Observable<ICategory[]>;
     public feedbackOptions: SelectionInput[];
+    public learningSteps: number[];
     public answerOptions: SelectionInput[];
     public showAnswerOptions = false;
 
@@ -62,13 +63,11 @@ export class CreateDeckComponent implements OnInit {
         answerOptions : new FormControl('',[
             Validators.required,
         ]),
+        learningSteps : new FormControl('',[]),
         defaultEaseModifier : new FormControl(DECK_DEFAULT_DEFAULT_EASE_MODIFIER,[
             Validators.required,
         ]),
         intervalModifier : new FormControl(DECK_DEFAULT_INTERVAL_MODIFIER,[
-            Validators.required,
-        ]),
-        hardIntervalModifier : new FormControl(DECK_DEFAULT_HARD_INTERVAL_MODIFIER,[
             Validators.required,
         ]),
         easeBonus : new FormControl(DECK_DEFAULT_EASE_BONUS,[
@@ -98,9 +97,9 @@ export class CreateDeckComponent implements OnInit {
     get description() { return this.deckForm.get('description') }
     get feedbackOption() { return this.deckForm.get('feedbackOption') }
     get selectedAnswerOptions() { return this.deckForm.get('answerOptions') }
+    get selectedLearningSteps() { return this.deckForm.get('learningSteps') }
     get defaultEaseModifier() { return this.deckForm.get('defaultEaseModifier') }
     get intervalModifier() { return this.deckForm.get('intervalModifier') }
-    get hardIntervalModifier() { return this.deckForm.get('hardIntervalModifier') }
     get easeBonus() { return this.deckForm.get('easeBonus') }
     get easePenalty() { return this.deckForm.get('easePenalty') }
     get again() { return this.deckForm.get('again') }
@@ -123,6 +122,10 @@ export class CreateDeckComponent implements OnInit {
     {
         this.playerTeams = this.teamService.getPlayerTeams();
         this.categories = this.deckService.getUserCategories();
+        this.learningSteps = DECK_DEFAULT_LEARNING_STEPS;
+
+        this.selectedLearningSteps.setValue(this.learningSteps);
+        this.selectedCategories.setValue([]);
     }
 
     ngOnInit(): void 
@@ -211,8 +214,8 @@ export class CreateDeckComponent implements OnInit {
             }
         });
 
-        dialogReference.afterClosed().subscribe(async result => {
-            
+        dialogReference.afterClosed().subscribe(async result => 
+        {
             if(result.confirmed)
             {
                 let created = await this.deckService.createCategory(result.content);
@@ -258,6 +261,7 @@ export class CreateDeckComponent implements OnInit {
 
     public async createDeck(): Promise<void>
     {
+        //TODO database security rule deck structure (deck has all required fields)
         if(this.deckForm.valid)
         {
             this.robotState = ROBOT_YES_EMOTE;
@@ -275,6 +279,26 @@ export class CreateDeckComponent implements OnInit {
     {
         this.showAnswerOptions = !this.showAnswerOptions;
         this.selectedAnswerOptions.setValue([ANSWER_OPTION_TYPE, ANSWER_OPTION_WRITE, ANSWER_OPTION_SPEECH]);
+    }
+
+    public addLearningStep(): void
+    {
+        this.learningSteps.push(Math.max(...this.learningSteps) + 1);
+
+        this.selectedLearningSteps.setValue(this.learningSteps);
+    }
+
+    public updateLearningStep(index: number, value: number): void
+    {
+        // TODO validate if value is higher than previous learningstep value
+        this.learningSteps[index] = value;
+
+        this.selectedLearningSteps.setValue(this.learningSteps);
+    }
+
+    public deleteLearningStep(index: number): void
+    {
+        this.learningSteps.splice(index, 1);
     }
 
     private setDeckOptions()

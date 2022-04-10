@@ -29,9 +29,6 @@ namespace TeacherDidac.Domain.Entities.Firebase
         [FirestoreProperty("intervalModifier")]
         public int IntervalModifier { get; set; }
 
-        [FirestoreProperty("hardIntervalModifier")]
-        public int HardIntervalModifier { get; set; }
-
         [FirestoreProperty("defaultEaseModifier")]
         public int DefaultEaseModifier { get; set; }
 
@@ -52,6 +49,9 @@ namespace TeacherDidac.Domain.Entities.Firebase
 
         [FirestoreProperty("easy")]
         public int Easy { get; set; }
+
+        [FirestoreProperty("learningSteps")]
+        public int[] LearningSteps { get; set; }
 
         public List<Card> Cards { get; set; }
 

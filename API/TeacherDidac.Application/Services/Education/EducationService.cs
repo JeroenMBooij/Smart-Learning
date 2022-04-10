@@ -128,9 +128,9 @@ namespace TeacherDidac.Application.Services.Education
 
         private async Task<int> CalculateLearningInterval(PlayerCard playerCard)
         {
-            Card card = await _cardRepository.GetCardAsync(playerCard.DeckId, playerCard.CardId);
+            Deck deck = await _deckRepository.GetDeck(playerCard.DeckId, false);
 
-            if (playerCard.CurrentStepIndex >= card.Steps.Length)
+            if (playerCard.CurrentStepIndex >= deck.LearningSteps.Length)
             {
                 await _cardRepository.UpdatePlayerCardFieldAsync(playerCard, nameof(PlayerCard.Phase).ToCamelCase(), EducationPhase.Graduate);
 
@@ -139,7 +139,11 @@ namespace TeacherDidac.Application.Services.Education
                 return 1;
             }
 
-            return card.Steps[playerCard.CurrentStepIndex];
+            var step = deck.LearningSteps[playerCard.CurrentStepIndex];
+
+            await _cardRepository.UpdatePlayerCardFieldAsync(playerCard, nameof(PlayerCard.CurrentStepIndex).ToCamelCase(), playerCard.CurrentStepIndex++);
+
+            return step;
         }
 
 
@@ -152,17 +156,16 @@ namespace TeacherDidac.Application.Services.Education
         private async Task<int> CalculateGraduateInterval(PlayerCard playerCard, FeedbackOptions feedback)
         {
             Deck deck = await _deckRepository.GetDeck(playerCard.DeckId, false);
-            Card card = await _cardRepository.GetCardAsync(playerCard.DeckId, playerCard.CardId);
 
-            await UpdateEaseModifier(playerCard, feedback);
+            await UpdateEaseModifier(deck, playerCard, feedback);
 
             int newInterval;
             switch (feedback)
             {
                 case FeedbackOptions.Again:
-                    newInterval = playerCard.CurrentInterval;
+                    newInterval = (int)(playerCard.CurrentInterval * deck.EasePenalty.ToPercent());
                     await _cardRepository.UpdatePlayerCardFieldAsync(playerCard, nameof(PlayerCard.Phase).ToCamelCase(), EducationPhase.Relearn);
-                    await _cardRepository.UpdatePlayerCardFieldAsync(playerCard, nameof(PlayerCard.RelearnInterval).ToCamelCase(), card.Steps[0]);
+                    await _cardRepository.UpdatePlayerCardFieldAsync(playerCard, nameof(PlayerCard.RelearnInterval).ToCamelCase(), deck.LearningSteps[0]);
                     break;
 
                 case FeedbackOptions.Hard:
@@ -170,11 +173,11 @@ namespace TeacherDidac.Application.Services.Education
                     break;
 
                 case FeedbackOptions.Good:
-                    newInterval = (int)(playerCard.CurrentInterval * (decimal)(playerCard.EaseModifier / 100) * deck.IntervalModifier);
+                    newInterval = (int)(playerCard.CurrentInterval * playerCard.EaseModifier.ToPercent() * deck.IntervalModifier.ToPercent());
                     break;
 
                 case FeedbackOptions.Easy:
-                    newInterval = (int)(playerCard.CurrentInterval * (decimal)(playerCard.EaseModifier / 100) * deck.IntervalModifier);
+                    newInterval = (int)(playerCard.CurrentInterval * playerCard.EaseModifier.ToPercent() * deck.IntervalModifier.ToPercent() * deck.EaseBonus.ToPercent());
                     break;
 
                 default:
@@ -185,25 +188,27 @@ namespace TeacherDidac.Application.Services.Education
             return newInterval;
         }
 
-        private async Task UpdateEaseModifier(PlayerCard playerCard, FeedbackOptions feedback)
+        private async Task UpdateEaseModifier(Deck deck, PlayerCard playerCard, FeedbackOptions feedback)
         {
             switch(feedback)
             {
                 case FeedbackOptions.Again:
                     if (playerCard.EaseModifier != 130)
-                        playerCard.EaseModifier = (int)(playerCard.EaseModifier * 0.8);
+                        playerCard.EaseModifier = (int)(playerCard.EaseModifier * deck.Again.ToPercent());
                     break;
 
                 case FeedbackOptions.Hard:
                     if (playerCard.EaseModifier != 130)
-                        playerCard.EaseModifier = (int)(playerCard.EaseModifier * 0.85);
+                        playerCard.EaseModifier = (int)(playerCard.EaseModifier * deck.Hard.ToPercent());
                     break;
 
                 case FeedbackOptions.Good:
+                    if (playerCard.EaseModifier != 130)
+                        playerCard.EaseModifier = (int)(playerCard.EaseModifier * deck.Good.ToPercent());
                     return;
 
                 case FeedbackOptions.Easy:
-                    playerCard.EaseModifier = (int)(playerCard.EaseModifier * 1.15);
+                    playerCard.EaseModifier = (int)(playerCard.EaseModifier * deck.Easy.ToPercent());
                     break;
 
                 default:

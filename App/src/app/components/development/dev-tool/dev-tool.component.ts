@@ -34,7 +34,7 @@ export class DevToolComponent implements OnInit {
         this.testAdminPassword = "string";
         this.testUser = {} as IPlayer;
         this.testUser.username = 'Timmeh';
-        this.testUser.email= 'test4@gmail.com';
+        this.testUser.email= 'user@test.test';
         this.testUserPassword = 'string';
 
     }

@@ -6,13 +6,17 @@
         <h5>{{'signpost.front' | translate}}</h5>
         <div class="d-inline-block theme-border p-2">
             <div class="card-container">
-                <front-card [frameSource]="frontFrameSource"></front-card>
+                <front-card 
+                    [answerOptions]="(deck | async)?.answerOptions" 
+                    [frameSource]="frontFrameSource"
+                    (flipCardEvent)="submit($event)"
+                ></front-card>
             </div>
         </div>
         <h5 class="mt-4">{{'signpost.back' | translate}}</h5>
         <div class="d-inline-block theme-border p-2">
             <div class="card-container">
-                <back-card [frameSource]="backFrameSource"></back-card>
+                <back-card [provideFeedback]="provideFeedback" [frameSource]="backFrameSource"></back-card>
             </div>
         </div>
         <div class="robo-container theme-border mt-5 mb-4">

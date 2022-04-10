@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherDidac.Application;
+using TeacherDidac.Infrastructure;
 using TeacherDidac.Persistance;
 using TeacherDidac.Web.Middleware.Auth.MyAuthenticationServer;
 using TeacherDidac.Web.Swagger;
@@ -28,6 +29,7 @@ namespace TeacherDidac.Web
 
             services.AddApplication(Configuration);
             services.AddPersistance(Configuration);
+            services.AddInfrastructure(Configuration);
             services.RegisterAuthentication(Configuration);
 
         }

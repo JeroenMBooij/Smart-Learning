@@ -1,17 +1,23 @@
 
-<iframe #frame 
-    class="preview-frame theme-border" 
-    sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
-        allow-presentation allow-scripts allow-top-navigation-by-user-activation"
-></iframe>
+<div class="w-100 h-100">
+    <iframe #frame 
+        class="preview-frame theme-border" 
+        sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
+            allow-presentation allow-scripts allow-top-navigation-by-user-activation"
+    ></iframe>
 
-<div>
-    <div>
-        <div  *ngIf="showAnswer.value == false" class="w-25 mt-5 mb-5 ml-auto mr-auto">
+    <div class="w-100 h-25">
+        <div *ngIf="selectedWrite" class="w-100 h-100">
+            <draw 
+                (submitEvent)="submit($event)"
+                [canSubmit]="canSubmit"
+            ></draw>
+        </div>
+
+        <div  *ngIf="validate == false" class="w-25 h-5 pt-3 pb-5 ml-auto mr-auto">
             <main-button 
-                (click)="submit()" 
+                (click)="submit({})" 
                 label="{{'input.showAnswer' | translate }}" 
-                [disabled]="showAnswer.value == true"
             ></main-button>
         </div>
     </div>

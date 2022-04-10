@@ -45,9 +45,6 @@ namespace TeacherDidac.Domain.Entities.Firebase
         [FirestoreProperty("javascript")]
         public string Javascript { get; set; }
 
-        [FirestoreProperty("steps")]
-        public int[] Steps { get; set; }
-
         public List<CardMedia> Media { get; set; }
 
         public List<PlayerCard> PlayerCards { get; set; }

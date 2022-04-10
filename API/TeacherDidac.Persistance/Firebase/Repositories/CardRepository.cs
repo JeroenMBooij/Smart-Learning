@@ -27,6 +27,7 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
                 return null;
 
             var card = snapshot.ConvertTo<Card>();
+            card.Id = snapshot.Id;
 
             return card;
         }
@@ -45,6 +46,7 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 playerCard = documentSnapshot.ConvertTo<PlayerCard>();
+                playerCard.Id = documentSnapshot.Id;
                 break;
             }
 
@@ -68,6 +70,7 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 document = documentSnapshot.ConvertTo<PlayerCard>();
+                document.Id = documentSnapshot.Id;
                 break;
             }
 
@@ -93,7 +96,7 @@ namespace TeacherDidac.Persistance.Firebase.Repositories
 
         public async Task<bool> UpdatePlayerCardFieldAsync(PlayerCard playerCard, string field, object value)
         {
-            return await UpdatePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, playerCard.UserId, field, value);
+            return await UpdatePlayerCardFieldAsync(playerCard.DeckId, playerCard.CardId, playerCard.Id, field, value);
         }
 
         public async Task<bool> UpdatePlayerCardFieldAsync(string deckId, string cardId, string playerCardId, string field, object value)

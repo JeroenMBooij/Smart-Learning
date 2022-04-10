@@ -6,8 +6,9 @@ export interface IDeck extends IDeckIdentity
     teamId: string;
     createdAt: Date;
     selectedCategories: string[];
+    learningSteps: number[];
     description: string;
-    answerOptions: string[],
+    answerOptions: string[];
     feedbackOption: string;
     intervalModifier: number;
     hardIntervalModifier: number;

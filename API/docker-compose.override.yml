@@ -11,6 +11,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       AUTH_SERVER_URL: ${AUTH_SERVER_URL}
+      RECOGNITION_SERVER_URL: ${RECOGNITION_SERVER_URL}
 
   
   teacherdidac.scheduler:
@@ -68,3 +69,17 @@ services:
       - "2000:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Staging
+
+  teacherdidac.transcribing-nn:
+    restart: always
+    container_name: teacherdidac.transcribing-nn
+    ports:
+      - "4000:8000"
+    entrypoint: ["/bin/sh","-c"]
+    command: 
+    - |
+        python manage.py runserver 0.0.0.0:8000
+    environment:
+        DJANGO_DEBUG: 'True'
+
+    

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeacherDidac.Application\TeacherDidac.Application.csproj" />
     <ProjectReference Include="..\TeacherDidac.Common\TeacherDidac.Common.csproj" />
+    <ProjectReference Include="..\TeacherDidac.Infrastructure\TeacherDidac.Infrastructure.csproj" />
     <ProjectReference Include="..\TeacherDidac.Persistance\TeacherDidac.Persistance.csproj" />
   </ItemGroup>
 
