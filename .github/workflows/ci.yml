@@ -47,4 +47,4 @@ jobs:
           context: ./App
           file: App/nginx.stage.Dockerfile
           push: true
-          tags: booij/teacher-didac.scheduler:latest
+          tags: booij/teacherdidac.app:latest
