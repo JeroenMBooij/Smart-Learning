@@ -1,5 +1,5 @@
 deployment:
-  environment: PRODUCTION
+  environment: Production
   database:
     main:
       host: teacherdidac.db

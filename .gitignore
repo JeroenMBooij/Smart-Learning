@@ -64,6 +64,7 @@ Thumbs.db
 *.sln.docstates
 docker-compose.vs.debug.yml
 firebase-admin-secret.json
+values.staging.yaml
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
