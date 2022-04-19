@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading.Tasks;
 using TeacherDidac.Scheduler.Firebase.Cards;
 
@@ -13,6 +14,8 @@ namespace TeacherDidac.Scheduler
         {
             var host = CreateHostBuilder(args)
                 .Build();
+
+            Console.WriteLine("test");
 
             using (var scope = host.Services.CreateScope())
             {
