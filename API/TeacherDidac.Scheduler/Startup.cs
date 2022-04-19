@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using TeacherDidac.Persistance;
 using TeacherDidac.Scheduler.Firebase.Cards;
 
@@ -30,7 +31,7 @@ namespace TeacherDidac.Scheduler
             string connectionString = GetDatabaseConnectionString(Configuration);
             services.AddDbContext<DbContext>(options =>
             {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), providerOptions => providerOptions.EnableRetryOnFailure());
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), providerOptions => providerOptions.EnableRetryOnFailure(30, TimeSpan.FromSeconds(30), null));
             });
 
             services.AddHangfire(x => x.UseStorage(new MySqlStorage(connectionString, new MySqlStorageOptions())));
