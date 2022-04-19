@@ -15,8 +15,6 @@ namespace TeacherDidac.Scheduler
             var host = CreateHostBuilder(args)
                 .Build();
 
-            Console.WriteLine("test");
-
             using (var scope = host.Services.CreateScope())
             {
                 var database = scope.ServiceProvider.GetService<DbContext>().Database;
