@@ -40,13 +40,14 @@ namespace TeacherDidac.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TeacherDidac.Web v1");
-                    c.RoutePrefix = string.Empty;
-                });
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TeacherDidac.Web v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseCors(options =>
             {
