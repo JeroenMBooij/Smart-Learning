@@ -13,7 +13,7 @@ prerequisite
 
 <br>
 
-<p> Execute the following commands on your local machine</p>
+<p> Execute the following commands on your local machine inside the Smart-Learning/Helm folder</p>
 <h2>🛡️ Setup environment </h2>
 docker run -it --rm -v ${PWD}:/work -w /work --entrypoint /bin/bash digitalocean/doctl:1.45.0 <br>
 mv /app/doctl /usr/local/bin/ <br>
