@@ -5,6 +5,7 @@ services:
         image: 'my-angular-app'
         build: 
           context: .
-          dockerfile: nginx.stage.Dockerfile
+          dockerfile: stage.Dockerfile
+        restart: always
         ports:
-          - 4000:80
+          - 4300:4200
