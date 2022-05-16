@@ -4,7 +4,9 @@
 Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
 
 <h3>Steps</h3>
-* prerequisite - docker installed
+* prerequisite 
+  - docker installed
+  - production secret environment variables set (<a href="">see production.values.yaml</a>)
 
 <b>Existing Cluster</b>
 <p> Run the following commands on your local machine</p>
@@ -22,6 +24,6 @@ tar -C /tmp/ -zxvf helm-v3.4.0-linux-amd64.tar.gz <br>
 rm helm-v3.4.0-linux-amd64.tar.gz <br>
 mv /tmp/linux-amd64/helm /usr/local/bin/helm <br>
 chmod +x /usr/local/bin/helm <br>
-helm install didac-release . --values values.staging.yaml <br>
+helm install didac-release . --values production.staging.yaml <br>
 
   
