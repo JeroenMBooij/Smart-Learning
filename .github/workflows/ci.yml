@@ -45,6 +45,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./App
-          file: App/nginx.stage.Dockerfile
+          file: App/stage.Dockerfile
           push: true
           tags: booij/teacherdidac.app:latest
