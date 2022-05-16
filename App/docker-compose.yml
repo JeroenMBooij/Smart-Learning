@@ -6,6 +6,6 @@ services:
         build: 
           context: .
           dockerfile: stage.Dockerfile
-        restart: always
+        pull_policy: always
         ports:
-          - 4300:4200
+          - 4300:80
