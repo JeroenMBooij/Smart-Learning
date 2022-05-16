@@ -24,7 +24,7 @@ tar -C /tmp/ -zxvf helm-v3.4.0-linux-amd64.tar.gz <br>
 rm helm-v3.4.0-linux-amd64.tar.gz <br>
 mv /tmp/linux-amd64/helm /usr/local/bin/helm <br>
 chmod +x /usr/local/bin/helm <br>
-helm install didac-release . --values production.staging.yaml <br>
+helm install didac-release . --values production.staging.yaml <br><br><br>
 
 <b>Create new Cluster</b>
 <p> Run the following commands on your local machine</p>
