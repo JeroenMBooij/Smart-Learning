@@ -19,7 +19,7 @@ doctl auth init <br>
 doctl kubernetes cluster kubeconfig save didac-cluster <br>
 
 <h2>💻 Create new Cluster</h2>
-doctl kubernetes cluster create didac-cluster --count 1 --size s-2vcpu-2gb --region ams3 <br>
+doctl kubernetes cluster create didac-cluster --count 1 --size s-2vcpu-2gb --region ams3 <br><br><br>
 
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl <br>
 chmod +x ./kubectl <br>
