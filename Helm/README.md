@@ -11,7 +11,7 @@ https://m.do.co/c/74a1c5d63dac
   <li> production secret environment variables set (<a href="https://github.com/JeroenMBooij/Smart-Learning/blob/main/Helm/values.production.yaml">see   production.values.yaml</a>) </li> 
 </ul>
 
-<br><br>
+<br>
 
 <p> Execute the following commands on your local machine</p>
 <h2>🛡️ Setup environment </h2>
