@@ -4,7 +4,7 @@
 Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
 
 <div style="border: solid 1px">
-<h3>Steps</h3>
+<h2>🛠️ Installation Steps:</h2>
 * prerequisite <br>
   - docker installed <br>
   - production secret environment variables set (<a href="https://github.com/JeroenMBooij/Smart-Learning/blob/main/Helm/values.production.yaml">see production.values.yaml</a>) <br><br>
