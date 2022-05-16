@@ -5,7 +5,7 @@ Coupon Link from DigitalOcean to get $100 credit for 60 days: <br/>
 https://m.do.co/c/74a1c5d63dac
 
 <h2>🛠️ Installation Steps DigitalOcean:</h2>
-* prerequisite 
+prerequisite 
 <ul>
   <li> docker installed </li> 
   <li> production secret environment variables set (<a href="https://github.com/JeroenMBooij/Smart-Learning/blob/main/Helm/values.production.yaml">see   production.values.yaml</a>) </li> 
