@@ -1,6 +1,6 @@
 # Kubernetes Helm Charts
 
-<h1>Digital Ocean</h1>
+<h1>🚀 Digital Ocean</h1>
 Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
 
 <div style="border: solid 1px">
