@@ -10,7 +10,9 @@ export const environment = {
     measurementId: "G-F0NXY27WJ5"
   },
   authenticationClient: {
-      baseUrl: "http://teacherdidac.authentication"
+      baseUrl: "http://teacherdidac.authentication",
+      appId: "716c80ee-8289-4360-aceb-de1e225ed096",
+      adminId: "fa548fb2-fb4f-42e5-84eb-f0546c11e27f"
   },
   didacClient: {
       baseUrl: "http://teacherdidac.api"
