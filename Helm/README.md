@@ -1,7 +1,9 @@
 # 🚀 Kubernetes Helm Charts
 
 <h1>🧐 Digital Ocean</h1>
-Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
+Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster <br>
+Coupon Link to get $100 credit for 60 days: <br/>
+https://m.do.co/c/74a1c5d63dac
 
 <h2>🛠️ Installation Steps:</h2>
 * prerequisite <br>
