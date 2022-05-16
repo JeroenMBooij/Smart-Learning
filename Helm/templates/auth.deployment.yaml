@@ -18,9 +18,10 @@ spec:
     spec:
       containers:
       - name: teacher-didac-auth-deployment
-        image: booij/authentication.server
+        image: booij/authentication.service
+        imagePullPolicy: {{.Values.deployment.image.pullPolicy}}
         ports:
-        - containerPort: {{.Values.deployment.ports.auth.containerPort}}
+        - containerPort: 80
         resources:
           requests:
             memory: {{.Values.deployment.resources.auth.requestMemory}}
@@ -35,7 +36,7 @@ spec:
           valueFrom: 
             configMapKeyRef:
               name: teacher-didac-configmap
-              key: database.main.host
+              key: database-main-host
         - name: DB_NAME
           value: IdentityDb
         - name: DB_USER
@@ -44,36 +45,40 @@ spec:
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: database.main.password
-        - name: JWT_SECRETTKEY
+              key: database-main-password
+        - name: JWT_SECRETKEY
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: jwt.key
+              key: jwt-key
         - name: JWT_ISSUER
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: jwt.issuer
+              key: jwt-issuer
         - name: EMAIL_APPKEY
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: email.appkey
+              key: email-appkey
 
               
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: teacher-didac-email-service
+  name: teacher-didac-auth-service
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "didac-auth-loadbalancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/index.html"
 spec:
   selector:
-    app: teacher-didac-email-deployment
+    app: teacher-didac-auth-deployment
   type: LoadBalancer  
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
-      port: {{.Values.deployment.ports.auth.containerPort}}
-      targetPort: {{.Values.deployment.ports.auth.containerPort}}
-      nodePort: {{.Values.deployment.ports.auth.nodePort}}
+      port: 80
+      targetPort: 80
 

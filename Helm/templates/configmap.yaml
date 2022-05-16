@@ -3,10 +3,6 @@ kind: ConfigMap
 metadata:
   name: teacher-didac-configmap
 data:
-  database: 
-    main: 
-      host: {{.Values.deployment.database.main.host}}
-  auth:
-    url: {{.Values.deployment.auth.url}}
-  api:
-    url: {{.Values.deployment.api.url}}
+  database-main-host: {{.Values.deployment.database.main.host}}
+  auth-url: {{.Values.deployment.auth.url}}
+  api-url: {{.Values.deployment.api.url}}

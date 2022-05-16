@@ -1,48 +1,38 @@
 deployment:
   environment: Production
+  debug:
+    recognition: "True"
   database:
     main:
       host: teacherdidac.db
-      user: ${MAIN_DATABASE_USER}
-      password: ${MAIN_DATABASE_PASSWORD}
+      user: $MAIN_DATABASE_USER
+      password: $MAIN_DATABASE_PASSWORD
       storageCapacity: 10Gi
   hangfire: 
-    user: ${HANGFIRE_USER}
-    password: ${HANGFIRE_PASSWORD}
+    user: $HANGFIRE_USER
+    password: $HANGFIRE_PASSWORD
   jwt:
-    key: ${JWT_KEY}
-    issuer: ${JWT_ISSUER}
+    key: $JWT_KEY
+    issuer: $JWT_ISSUER
   email:
-    appkey: ${EMAIL_APPKEY}
+    appkey: $EMAIL_APPKEY
   auth:
     url: http://teacherdidac.authentication
   api:
     url: http://teacherdidac.api
+  recognition:
+    allowedHosts: '*'
   ports:
-    app:
-      containerPort: 4000
-      nodePort: 34000
-    api:
-      containerPort: 7000
-      nodePort: 37000
-    auth:
-      containerPort: 3000
-      nodePort: 33000
-    email:
-      containerPort: 2000
-      nodePort: 32000
-    scheduler:
-      containerPort: 7001
-      nodePort: 37001
-    mainDB:
-      containerPort: 3003
-      nodePort: 33003
+    mainDb:
+      containerPort: 3306
+      targetPort: 3306
+      nodePort: 30303
   resources:
     app:
       requestMemory: 50Mi
-      requestCPU: 50m
-      limitMemory: 500Mi
-      limitCPU: 250m
+      requestCPU: 25m
+      limitMemory: 100Mi
+      limitCPU: 50m
     api:
       requestMemory: 50Mi
       requestCPU: 50m
@@ -63,7 +53,12 @@ deployment:
       requestCPU: 50m
       limitMemory: 400Mi
       limitCPU: 200m
-    mainDB:
+    mainDb:
+      requestMemory: 50Mi
+      requestCPU: 50m
+      limitMemory: 400Mi
+      limitCPU: 200m
+    recognition:
       requestMemory: 50Mi
       requestCPU: 50m
       limitMemory: 400Mi

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacher-didac-recognition
+  labels:
+    app: teacher-didac-recognition
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teacher-didac-recognition-deployment
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: teacher-didac-recognition-deployment
+    spec:
+      containers:
+      - name: teacher-didac-recognition-deployment
+        image: booij/transcribing-nn.service
+        imagePullPolicy: {{.Values.deployment.image.pullPolicy}}
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: {{.Values.deployment.resources.recognition.requestMemory}}
+            cpu: {{.Values.deployment.resources.recognition.requestCPU}}
+          limits:
+            memory: {{.Values.deployment.resources.recognition.limitMemory}}
+            cpu: {{.Values.deployment.resources.recognition.limitCPU}}
+        env:
+        - name: DJANGO_DEBUG
+          value: {{.Values.deployment.recognition.debug | quote}}
+        - name: ALLOWED_HOSTS
+          value: {{.Values.deployment.recognition.allowedHosts | quote}}
+        
+
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teacher-didac-recognition-service
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "didac-recognition-loadbalancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/"
+spec:
+  selector:
+    app: teacher-didac-recognition-deployment
+  type: LoadBalancer 
+  externalTrafficPolicy: Local
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+

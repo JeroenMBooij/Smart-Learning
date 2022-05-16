@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: teacher-didac-main-db-deployment
   labels:
-    app: mongodb
+    app: teacher-didac-main-db-deployment
 spec:
   serviceName: teacher-didac-main-db-service
   selector:
@@ -30,11 +30,11 @@ spec:
               memory: {{.Values.deployment.resources.mainDb.limitMemory}}
               cpu: {{.Values.deployment.resources.mainDb.limitCPU}}
           env:
-          - name: ASPNETCORE_ENVIRONMENT
+          - name: MYSQL_ROOT_PASSWORD
             valueFrom: 
               secretKeyRef:
                 name: teacher-didac-secret
-                key: database.main.password
+                key: database-main-password
           volumeMounts:
           - name: data
             mountPath: /var/lib/mysql
@@ -55,8 +55,7 @@ spec:
   ports:
     - protocol: TCP
       port: {{.Values.deployment.ports.mainDb.containerPort}}
-      targetPort: {{.Values.deployment.ports.mainDb.containerPort}}
-      nodePort: {{.Values.deployment.ports.mainDb.nodePort}}
+      targetPort: {{.Values.deployment.ports.mainDb.targetPort}}
 
 
 ---

@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: teacher-didac-app-deployment
+  name: teacher-didac-app
   labels:
-    app: teacher-didac-app-deployment
+    app: teacher-didac-app
 spec:
   replicas: 1
   selector:
@@ -19,8 +19,9 @@ spec:
       containers:
       - name: teacher-didac-app-deployment
         image: booij/teacherdidac.app
+        imagePullPolicy: {{.Values.deployment.image.pullPolicy}}
         ports:
-        - containerPort: {{.Values.deployment.ports.app.containerPort}}
+        - containerPort: 80
         resources:
           requests:
             memory: {{.Values.deployment.resources.app.requestMemory}}
@@ -33,21 +34,25 @@ spec:
           valueFrom: 
             configMapKeyRef:
               name: teacher-didac-configmap
-              key: api.url
+              key: api-url
 
               
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: teacher-didac-app-deployment
+  name: teacher-didac-app-service
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "didac-app-loadbalancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/"
 spec:
   selector:
-    app: teacher-didac-scheduler-app
+    app: teacher-didac-app-deployment
   type: LoadBalancer  
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
-      port: {{.Values.deployment.ports.app.containerPort}}
-      targetPort: {{.Values.deployment.ports.app.containerPort}}
-      nodePort: {{.Values.deployment.ports.app.nodePort}}
+      port: 80
+      targetPort: 80
 

@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: teacher-didac-api-deployment
+  name: teacher-didac-api
   labels:
-    app: teacher-didac-api-deployment
+    app: teacher-didac-api
 spec:
   replicas: 1
   selector:
@@ -15,12 +15,17 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: teacher-didac-api-deployment
-    spec:
+    spec:      
+      volumes:
+      - name: google-service-secret
+        secret:
+          secretName: google-service-secret
       containers:
       - name: teacher-didac-api-deployment
-        image: booij/teacherdidac.api
+        image: booij/teacher-didac.api
+        imagePullPolicy: {{.Values.deployment.image.pullPolicy}}
         ports:
-        - containerPort: {{.Values.deployment.ports.api.containerPort}}
+        - containerPort: 80
         resources:
           requests:
             memory: {{.Values.deployment.resources.api.requestMemory}}
@@ -28,28 +33,37 @@ spec:
           limits:
             memory: {{.Values.deployment.resources.api.limitMemory}}
             cpu: {{.Values.deployment.resources.api.limitCPU}}
+        volumeMounts:
+        - name: google-service-secret
+          # all contents inside /app/File/config are overwritten
+          mountPath: "/app/Files/config"
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: {{.Values.deployment.database.firebase.serviceAccountLocation}}
         - name: AUTH_SERVER_URL
           valueFrom: 
             configMapKeyRef:
               name: teacher-didac-configmap
-              key: auth.url
-
-
+              key: auth-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: teacher-didac-api-service
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "didac-api-loadbalancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-port: "80"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/index.html"
 spec:
   selector:
     app: teacher-didac-api-deployment
-  type: LoadBalancer  
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
-      port: {{.Values.deployment.ports.api.containerPort}}
-      targetPort: {{.Values.deployment.ports.api.containerPort}}
-      nodePort: {{.Values.deployment.ports.api.nodePort}}
+      port: 80
+      targetPort: 80
 

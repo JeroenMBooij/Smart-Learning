@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: teacher-didac-email
+  name: teacher-didac-scheduler
   labels:
-    app: teacher-didac-email
+    app: teacher-didac-scheduler
 spec:
   replicas: 1
   selector:
@@ -16,11 +16,16 @@ spec:
       labels:
         app: teacher-didac-scheduler-deployment
     spec:
+      volumes:
+      - name: google-service-secret
+        secret:
+          secretName: google-service-secret
       containers:
       - name: teacher-didac-scheduler-deployment
-        image: booij/teacherdidac.scheduler
+        image: booij/teacher-didac.scheduler
+        imagePullPolicy: {{.Values.deployment.image.pullPolicy}}
         ports:
-        - containerPort: {{.Values.deployment.ports.scheduler.containerPort}}
+        - containerPort: 80
         resources:
           requests:
             memory: {{.Values.deployment.resources.scheduler.requestMemory}}
@@ -28,14 +33,20 @@ spec:
           limits:
             memory: {{.Values.deployment.resources.scheduler.limitMemory}}
             cpu: {{.Values.deployment.resources.scheduler.limitCPU}}
+        volumeMounts:
+        - name: google-service-secret
+          # all contents inside /app/File/config are overwritten
+          mountPath: "/app/Files/config"
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{.Values.deployment.environment}}
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: {{.Values.deployment.database.firebase.serviceAccountLocation}}
         - name: DB_HOST
           valueFrom: 
             configMapKeyRef:
               name: teacher-didac-configmap
-              key: database.main.host
+              key: database-main-host
         - name: DB_NAME
           value: ScheduleDb
         - name: DB_USER
@@ -44,14 +55,14 @@ spec:
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: database.main.password
+              key: database-main-password
         - name: HANGFIRE_USER
           value: {{.Values.deployment.hangfire.user}}
         - name: HANGFIRE_PASSWORD
           valueFrom: 
             secretKeyRef:
               name: teacher-didac-secret
-              key: hangfire.password
+              key: hangfire-password
 
               
 ---
@@ -59,13 +70,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: teacher-didac-scheduler-service
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "didac-scheduler-loadbalancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/api/Hangfire"
 spec:
   selector:
     app: teacher-didac-scheduler-deployment
-  type: LoadBalancer  
+  type: LoadBalancer 
+  externalTrafficPolicy: Local 
   ports:
     - protocol: TCP
-      port: {{.Values.deployment.ports.scheduler.containerPort}}
-      targetPort: {{.Values.deployment.ports.scheduler.containerPort}}
-      nodePort: {{.Values.deployment.ports.scheduler.nodePort}}
-
+      port: 80
+      targetPort: 80
