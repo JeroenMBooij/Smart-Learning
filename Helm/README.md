@@ -3,6 +3,7 @@
 <h1>Digital Ocean</h1>
 Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
 
+<div style="border: solid 1px">
 <h3>Steps</h3>
 * prerequisite <br>
   - docker installed <br>
@@ -43,5 +44,7 @@ rm helm-v3.4.0-linux-amd64.tar.gz <br>
 mv /tmp/linux-amd64/helm /usr/local/bin/helm <br>
 chmod +x /usr/local/bin/helm <br>
 helm install didac-release . --values production.staging.yaml <br>
+  
+</div>
 
   
