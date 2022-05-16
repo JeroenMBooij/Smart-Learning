@@ -1,15 +1,14 @@
-# Kubernetes Helm Charts
+# 🚀 Kubernetes Helm Charts
 
-<h1>🚀 Digital Ocean</h1>
+<h1>🧐 Digital Ocean</h1>
 Disclaimer: For data storage scalability these charts depend on a cloud managed MySQL database cluster
 
-<div style="border: solid 1px">
 <h2>🛠️ Installation Steps:</h2>
 * prerequisite <br>
   - docker installed <br>
   - production secret environment variables set (<a href="https://github.com/JeroenMBooij/Smart-Learning/blob/main/Helm/values.production.yaml">see production.values.yaml</a>) <br><br>
 
-<b>Existing Cluster</b>
+<h5>Existing Cluster</h5>
 <p> Run the following commands on your local machine</p>
 docker run -it --rm -v ${PWD}:/work -w /work --entrypoint /bin/bash digitalocean/doctl:1.45.0 <br>
 mv /app/doctl /usr/local/bin/ <br>
@@ -27,7 +26,7 @@ mv /tmp/linux-amd64/helm /usr/local/bin/helm <br>
 chmod +x /usr/local/bin/helm <br>
 helm install didac-release . --values production.staging.yaml <br><br><br>
 
-<b>Create new Cluster</b>
+<h5>Create new Cluster</h5>
 <p> Run the following commands on your local machine</p>
 docker run -it --rm -v ${PWD}:/work -w /work --entrypoint /bin/bash digitalocean/doctl:1.45.0 <br>
 mv /app/doctl /usr/local/bin/ <br>
@@ -45,6 +44,5 @@ mv /tmp/linux-amd64/helm /usr/local/bin/helm <br>
 chmod +x /usr/local/bin/helm <br>
 helm install didac-release . --values production.staging.yaml <br>
   
-</div>
 
   
