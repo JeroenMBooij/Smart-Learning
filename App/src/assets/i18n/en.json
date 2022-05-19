@@ -26,10 +26,12 @@
 			"again": "again",
 			"easy": "easy",
 			"good": "good",
-			"hard": "hard"
+			"hard": "hard",
+			"next": ""
 		},
 		"name": "Name",
 		"showAnswer": "Show Answer",
+		"step": "",
 		"validateAnswer": "Validate Answer"
 	},
 	"cards": {
@@ -45,7 +47,7 @@
 		"review": "Review",
 		"settings": "Settings",
 		"start": "Start",
-        "title": "Title"
+		"title": "Title"
 	},
 	"dropdown": {
 		"more": "more",
@@ -53,11 +55,42 @@
 		"search": "Search",
 		"select": "Select"
 	},
+	"error": {
+		"card": {
+			"name": ""
+		},
+		"deck": {
+			"again": "",
+			"defaultEaseModifier": "",
+			"easeBonus": "",
+			"easePenalty": "",
+			"easy": "",
+			"good": "",
+			"hard": "",
+			"intervalModifier": "",
+			"title": ""
+		}
+	},
 	"header": {
 		"cardSettings": "Card Settings",
 		"decks": "Decks",
 		"review": "Review",
 		"teams": ""
+	},
+	"info": {
+		"createFlash": {
+			"content": "Didac flashcards offer multiple ways to design your flash cards including HTML, CSS (Including bootstrap), and Javascript.",
+			"title": "Create flash cards that are easy to remember for you and your friends"
+		},
+		"didac-team": {
+			"content": "Flash cards can be configured to be validated, even using handwriting recognition and speech recognition (coming soon). Your performance for every card is tracked and visualized to show you how you are doing compared to your teammates",
+			"title": "Create a Team to start learning together"
+		},
+		"editor-preview-html": "<h3>Geography</h3> \nWhat is the capital of Texas? \n<img height=100 width= 200 class='ml-auto mr-auto' src='https://www.google.com/maps/vt/data=1oFhp66L2W1FwYAdl1RArE0D7lPewnuMJ-wSANWJfNuvDDRDmq77_OkgiWjJ4q_TjAr5eF5Gmq5pkBmfBnYjDw5eU_gvFLIin92UtT_aC9GRXowFl66yvnYQiTPivij1ZBz6SXtHUN_0z-NHffDjmr_stSNf1tKAakavUzj9HpGZCgSToXKioekqtKkd97NmFexDnE5DZTbqvKMNHWFY3MRl5iynIox9AdX56ivr5YlA6-0'/> \n",
+		"sm2": {
+			"content": "Didac flashcards are presented to all students who have subscribed to the flashcard deck. Based on their feedbackan optimal timing interval is calculated to determine when a student should review the card again.",
+			"title": "SuperMemo2 spatial repetition"
+		}
 	},
 	"input": {
 		"UndoChanges": "Undo Changes",
@@ -80,10 +113,12 @@
 		"file": "File",
 		"light-theme": "light theme",
 		"name": "Name",
+		"redo": "",
 		"required": "Is required",
 		"reset": "Reset",
 		"search": "Search",
 		"showAnswer": "Show Answer",
+		"submit": "",
 		"title": "Title",
 		"update": "Update"
 	},
@@ -108,7 +143,7 @@
 		"frontEditor": "Front Editor",
 		"groups": "groups",
 		"javascriptEditor": "Javascript Editor",
-		"joinLearning": "Join Learning",
+		"joinLearning": "Join the learning experience",
 		"newCard": "New Card",
 		"noCards": "No Cards Found",
 		"noDecks": "No Decks Found",

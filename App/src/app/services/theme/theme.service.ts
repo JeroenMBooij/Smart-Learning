@@ -12,7 +12,9 @@ import
     LIGHT_THEME_OPPOSITE_COLOR,
     DARK_THEME_OPPOSITE_COLOR,
     LIGHT_THEME_PRIMARY_COLOR,
-    DARK_THEME_PRIMARY_COLOR
+    DARK_THEME_PRIMARY_COLOR,
+    LIGHT_THEME_CONTRAST_COLOR,
+    DARK_THEME_CONTRAST_COLOR
 } from "src/app/common/constants/theme.constants";
 import { TranslationService } from '../translation/translation.service';
 
@@ -25,7 +27,8 @@ export class ThemeService
     public update: BehaviorSubject<any> = new BehaviorSubject("");
     public addButton: BehaviorSubject<any> = new BehaviorSubject("");
 
-    public themeBanner: BehaviorSubject<any> = new BehaviorSubject("");
+    public themeBanner1: BehaviorSubject<any> = new BehaviorSubject("");
+    public themeBanner2: BehaviorSubject<any> = new BehaviorSubject("");
     public themeMath: BehaviorSubject<any> = new BehaviorSubject("");
     public themeReading: BehaviorSubject<any> = new BehaviorSubject("");
     public themeWriting: BehaviorSubject<any> = new BehaviorSubject("");
@@ -92,9 +95,11 @@ export class ThemeService
                 document.documentElement.style.setProperty('--my-theme-color', LIGHT_THEME_COLOR);
                 document.documentElement.style.setProperty('--theme-back-color', LIGHT_THEME_BACK_COLOR);
                 document.documentElement.style.setProperty('--theme-opposite-color', LIGHT_THEME_OPPOSITE_COLOR);
+                document.documentElement.style.setProperty('--theme-contrast-color', LIGHT_THEME_CONTRAST_COLOR);
                 this.addButton.next('add-light');
 
-                this.themeBanner.next('banner-light.png');
+                this.themeBanner1.next('banner-light-1.svg');
+                this.themeBanner2.next('banner-light-2.svg');
                 this.themeMath.next('light-math.png');
                 this.themeReading.next('light-reading.png');
                 this.themeWriting.next('light-writing.png');
@@ -107,9 +112,11 @@ export class ThemeService
                 document.documentElement.style.setProperty('--my-theme-color', DARK_THEME_COLOR);
                 document.documentElement.style.setProperty('--theme-back-color', DARK_THEME_BACK_COLOR);
                 document.documentElement.style.setProperty('--theme-opposite-color', DARK_THEME_OPPOSITE_COLOR);
+                document.documentElement.style.setProperty('--theme-contrast-color', DARK_THEME_CONTRAST_COLOR);
                 this.addButton.next('add-dark');
                 
-                this.themeBanner.next('banner-dark.png');
+                this.themeBanner1.next('banner-dark-1.svg');
+                this.themeBanner2.next('banner-dark-2.svg');
                 this.themeMath.next('dark-math.png');
                 this.themeReading.next('dark-reading.png');
                 this.themeWriting.next('dark-writing.png');

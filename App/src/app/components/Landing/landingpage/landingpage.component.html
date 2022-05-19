@@ -1,37 +1,99 @@
-<div class="d-flex flex-column justify-content-between banner vw-100 position-relative" 
-    style="background-image: url('/assets/images/{{themeService.themeBanner.value}}');">
-
-    <div class="d-flex justify-content-between ml-4 mr-4 w-100">
-        <div>
-            <div class="d-flex mt-3 mb-3">
-                <img src="/assets/images/robot.svg" alt="robot" height="80">
-                <h5 class="ml-2 mt-4">{{'shared.title' | translate }}</h5>
+<div class="d-flex justify-content-between banner vw-100 position-relative">
+    <div class="d-flex w-20">
+        <img src="/assets/images/{{themeService.themeBanner1.value}}" alt="robot" height="200"
+            class="m-auto">
+    </div>
+    <div class="w-60">
+        <div class="d-flex justify-content-between ml-4 mr-4 w-100">
+            <div>
+                <div class="d-flex mt-3 mb-3">
+                    <img src="/assets/images/robot.svg" alt="robot" height="80">
+                    <h5 class="ml-2 mt-4">{{'shared.title' | translate }}</h5>
+                </div>
+                <theme-switch class="ml-3"></theme-switch>
             </div>
-            <theme-switch class="ml-3"></theme-switch>
+            <language-switch class="mt-4"></language-switch>
+        </div>
+
+        <div class="d-flex">
+            <img src="/assets/images/{{themeService.themeBanner2.value}}" alt="robot" height="100"
+                class="m-auto">
+        </div>
+
+        <div class="w-50 ml-auto mr-auto text-center mt-5">
+            <h5>{{'signpost.joinLearning' | translate}}</h5>
+
+            <div class="d-flex justify-content-between mt-4 mb-4">
+
+                <div class="w-40">
+                    <main-button (click)="openRegister()" label="{{'authentication.register' | translate }}">
+                    </main-button>
+                </div>
+
+                <h3 style="line-height: 70px;">{{'signpost.or' | translate}}</h3>
+                
+                <div class="w-40">
+                    <main-button (click)="openLogin()" label="{{'authentication.login' | translate }}">
+                    </main-button>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <div class="w-25 ml-auto mr-auto text-center mt-5">
-        <h5>{{'signpost.joinLearning' | translate}}</h5>
+    <div class="w-20">
+        <div class="position-absolute" style="height: 500px; width: 220px; left: 85vw">
+            <app-robot [emote]="robotEmote" horizontalOrientation="-1.4"></app-robot>
+        </div>
+    </div>
+</div>
 
-        <div class="d-flex justify-content-between mt-4 mb-4">
+<div>
 
-            <div class="w-40">
-                <main-button (click)="openRegister()" label="{{'authentication.register' | translate }}">
-                </main-button>
+    <div class="landing-row mt-5 mb-5">
+
+        <div class="d-flex justify-content-around">
+            <div class="mr-5 overflow-hidden">
+                <front-card 
+                    [frameSource]="frontFrameSource"
+                    answerOptions="['show']"
+                ></front-card>
             </div>
-
-            <h3>{{'signpost.or' | translate}}</h3>
             
-            <div class="w-40">
-                <main-button (click)="openLogin()" label="{{'authentication.login' | translate }}">
-                </main-button>
+            <div style="width: 400px">
+                <div class="theme-border">
+                    <ngx-monaco-editor [options]="editorContent.options" 
+                        (onInit)="registerMonacoHtmlAutoComplete()"
+                        (keyup)="reloadFrontCard()" [(ngModel)]="editorContent.current">
+                    </ngx-monaco-editor>
+                </div>
             </div>
+        </div>
 
+        <div class="w-25">
+            <h2><b>{{'info.createFlash.title' | translate }}</b></h2>
+            <p class="mt-3">{{'info.createFlash.content' | translate }}</p>
         </div>
     </div>
 
-    <<div class="position-absolute" style="height: 500px; width: 200px; left: 85vw">
-        <app-robot horizontalOrientation="-1.4"></app-robot>
+    <div class="landing-row d-flex mt-5 mb-5">
+        <div class="w-75 mt-5">
+            <h2 class="w-45"><b>{{'info.sm2.title' | translate }}</b></h2>
+            <p class="w-75 mt-3">{{'info.sm2.content' | translate }}</p>
+        </div>
+        <div class="mt-5">
+            <img src="/assets/images/time-machine.svg" alt="robot" height="200">
+        </div>
+    </div>
+
+    <div class="landing-row d-flex mt-5 mb-5">
+        <div class="w-75 mt-5">
+            <img src="/assets/images/didac-team.svg" alt="robot" height="200">
+        </div>
+
+        <div class="mt-5">
+            <h2><b>{{'info.didac-team.title' | translate }}</b></h2>
+            <p class="mt-3">{{'info.didac-team.content' | translate }}</p>
+        </div>
     </div>
 </div>

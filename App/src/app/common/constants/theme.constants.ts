@@ -15,5 +15,8 @@ export const DARK_THEME_BACK_COLOR = '#4e4e4e';
 export const LIGHT_THEME_OPPOSITE_COLOR = '#4e4e4e';
 export const DARK_THEME_OPPOSITE_COLOR = '#ffffff';
 
+export const LIGHT_THEME_CONTRAST_COLOR = '#609FEF';
+export const DARK_THEME_CONTRAST_COLOR = '#250234';
+
 export const SUCCESS_COLOR = '#00FF00'
 export const ERROR_COLOR = '#ff5722'

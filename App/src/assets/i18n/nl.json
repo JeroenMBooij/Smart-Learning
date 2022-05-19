@@ -26,10 +26,12 @@
 			"again": "",
 			"easy": "",
 			"good": "",
-			"hard": ""
+			"hard": "",
+			"next": ""
 		},
 		"name": "",
 		"showAnswer": "",
+		"step": "",
 		"validateAnswer": ""
 	},
 	"cards": {
@@ -77,6 +79,21 @@
 		"review": "Review",
 		"teams": ""
 	},
+	"info": {
+		"createFlash": {
+			"content": "Met Didac flash cards kan je op meerdere manieren je flashcards ontwerpen, waaronder met HTML, CSS (inclusief bootstrap) en Javascript.",
+			"title": "Maak flash cards die voor jou en je vrienden makkelijk te onthouden zijn."
+		},
+		"didac-team": {
+			"content": "Flash cards hebben de optie om gevalideerd te worden voordat je een antwoord krijgt, zelfs met handschriftherkenning en spraakherkenning (binnenkort beschikbaar). Je prestatie voor elke kaart wordt bijgehouden en gevisualiseerd om je te laten zien hoe je het doet in vergelijking met je teamgenoten",
+			"title": "Creëer een team om samen te leren"
+		},
+		"editor-preview-html": "<h3>Aardrijkskunde</h3> \nWat is de hoofdstad van Gelderland? \n<img height=100 width= 100 class='ml-auto mr-auto mt-2' src='data:image/jpeg;base64,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'/> \n",
+		"sm2": {
+			"content": "Flash cards van Didac worden gepresenteerd aan alle studenten die geabonneerd hebben op de flashcard deck. Op basis van hun feedback wordt een optimaal tijdsinterval berekend om te bepalen wanneer een student de kaart opnieuw moet bekijken.",
+			"title": "SuperMemo2 spatial repetition"
+		}
+	},
 	"input": {
 		"UndoChanges": "",
 		"accountDeleted": "Account verwijderd",
@@ -96,10 +113,12 @@
 		"description": "Beschrijving",
 		"file": "Bestand",
 		"name": "Naam",
+		"redo": "",
 		"required": "Is verplicht",
 		"reset": "Reset",
 		"search": "Zoeken",
 		"showAnswer": "Laat antwoord zien",
+		"submit": "",
 		"title": "Titel",
 		"update": "Update"
 	},
@@ -124,7 +143,7 @@
 		"frontEditor": "Voorkant Editor",
 		"groups": "groepen",
 		"javascriptEditor": "Javascript Editor",
-		"joinLearning": "aansluiten",
+		"joinLearning": "Sluit je aan bij de leerervaring",
 		"newCard": "Nieuwe kaart",
 		"noCards": "Geen kaarten gevonden",
 		"noDecks": "Geen decks gevonden",

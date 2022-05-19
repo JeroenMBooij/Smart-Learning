@@ -26,10 +26,12 @@
 			"again": "屡次",
 			"easy": "简单",
 			"good": "好的",
-			"hard": "难的"
+			"hard": "难的",
+			"next": ""
 		},
 		"name": "名字",
 		"showAnswer": "显示答",
+		"step": "",
 		"validateAnswer": "证实答"
 	},
 	"cards": {
@@ -52,11 +54,42 @@
 		"search": "搜索",
 		"select": "选择"
 	},
+	"error": {
+		"card": {
+			"name": ""
+		},
+		"deck": {
+			"again": "",
+			"defaultEaseModifier": "",
+			"easeBonus": "",
+			"easePenalty": "",
+			"easy": "",
+			"good": "",
+			"hard": "",
+			"intervalModifier": "",
+			"title": ""
+		}
+	},
 	"header": {
 		"cardSettings": "卡片设置",
 		"decks": "几甲板",
 		"review": "审查",
 		"teams": "队们"
+	},
+	"info": {
+		"createFlash": {
+			"content": "使用 Didac 闪存卡，您可以通过多种方式设计您的闪存卡，包括 HTML、CSS（包含 Bootstrap) 和 Javascript。",
+			"title": "创建便于您和您的朋友记住的抽认卡。"
+		},
+		"didac-team": {
+			"content": "闪存卡可以在收到回复之前进行验证，即使是手写和语音识别（即将推出）也是如此。 跟踪和可视化您在每张卡片上的表现，以向您展示您如何与队友对抗",
+			"title": "组建团队一起学习"
+		},
+		"editor-preview-html": "<h3>地理学</h3> \n广东的省会是什么? \n<img height=100 width= 200 class='ml-auto mr-auto' src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/China_Guangdong.svg/266px-China_Guangdong.svg.png'/> \n",
+		"sm2": {
+			"content": "Didac 的抽认卡会赠送给所有订阅抽认卡组的学生。 根据他们的反馈，计算出最佳时间间隔以确定学生何时应查看地图。",
+			"title": "SuperMemo2 空间重复"
+		}
 	},
 	"input": {
 		"UndoChanges": "取消更改",
@@ -79,10 +112,12 @@
 		"file": "文件",
 		"light-theme": "白色的主题",
 		"name": "名字",
+		"redo": "",
 		"required": "必需",
 		"reset": "重启",
 		"search": "搜索",
 		"showAnswer": "显示答",
+		"submit": "",
 		"title": "纸牌名",
 		"update": "更新"
 	},
@@ -90,7 +125,7 @@
 		"select": "选择语言"
 	},
 	"shared": {
-		"title": "迪达克老师"
+		"title": "Didac 老师"
 	},
 	"signpost": {
 		"advancedSettings": "高级设置",
@@ -107,11 +142,11 @@
 		"frontEditor": "前编辑器",
 		"groups": "团体们",
 		"javascriptEditor": "Javascript编辑器",
-		"joinLearning": "入伍在学习",
+		"joinLearning": "加入学习体验",
 		"newCard": "新牌",
 		"noCards": "没有找到牌",
 		"noDecks": "没有找到纸牌",
-		"or": "或",
+		"or": "还是",
 		"returnToLogin": "返回登录",
 		"settings": "设置",
 		"signup": "在这里注册",

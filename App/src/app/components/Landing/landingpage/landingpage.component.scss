@@ -1,4 +1,19 @@
 .banner {
     height: 510px;
+    max-width: calc(100vw - 12px);
     overflow-x: hidden;
+    background-color: var(--theme-contrast-color);
+}
+
+.my-editor {
+    height: 400px;
+    width: 300px;
+}
+
+.landing-row {
+    display: flex;
+    justify-content: space-between;
+    width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
 }

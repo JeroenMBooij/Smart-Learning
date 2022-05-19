@@ -30,7 +30,7 @@ export class RobotComponent implements OnInit
     @Input()
     set emote(value: string)
     {
-        if(this.robot)
+        if(this.robot && this.robot.actions)
             if(value)
                 this.robot.executeEmote(value);
         else
@@ -103,6 +103,7 @@ export class RobotComponent implements OnInit
 
             let model = gltf.scene;
             model.rotation.set(0, this.horizontalOrientation, 0)
+            model.position.set(1.5, -0.5, 0);
             this.robot.scene.add(model);
 
             this.createControls(model, gltf.animations);

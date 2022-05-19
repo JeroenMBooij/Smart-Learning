@@ -58,12 +58,12 @@ export class Robot
         ref.previousActionName = this.activeActionName;
         ref.fadeToAction(name, 0.2);
 
-        ref.mixer.addEventListener('finished', ref.restoreState);
+        ref.mixer.addEventListener('finished', () => { ref.restoreState(this.id);});
     }
 
-    public restoreState() 
+    public restoreState(id) 
     {
-        let ref = window[`robot-${this.id}`];
+        let ref = window[`robot-${id}`];
         ref.fadeToAction(ref.previousActionName, 0.2);
     }
 }

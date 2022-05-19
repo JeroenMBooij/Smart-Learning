@@ -13,6 +13,7 @@
                 ></front-card>
             </div>
         </div>
+
         <h5 class="mt-4">{{'signpost.back' | translate}}</h5>
         <div class="d-inline-block theme-border p-2">
             <div class="card-container">
@@ -34,6 +35,7 @@
                 </ngx-monaco-editor>
             </div>
         </div>
+
         <div #backEditorContainer class="w-75 h-25 ml-auto">
             <p>{{'signpost.backEditor' | translate}}</p>
             <div class="pr-1" [ngClass]="(editorContent.backHtml.eval == false) ? 'theme-border':'warning-border'">
@@ -42,6 +44,7 @@
                 </ngx-monaco-editor>
             </div>
         </div>
+
         <div #cssEditorContainer class="w-75 h-25 ml-auto">
             <p>{{'signpost.cssEditor' | translate}}</p>
             <div class="pr-1" [ngClass]="(editorContent.css.eval == false) ? 'theme-border':'warning-border'">
@@ -50,6 +53,7 @@
                 </ngx-monaco-editor>
             </div>
         </div>
+        
         <div #javascriptEditorContainer class="w-75 h-25 ml-auto">
             <p>{{'signpost.javascriptEditor' | translate}}</p>
             <div class="pr-1" [ngClass]="(editorContent.javascript.eval == false) ? 'theme-border':'warning-border'">
