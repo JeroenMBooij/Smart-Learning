@@ -31,6 +31,9 @@ source init-cluster -s \ --subscription-id=506f6bf7-19b7-41c5-bad5-36fe386c6255 
 --resourcegroup didac-group
 
 <h4>New Cluster</h4>
+
+az aks get-versions --location westeurope --output table
+
 source init-cluster -s \ --subscription-id=506f6bf7-19b7-41c5-bad5-36fe386c6255 \
 --resourcegroup didac-group \
 --az-location westeurope \
