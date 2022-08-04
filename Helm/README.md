@@ -4,7 +4,6 @@ Disclaimer: <i>For data storage scalability these charts depend on a cloud manag
 Coupon Link from DigitalOcean to get $100 credit for 60 days: <br/>
 https://m.do.co/c/74a1c5d63dac
 
-<h2>🛠️ Installation Steps DigitalOcean:</h2>
 prerequisite 
 <ul>
   <li> docker installed </li> 
@@ -12,6 +11,47 @@ prerequisite
 </ul>
 
 <br>
+
+<h2>🛠️ Installation Steps Azure:</h2>
+
+<p> Execute the following commands on your local machine inside the Smart-Learning/Helm folder</p>
+docker run -it --rm -v ${PWD}:/work -w /work --entrypoint /bin/sh booij/azure-helm-cli:latest
+
+<h3>Login to Azure</h3>
+az login
+
+az account list -o table
+
+<h3>💻Create Cluster</h3>
+
+az aks list -o table
+
+<h4>Existing Cluster</h4>
+source init-cluster -s \ --subscription-id=506f6bf7-19b7-41c5-bad5-36fe386c6255 \
+--resourcegroup didac-group
+
+<h4>New Cluster</h4>
+source init-cluster -s \ --subscription-id=506f6bf7-19b7-41c5-bad5-36fe386c6255 \
+--resourcegroup didac-group \
+--az-location westeurope \
+--sp-name didac-sp \
+--cluster-name didac-cluster \
+-v 1.23.8
+
+<h3>🤖 Setup kubectl</h3>
+
+kubectl create ns didac-app
+
+helm install didac-release . --values values.production.yaml -n didac-app
+
+kubectl -n didac-app get svc
+
+<h3>Clean Up</h3>
+source cleanup-cluster
+
+
+<h2>🛠️ Installation Steps DigitalOcean:</h2>
+
 
 <p> Execute the following commands on your local machine inside the Smart-Learning/Helm folder</p>
 <h2>🛡️ Setup environment </h2>
