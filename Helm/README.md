@@ -49,6 +49,44 @@ helm install didac-release . --values values.production.yaml -n didac-app
 
 kubectl -n didac-app get svc
 
+<h1>🍰Node Pools</h1>
+az aks nodepool list --resource-group $RESOURCEGROUP --cluster-name $CLUSTER_NAME -o table
+
+az aks nodepool add \
+--resource-group $RESOURCEGROUP \
+--cluster-name $CLUSTER_NAME \
+--name [node pool name] \
+--node-count 1 \
+--node-vm-size [node vm size] \
+--labels key=value \
+--node-taints key=value:NoSchedule \
+--no-wait
+
+nodeSelector:
+  key: value
+
+toleration:
+  - key: "key"
+    operator: "Equal"
+    value: "value"
+    effect: "NoSchedule"
+
+<h1>Auto Scale</h1>
+<h2>Nodes</h2>
+az aks update --resource-group $RESOURCEGROUP --name [scaler name] --enable-cluster-autoscaler --min-count ? --max-count ?
+
+kubectl scale deploy [deployment name] --replicas=50
+
+kubectl get configmap -n [configmap name] cluster-autoscaler-status -o yaml
+
+
+<h2>Pods</h2>
+kubectl autoscale deployment [deployment name] --max=? --min=? --cpu-percent=85
+
+
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O [curl command]"
+
+
 <h3>Clean Up</h3>
 source cleanup-cluster
 
