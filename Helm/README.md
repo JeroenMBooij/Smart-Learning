@@ -1,9 +1,5 @@
 # 🚀 Kubernetes Helm Charts
 
-Disclaimer: <i>For data storage scalability these charts depend on a cloud managed MySQL database cluster</i> <br>
-Coupon Link from DigitalOcean to get $100 credit for 60 days: <br/>
-https://m.do.co/c/74a1c5d63dac
-
 prerequisite 
 <ul>
   <li> docker installed </li> 
