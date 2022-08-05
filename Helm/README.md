@@ -20,11 +20,11 @@ az account list -o table
 
 <h3>💻Create Cluster</h3>
 
-az aks list -o table
-
 <h4>Existing Cluster</h4>
 source init-cluster -s \ --subscription-id=506f6bf7-19b7-41c5-bad5-36fe386c6255 \
 --resourcegroup didac-group
+
+az aks list -o table
 
 <h4>New Cluster</h4>
 
