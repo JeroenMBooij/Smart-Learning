@@ -49,7 +49,7 @@ helm install didac-release . --values values.production.yaml -n didac-app
 
 kubectl -n didac-app get svc
 
-<h1>🍰Node Pools</h1>
+<h3>🍰Node Pools</h3>
 az aks nodepool list --resource-group $RESOURCEGROUP --cluster-name $CLUSTER_NAME -o table
 
 az aks nodepool add \
@@ -71,8 +71,8 @@ toleration:
     value: "value"
     effect: "NoSchedule"
 
-<h1>Auto Scale</h1>
-<h2>Nodes</h2>
+<h3>Auto Scale</h3>
+<h4>Nodes</h4>
 az aks update --resource-group $RESOURCEGROUP --name [scaler name] --enable-cluster-autoscaler --min-count ? --max-count ?
 
 kubectl scale deploy [deployment name] --replicas=50
@@ -80,7 +80,7 @@ kubectl scale deploy [deployment name] --replicas=50
 kubectl get configmap -n [configmap name] cluster-autoscaler-status -o yaml
 
 
-<h2>Pods</h2>
+<h4>Pods</h4>
 kubectl autoscale deployment [deployment name] --max=? --min=? --cpu-percent=85
 
 
